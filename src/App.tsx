@@ -33,7 +33,10 @@ const fetchPetsFromAPI = async (url: string) => {
   filteredData.forEach((pet: Pet) => {
     const randomIndex = Math.round((Math.random() * 100));
     const name = catNames[randomIndex];
-    pet.name = name;    
+
+    const age = Math.round(Math.random() * 20);
+    pet.name = name;
+    pet.age = age;
   });
   
   return filteredData;
@@ -65,6 +68,7 @@ function App() {
         <div key={pet.id}>
           <img alt="Picture of a cat" src={pet.url} />
           <h3>{pet.name}</h3>
+          <p>Age: {pet.age}</p>
         </div>
       ))}
     </main>
