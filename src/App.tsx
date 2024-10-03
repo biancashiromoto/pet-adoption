@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import './App.css';
+import './App.scss';
 import { catNames } from 'cat-names';
 
 const MAX_PETS = 15;
