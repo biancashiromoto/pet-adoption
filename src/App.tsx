@@ -24,13 +24,8 @@ const getLocalStorage = (key: string): any | null => {
   return item ? JSON.parse(item) : null
 }
 
-const fetchPetsFromAPI = async (url: string) => {
-  const response = await fetch(url, {headers: {
-    'x-api-key': API_KEY
-  }});
-  const data = await response.json();
-  const filteredData = data.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
-  filteredData.forEach((pet: Pet) => {
+const addNameAndAgeToPet = (pets: Pet[]) => {
+  pets.forEach((pet: Pet) => {
     const randomIndex = Math.round((Math.random() * 100));
     const name = catNames[randomIndex];
 
@@ -38,7 +33,15 @@ const fetchPetsFromAPI = async (url: string) => {
     pet.name = name;
     pet.age = age;
   });
-  
+}
+
+const fetchPetsFromAPI = async (url: string) => {
+  const response = await fetch(url, {headers: {
+    'x-api-key': API_KEY
+  }});
+  const data = await response.json();
+  const filteredData = data.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
+  addNameAndAgeToPet(filteredData);  
   return filteredData;
 }
 
@@ -59,19 +62,19 @@ function App() {
     } 
   }, []);
 
-  useEffect(() => console.log(pets), [pets])
-
   return (
-    <main>
+    <>
       <h1>Pet adoption</h1>
-      {pets && pets.map(pet => (
-        <div key={pet.id}>
-          <img alt="Picture of a cat" src={pet.url} />
-          <h3>{pet.name}</h3>
-          <p>Age: {pet.age}</p>
-        </div>
-      ))}
-    </main>
+      <main>
+        {pets && pets.map(pet => (
+          <div key={pet.id} className="card">
+            <img alt="Picture of a cat" src={pet.url} />
+            <h3>{pet.name}</h3>
+            <p>Age: {pet.age}</p>
+          </div>
+        ))}
+      </main>
+    </>
   )
 }
 
