@@ -78,7 +78,13 @@ const Home = () => {
           </div>
         ))}
       </main>
-      {showModal && <Modal pet={selectedPet} setShowModal={setShowModal} />}
+      {showModal && (
+        <>
+            <div className="overlay" role="button" onClick={() => setShowModal(false)} />
+            <Modal pet={selectedPet} setShowModal={setShowModal} />
+        </>
+
+      )}
     </>
   )
 }
