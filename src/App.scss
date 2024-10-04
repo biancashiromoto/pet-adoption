@@ -22,7 +22,7 @@ main {
   justify-content: center;
   padding: 10px;
   position: fixed;
-  top: 50%;
+  top: 35%;
   left: 50%;
   transform: translateX(-50%);
   width: 60dvw;
@@ -33,4 +33,14 @@ main {
     gap: 10px;
     justify-content: center;
   }
+}
+
+.overlay {
+  background-color: black;
+  height: 100dvh;
+  left: 0;
+  opacity: 0.75;
+  position: absolute;
+  top: 0;
+  width: 100dvw;
 }
