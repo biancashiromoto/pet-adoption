@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Pet } from "../../App"
+import { Pet } from "../../pages/Home";
 
 interface ModalProps {
     pet: Pet[];
