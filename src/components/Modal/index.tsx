@@ -10,6 +10,7 @@ const Modal = ({ pet, setShowModal }: ModalProps) => {
   return (
     <div className='modal'>
         <h2>{`Are you sure you want to adopt ${pet[0].name}?`}</h2>
+        <img alt="Random picture of a cat" src={pet[0].url} />
         <div className="modal__buttons-container">
             <button
                 aria-label="Yes"
