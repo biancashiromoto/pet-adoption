@@ -18,14 +18,17 @@ main {
   border: solid 1px black;
   display: flex;
   flex-direction: column;
-  height: 25dvh;
-  justify-content: center;
+  gap: 20px;
   padding: 10px;
   position: fixed;
   top: 35%;
   left: 50%;
   transform: translateX(-50%);
   width: 60dvw;
+
+  h2 {
+    margin: 0;
+  }
 
   &__buttons-container {
     align-items: center;
@@ -37,10 +40,10 @@ main {
 
 .overlay {
   background-color: black;
-  height: 100dvh;
+  height: 100%;
   left: 0;
   opacity: 0.75;
   position: absolute;
   top: 0;
-  width: 100dvw;
+  width: 100%;
 }
