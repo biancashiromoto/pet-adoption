@@ -21,12 +21,13 @@ const setLocalStorage = (key: string, value: any): void => {
 
 const getLocalStorage = (key: string): any | null => {
   const item = localStorage.getItem(key);
-  return item ? JSON.parse(item) : null
+  if (item) return JSON.parse(item);
+  return null;
 }
 
-const addNameAndAgeToPet = (pets: Pet[]) => {
+const addNameAndAgeToPets = (pets: Pet[]) => {
   pets.forEach((pet: Pet) => {
-    const randomIndex = Math.round((Math.random() * 100));
+    const randomIndex = Math.round((Math.random() * catNames.length));
     const name = catNames[randomIndex];
 
     const age = Math.round(Math.random() * 19) + 1;
@@ -35,62 +36,81 @@ const addNameAndAgeToPet = (pets: Pet[]) => {
   });
 }
 
-const fetchPetsFromAPI = async (url: string) => {
-  const response = await fetch(url, {headers: {
-    'x-api-key': API_KEY
-  }});
-  const data = await response.json();
-  const filteredData = data.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
-  addNameAndAgeToPet(filteredData);  
-  return filteredData;
-}
-
 const Home = () => {
     const [pets, setPets] = useState<Pet[]>([]);
     const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
 
     useEffect(() => {
-      const storagedPets = getLocalStorage('pets');
-      if (!storagedPets || storagedPets.length === 0) {
+      const storaged = getLocalStorage('pets');
+      if (!storaged || storaged.length === 0) {
         const fetchPets = async (url: string) => {
-          const fetchedPets = await fetchPetsFromAPI(url);
-          setPets(fetchedPets);
-          setLocalStorage('pets', fetchedPets);
+          setIsLoading(true);
+          try {
+            const response = await fetch(url, {
+              headers: { 'x-api-key': API_KEY }
+            });
+            
+            if (!response.ok) {
+              throw new Error('Failed to fetch');
+            }
+            
+            const data = await response.json();
+            const filteredData = data.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
+            addNameAndAgeToPets(filteredData);
+            setPets(filteredData);
+            setLocalStorage('pets', filteredData);
+          } catch (error) {
+            if (error instanceof Error) {
+              setError(error.message);
+            } else {
+              setError('An unknown error occurred');
+            }
+            console.error(error);
+          } finally {
+            setIsLoading(false);
+          }
         }
         fetchPets(API_URL);
-      } else {
-        setPets(storagedPets);
-      } 
+      }
+      setPets(storaged);
     }, []);
 
   return (
     <>
-        <main>
-        {pets && pets.map(pet => (
-          <div key={pet.id} className="card" onClick={() => {
-            setSelectedPet([pet]);
-            setShowModal(true);
-          }}>
-            <img alt="Random picture of a cat" src={pet.url} />
-            <h3>{pet.name}</h3>
-            <p>Age: {pet.age}</p>
-          </div>
-        ))}
-      </main>
-      {showModal && (
+      {isLoading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+      {!error && !isLoading && (
         <>
-          <div
-            aria-label="Close modal"
-            className="overlay"
-            role="button"
-            onClick={() => setShowModal(false)}
-          />
-          <Modal pet={selectedPet} setShowModal={setShowModal} />
+          <main>
+            {pets && pets.map(pet => (
+              <div key={pet.id} className="card" onClick={() => {
+                setSelectedPet([pet]);
+                setShowModal(true);
+              }}>
+                <img alt="Random picture of a cat" src={pet.url} />
+                <h3>{pet.name}</h3>
+                <p>Age: {pet.age}</p>
+              </div>
+            ))}
+          </main>
+          {showModal && (
+            <>
+              <div
+                aria-label="Close modal"
+                className="overlay"
+                role="button"
+                onClick={() => setShowModal(false)}
+              />
+              <Modal pet={selectedPet} setShowModal={setShowModal} />
+            </>
+          )}
         </>
       )}
     </>
   )
 }
 
-export default Home
+export default Home;
