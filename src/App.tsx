@@ -13,7 +13,7 @@ const AppContent = () => {
       <h1>Pet adoption</h1>
       <p>
         <strong>Attention: </strong>
-        This is a fake adoption site created to practice my development skills. None of these pets can be adopted through this page.
+        This is a fake adoption site created to practice my development skills. The pets' names and pictures were retrieved from an API, and their ages are randomly generated.
       </p>
       {location.pathname !== '/' && (
         <Button.Root
