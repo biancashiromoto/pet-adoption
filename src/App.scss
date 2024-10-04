@@ -47,3 +47,14 @@ main {
   top: 0;
   width: 100%;
 }
+
+form {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  button {
+    width: 25%;
+  }
+}
