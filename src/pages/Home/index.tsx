@@ -29,7 +29,7 @@ const addNameAndAgeToPet = (pets: Pet[]) => {
     const randomIndex = Math.round((Math.random() * 100));
     const name = catNames[randomIndex];
 
-    const age = Math.round(Math.random() * 20);
+    const age = Math.round(Math.random() * 19) + 1;
     pet.name = name;
     pet.age = age;
   });
