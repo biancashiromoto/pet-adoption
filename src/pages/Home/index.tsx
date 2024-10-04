@@ -51,18 +51,18 @@ const Home = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
 
     useEffect(() => {
-        const storagedPets = getLocalStorage('pets');
-        if (!storagedPets || storagedPets.length === 0) {
-          const fetchPets = async (url: string) => {
-            const fetchedPets = await fetchPetsFromAPI(url);
-            setPets(fetchedPets);
-            setLocalStorage('pets', fetchedPets);
-          }
-          fetchPets(API_URL);
-        } else {
-          setPets(storagedPets);
-        } 
-      }, []);
+      const storagedPets = getLocalStorage('pets');
+      if (!storagedPets || storagedPets.length === 0) {
+        const fetchPets = async (url: string) => {
+          const fetchedPets = await fetchPetsFromAPI(url);
+          setPets(fetchedPets);
+          setLocalStorage('pets', fetchedPets);
+        }
+        fetchPets(API_URL);
+      } else {
+        setPets(storagedPets);
+      } 
+    }, []);
 
   return (
     <>
@@ -80,10 +80,14 @@ const Home = () => {
       </main>
       {showModal && (
         <>
-            <div className="overlay" role="button" onClick={() => setShowModal(false)} />
-            <Modal pet={selectedPet} setShowModal={setShowModal} />
+          <div
+            aria-label="Close modal"
+            className="overlay"
+            role="button"
+            onClick={() => setShowModal(false)}
+          />
+          <Modal pet={selectedPet} setShowModal={setShowModal} />
         </>
-
       )}
     </>
   )
