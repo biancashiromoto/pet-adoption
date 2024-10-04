@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { Pet } from "../../pages/Home";
+import { useNavigate } from "react-router-dom";
 
 interface ModalProps {
     pet: Pet[];
@@ -7,6 +8,8 @@ interface ModalProps {
 }
 
 const Modal = ({ pet, setShowModal }: ModalProps) => {
+const navigate = useNavigate();
+
   return (
     <div className='modal'>
         <h2>{`Are you sure you want to adopt ${pet[0].name}?`}</h2>
@@ -15,7 +18,7 @@ const Modal = ({ pet, setShowModal }: ModalProps) => {
             <button
                 aria-label="Yes"
                 type="button"
-                onClick={() => console.log('Yes')}
+                onClick={() => navigate("/adopt")}
             >
                 Yes
             </button>
