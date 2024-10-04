@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import './App.scss';
 import { catNames } from 'cat-names';
+import Modal from "./components/Modal";
 
 const MAX_PETS = 15;
 const API_KEY: string = 'live_zllOBSsaSmrsLy6r2n5z2SQ7Zqz4NkckgTWwPzxZJr90rcoeMUpSleldcvpv8v9r';
 const API_URL: string = `https://api.thecatapi.com/v1/images/search?limit=${MAX_PETS}&size=thumb `;
 
-interface Pet {
+export interface Pet {
   age?: number;
   id: string;
   height: number;
@@ -47,6 +48,8 @@ const fetchPetsFromAPI = async (url: string) => {
 
 function App() {
   const [pets, setPets] = useState<Pet[]>([]);
+  const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
   
   useEffect(() => {
     const storagedPets = getLocalStorage('pets');
@@ -67,13 +70,17 @@ function App() {
       <h1>Pet adoption</h1>
       <main>
         {pets && pets.map(pet => (
-          <div key={pet.id} className="card">
-            <img alt="Picture of a cat" src={pet.url} />
+          <div key={pet.id} className="card" onClick={() => {
+            setSelectedPet([pet]);
+            setShowModal(true);
+          }}>
+            <img alt="Random picture of a cat" src={pet.url} />
             <h3>{pet.name}</h3>
             <p>Age: {pet.age}</p>
           </div>
         ))}
       </main>
+      {showModal && <Modal pet={selectedPet} setShowModal={setShowModal} />}
     </>
   )
 }
