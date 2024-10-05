@@ -1,4 +1,4 @@
-# Pet adoption 🐱🧡
+# Pet adoption 🐱🐶🧡
 
 ## [EN] About this project
 
@@ -6,7 +6,7 @@ This is a React based project that simulates a pet adoption site, where the user
 
 If they are interested in adopting one of the available pets, they can fill out the adoption form with their information and submit their request.
 
-The pets' pictures are fetched from [The Cat API](https://thecatapi.com/), and their names from the [cat-names](https://www.npmjs.com/package/cat-names?activeTab=readme) library. Their age is a randomly generated number between 1 and 20 (so don't be surprised if you see some 12 year old kittens lol).
+The pets' pictures are fetched from [The Cat API](https://thecatapi.com/) and [The Dog API](https://www.thedogapi.com//), and their names from the [cat-names](https://www.npmjs.com/package/cat-names?activeTab=readme) library. Their age is a randomly generated number between 1 and 20 (so don't be surprised if you see some 12 year old kittens/puppies lol).
 
 The data is then stored in localStorage
 prevent unnecessary future API requests.
@@ -37,7 +37,7 @@ Este é um projeto desenvolvido com React que simula um site de adoção de pets
 
 Caso o usuário tenha interesse em adotar um dos pets disponíveis, é possível preencher um formulário de adoção com suas informações e enviar sua solicitação.
 
-As imagens dos pets são obtidas da [The Cat API](https://thecatapi.com/) e seus nomes vêm da biblioteca [cat-names](https://www.npmjs.com/package/cat-names?activeTab=readme). As idades são um número gerado aleatoriamente entre 1 e 20 (então não se surpreenda se vir alguns filhotes de 12 anos kkkk).
+As imagens dos pets são obtidas da [The Cat API](https://thecatapi.com/) e da [The Dog API](https://www.thedogapi.com//) e seus nomes vêm da biblioteca [cat-names](https://www.npmjs.com/package/cat-names?activeTab=readme). As idades são um número gerado aleatoriamente entre 1 e 20 (então não se surpreenda se vir alguns filhotes de 12 anos kkkk).
 
 Os dados são então armazenados no localStorage, para evitar requisições futuras desnecessárias.
 
