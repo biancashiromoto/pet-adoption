@@ -6,6 +6,7 @@ import Overlay from '../../components/Overlay';
 import { Utils } from '../../helpers/Utils';
 import { info } from '../../helpers/info';
 import Filter from '../../components/Filter';
+import Card from '../../components/Card';
 
 export interface Pet {
   age?: number;
@@ -23,7 +24,8 @@ const Home = () => {
   const [pets, setPets] = useState<Pet[]>([]);
   const [displayedPets, setDisplayedPets] = useState<Pet[]>(pets);
   const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
+  const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [species, setSpecies] = useState<'none' | 'dog' | 'cat'>('none');
   const [order, setOrder] = useState<'none' | 'older' | 'younger'>('none');
@@ -80,6 +82,11 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    setShowUpdatePetsModal(false);
+    setShowAdoptionModal(false);
+  }, []);
+
+  useEffect(() => {
     const filteredPets = [...pets].filter((pet: Pet) => pet.species === species);
     switch (species) {
       case 'none':
@@ -127,16 +134,12 @@ const Home = () => {
     }
   }
 
-  const updatePets = () => {
-    fetchPets();
-  }
-
   return (
     <>
       {error && <p>Error: {error}</p>}
       <Button.Root
         ariaLabel='Update pets'
-        onClick={() => updatePets()}
+        onClick={() => setShowUpdatePetsModal(true)}
       >
         <Button.Label label='Update pets' />
       </Button.Root>
@@ -152,19 +155,12 @@ const Home = () => {
         <>
           <main>
             {displayedPets && displayedPets.map(pet => (
-              <div key={pet.id} className='card' onClick={() => {
-                setSelectedPet([pet]);
-                setShowModal(true);
-              }}>
-                <img alt='Random picture of a cat' src={pet.url} />
-                <h3>{pet.name}</h3>
-                <p>Age: {pet.age}</p>
-              </div>
+              <Card pet={pet} setSelectedPet={setSelectedPet} setShowModal={setShowAdoptionModal} />
             ))}
           </main>
-          {showModal && (
+          {showAdoptionModal && (
             <>
-              <Overlay setShowModal={setShowModal }/>
+              <Overlay openModal={setShowAdoptionModal} />
               <Modal
                 title={`Go ahead and fill form to adopt ${selectedPet[0].name}?`}
               >
@@ -178,7 +174,34 @@ const Home = () => {
                   </Button.Root>
                   <Button.Root
                     ariaLabel='No'
-                    onClick={() => setShowModal(false)}
+                    onClick={() => setShowAdoptionModal(false)}
+                  >
+                    <Button.Label label='No' />
+                  </Button.Root>
+                </div>
+              </Modal>
+            </>
+          )}
+          {showUpdatePetsModal && (
+            <>
+              <Overlay openModal={setShowUpdatePetsModal}/>
+              <Modal
+                text='This action will fetch new pets and the current pets will be lost. Do you want to proceed?'
+                title='Update pets?'
+              >
+                <div className='modal__buttons-container'>
+                  <Button.Root
+                    ariaLabel='Yes'
+                    onClick={() => {
+                      fetchPets();
+                      setShowUpdatePetsModal(false);
+                    }}
+                  >
+                    <Button.Label label='Yes' />
+                  </Button.Root>
+                  <Button.Root
+                    ariaLabel='No'
+                    onClick={() => setShowUpdatePetsModal(false)}
                   >
                     <Button.Label label='No' />
                   </Button.Root>
