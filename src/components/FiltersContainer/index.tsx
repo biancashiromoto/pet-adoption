@@ -34,7 +34,7 @@ const FiltersContainer = ({
         <Filter
           id='order'
           items={['none', 'younger', 'older']}
-          label='Older: '
+          label='Order: '
           ref={orderRef}
           onChange={(e) => selectFilter(e, setOrder)}
         />
