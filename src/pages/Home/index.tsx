@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import Overlay from '../../components/Overlay';
 import { Utils } from '../../helpers/Utils';
 import { info } from '../../helpers/info';
-import Filter from '../../components/Filter';
 import Card from '../../components/Card';
+import FiltersContainer from '../../components/FiltersContainer';
 
 export interface Pet {
   age?: number;
@@ -87,39 +87,24 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    const filteredPets = [...pets].filter((pet: Pet) => pet.species === species);
-    switch (species) {
-      case 'none':
-        setDisplayedPets(pets);
-        break;
-      default:
-        setDisplayedPets(filteredPets);
-        break;
-    }
-  }, [pets, species]);
-
-  useEffect(() => {
-    let orderedPets;
-    switch (order) {
-      case 'younger':
-        orderedPets = [...pets].sort((a: Pet, b: Pet) => {
+    const applyFilters = () => {
+      let filteredPets = pets;
+  
+      if (species !== 'none') {
+        filteredPets = pets.filter((pet: Pet) => pet.species === species);
+      }
+  
+      let orderedPets = filteredPets;
+      if (order !== 'none') {
+        orderedPets = [...filteredPets].sort((a: Pet, b: Pet) => {
           if (!a.age || !b.age) return 0;
-          return a.age - b.age;
+          return order === 'younger' ? a.age - b.age : b.age - a.age;
         });
-        setDisplayedPets(orderedPets);
-        break;
-      case 'older':
-        orderedPets = [...pets].sort((a: Pet, b: Pet) => {
-          if (!a.age || !b.age) return 0;
-          return b.age - a.age;
-        });
-        setDisplayedPets(orderedPets);
-        break;
-      default:
-        setDisplayedPets(pets);
-        break;
-    }
-  }, [pets, order]);
+      }
+      setDisplayedPets(orderedPets);
+    };
+    applyFilters();
+  }, [pets, species, order]);
 
   const clearFilters = () => {
     setDisplayedPets(pets);
@@ -127,7 +112,7 @@ const Home = () => {
     setSpecies('none');
 
     if (speciesRef.current) {
-      speciesRef.current.value = '';
+      speciesRef.current.value = 'none';
     }
     if (orderRef.current) {
       orderRef.current.value = 'none';
@@ -143,19 +128,24 @@ const Home = () => {
       >
         <Button.Label label='Update pets' />
       </Button.Root>
-      <Filter
+      <FiltersContainer
         clearFilters={clearFilters}
         orderRef={orderRef}
         setOrder={setOrder}
-        setSpecies={setSpecies}
         speciesRef={speciesRef}
-       />
+        setSpecies={setSpecies}
+      />
       {isLoading && <p>Loading...</p>}
       {!error && !isLoading && (
         <>
           <main>
             {displayedPets && displayedPets.map(pet => (
-              <Card pet={pet} setSelectedPet={setSelectedPet} setShowModal={setShowAdoptionModal} />
+              <Card
+                key={pet.id}
+                pet={pet}
+                setSelectedPet={setSelectedPet}
+                setShowModal={setShowAdoptionModal}
+              />
             ))}
           </main>
           {showAdoptionModal && (
