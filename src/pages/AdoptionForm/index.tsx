@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { Button } from "../../components/Button";
 import Modal from "../../components/Modal";
 import Overlay from "../../components/Overlay";
@@ -7,6 +7,20 @@ import { useNavigate } from "react-router-dom";
 const AdoptionForm = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape' && showModal) {
+                setShowModal(false);
+            }
+        };
+        
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [showModal]);
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -68,4 +82,4 @@ const AdoptionForm = () => {
     )
 }
 
-export default AdoptionForm
+export default AdoptionForm;
