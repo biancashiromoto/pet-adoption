@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-interface Modal2Props {
+interface ModalProps {
   children: ReactNode;
   className?: string;
   title?: string;
@@ -13,7 +13,7 @@ const Modal = ({
   title,
   text,
   ...rest
-}: Modal2Props) => {
+}: ModalProps) => {
   return (
     <div className='modal' {...rest}>
       <h2>{ title }</h2>
