@@ -4,12 +4,7 @@ import { Button } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import Overlay from "../../components/Overlay";
 import { Utils } from "../../helpers/Utils";
-
-const MAX_PETS = 15;
-const API_KEY: string = 'live_zllOBSsaSmrsLy6r2n5z2SQ7Zqz4NkckgTWwPzxZJr90rcoeMUpSleldcvpv8v9r';
-const API_URL: string = `https://api.thecatapi.com/v1/images/search?limit=${MAX_PETS}&size=thumb `;
-const DOG_API_URL: string = `https://api.thedogapi.com/v1/images/search?limit=${MAX_PETS}&size=thumb `;
-const DOG_API_KEY: string = 'live_fjag8bs7S11T5sFU6WhjVtUBRslLyueJ97ohSNbjCn7hERUx5mjZQMa5XndLrQME';
+import { info } from "../../helpers/info";
 
 export interface Pet {
   age?: number;
@@ -36,18 +31,16 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-      const storaged = utils.getLocalStorage('pets');
-      console.log('storaged: ', storaged);
-      
+      const storaged = utils.getLocalStorage('pets');     
       if (!storaged || storaged.length === 0) {
         const fetchPets = async (url: string) => {
           setIsLoading(true);
           try {
             const catsResponse = await fetch(url, {
-              headers: { 'x-api-key': API_KEY }
+              headers: { 'x-api-key': info.API_KEY }
             });
-            const dogsResponse = await fetch(DOG_API_URL, {
-              headers: { 'x-api-key': DOG_API_KEY }
+            const dogsResponse = await fetch(info.DOG_API_URL, {
+              headers: { 'x-api-key': info.DOG_API_KEY }
             });
             
             if (!catsResponse.ok || !dogsResponse.ok) {
@@ -75,7 +68,7 @@ const Home = () => {
             setIsLoading(false);
           }
         }
-        fetchPets(API_URL);
+        fetchPets(info.API_URL);
       } else {
         setPets(storaged);
         setDisplayedPets(storaged);
