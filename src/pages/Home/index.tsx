@@ -20,115 +20,126 @@ export interface Pet {
 const utils = new Utils();
 
 const Home = () => {
-    const [pets, setPets] = useState<Pet[]>([]);
-    const [displayedPets, setDisplayedPets] = useState<Pet[]>(pets);
-    const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
-    const [showModal, setShowModal] = useState<boolean>(false);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [species, setSpecies] = useState<'none' | 'dog' | 'cat'>('none');
-    const [order, setOrder] = useState<'none' | 'older' | 'younger'>('none');
-    const speciesRef = createRef<HTMLSelectElement>();
-    const orderRef = createRef<HTMLSelectElement>();
+  const [pets, setPets] = useState<Pet[]>([]);
+  const [displayedPets, setDisplayedPets] = useState<Pet[]>(pets);
+  const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [species, setSpecies] = useState<'none' | 'dog' | 'cat'>('none');
+  const [order, setOrder] = useState<'none' | 'older' | 'younger'>('none');
+  const speciesRef = createRef<HTMLSelectElement>();
+  const orderRef = createRef<HTMLSelectElement>();
 
-    const [error, setError] = useState<string>('');
-    const navigate = useNavigate();
+  const [error, setError] = useState<string>('');
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      const storaged = utils.getLocalStorage('pets');     
-      if (!storaged || storaged.length === 0) {
-        const fetchPets = async (url: string) => {
-          setIsLoading(true);
-          try {
-            const catsResponse = await fetch(url, {
-              headers: { 'x-api-key': info.API_KEY }
-            });
-            const dogsResponse = await fetch(info.DOG_API_URL, {
-              headers: { 'x-api-key': info.DOG_API_KEY }
-            });
-            
-            if (!catsResponse.ok || !dogsResponse.ok) {
-              throw new Error('Failed to fetch');
-            }
-            
-            const catsData = await catsResponse.json();
-            const dogsData = await dogsResponse.json();
-            
-            const filteredCatsData = utils.removeGifs(catsData);
-            const filteredDogsData = utils.removeGifs(dogsData)
-            const allPets = filteredCatsData.concat(filteredDogsData);
-            utils.addPetsInfo(allPets);
-            setPets(allPets);
-            setDisplayedPets(allPets);
-            utils.setLocalStorage('pets', allPets);
-          } catch (error) {
-            if (error instanceof Error) {
-              setError(error.message);
-            } else {
-              setError('An unknown error occurred');
-            }
-            console.error(error);
-          } finally {
-            setIsLoading(false);
-          }
-        }
-        fetchPets(info.API_URL);
+  const fetchPets = async () => {
+    setIsLoading(true);
+    try {
+      const catsResponse = await fetch(info.CAT_API_URL, {
+        headers: { 'x-api-key': info.CAT_API_KEY }
+      });
+      const dogsResponse = await fetch(info.DOG_API_URL, {
+        headers: { 'x-api-key': info.DOG_API_KEY }
+      });
+      
+      if (!catsResponse.ok || !dogsResponse.ok) {
+        throw new Error('Failed to fetch');
+      }
+      
+      const catsData = await catsResponse.json();
+      const dogsData = await dogsResponse.json();
+      
+      const filteredCatsData = utils.removeGifs(catsData);
+      const filteredDogsData = utils.removeGifs(dogsData)
+      const allPets = filteredCatsData.concat(filteredDogsData);
+      utils.addPetsInfo(allPets);
+      setPets(allPets);
+      setDisplayedPets(allPets);
+      utils.setLocalStorage('pets', allPets);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
       } else {
-        setPets(storaged);
-        setDisplayedPets(storaged);
+        setError('An unknown error occurred');
       }
-    }, []);
-
-    useEffect(() => {
-      const filteredPets = [...pets].filter((pet: Pet) => pet.species === species);
-      switch (species) {
-        case 'none':
-          setDisplayedPets(pets);
-          break;
-        default:
-          setDisplayedPets(filteredPets);
-          break;
-      }
-    }, [pets, species]);
-
-    useEffect(() => {
-      let orderedPets;
-      switch (order) {
-        case 'younger':
-          orderedPets = [...pets].sort((a: Pet, b: Pet) => {
-            if (!a.age || !b.age) return 0;
-            return a.age - b.age;
-          });
-          setDisplayedPets(orderedPets);
-          break;
-        case 'older':
-          orderedPets = [...pets].sort((a: Pet, b: Pet) => {
-            if (!a.age || !b.age) return 0;
-            return b.age - a.age;
-          });
-          setDisplayedPets(orderedPets);
-          break;
-        default:
-          setDisplayedPets(pets);
-          break;
-      }
-    }, [pets, order]);
-
-    const clearFilters = () => {
-      setDisplayedPets(pets);
-      setOrder('none');
-      setSpecies('none');
-
-      if (speciesRef.current) {
-        speciesRef.current.value = '';
-      }
-      if (orderRef.current) {
-        orderRef.current.value = 'none';
-      }
+      console.error(error);
+    } finally {
+      setIsLoading(false);
     }
+  }
+
+  useEffect(() => {
+    const storaged = utils.getLocalStorage('pets');     
+    if (!storaged || storaged.length === 0) {
+      fetchPets();
+    } else {
+      setPets(storaged);
+      setDisplayedPets(storaged);
+    }
+  }, []);
+
+  useEffect(() => {
+    const filteredPets = [...pets].filter((pet: Pet) => pet.species === species);
+    switch (species) {
+      case 'none':
+        setDisplayedPets(pets);
+        break;
+      default:
+        setDisplayedPets(filteredPets);
+        break;
+    }
+  }, [pets, species]);
+
+  useEffect(() => {
+    let orderedPets;
+    switch (order) {
+      case 'younger':
+        orderedPets = [...pets].sort((a: Pet, b: Pet) => {
+          if (!a.age || !b.age) return 0;
+          return a.age - b.age;
+        });
+        setDisplayedPets(orderedPets);
+        break;
+      case 'older':
+        orderedPets = [...pets].sort((a: Pet, b: Pet) => {
+          if (!a.age || !b.age) return 0;
+          return b.age - a.age;
+        });
+        setDisplayedPets(orderedPets);
+        break;
+      default:
+        setDisplayedPets(pets);
+        break;
+    }
+  }, [pets, order]);
+
+  const clearFilters = () => {
+    setDisplayedPets(pets);
+    setOrder('none');
+    setSpecies('none');
+
+    if (speciesRef.current) {
+      speciesRef.current.value = '';
+    }
+    if (orderRef.current) {
+      orderRef.current.value = 'none';
+    }
+  }
+
+  const updatePets = () => {
+    fetchPets();
+  }
 
   return (
     <>
       {error && <p>Error: {error}</p>}
+      <Button.Root
+        ariaLabel='Update pets'
+        onClick={() => updatePets()}
+      >
+        <Button.Label label='Update pets' />
+      </Button.Root>
       <Filter
         clearFilters={clearFilters}
         orderRef={orderRef}
