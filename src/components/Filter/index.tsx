@@ -1,44 +1,23 @@
-import { Dispatch, LegacyRef, SetStateAction } from "react";
-import { Button } from "../Button";
+import { forwardRef } from 'react';
 
 interface FilterProps {
-  speciesRef: LegacyRef<HTMLSelectElement>;
-  setSpecies: Dispatch<SetStateAction<'none' | 'dog' | 'cat'>>;
-  orderRef: LegacyRef<HTMLSelectElement>;
-  setOrder: Dispatch<SetStateAction<'none' | 'older' | 'younger'>>;
-  clearFilters: () => void;
+  id: string;
+  label: string;
+  items: string[];
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-const Filter = ({ clearFilters, speciesRef, setSpecies, orderRef, setOrder }: FilterProps) => {
-  return (
-    <div className='filter'>
-      <label htmlFor='species'>
-        Species: 
-        <select ref={speciesRef} id='species' onChange={(e) => {
-          const value = e.target.value as 'none' | 'dog' | 'cat';
-          setSpecies(value);
-        }}>
-          <option value=''>Select species</option>
-          <option value='cat'>Cats</option>
-          <option value='dog'>Dogs</option>
-        </select>
-      </label>
-      <label htmlFor='sort'>
-        Sort: 
-        <select ref={orderRef} id='sort' onChange={(e) => {
-          const value = e.target.value as 'none' | 'older' | 'younger';
-          setOrder(value);
-        }}>
-          <option value='none'>None</option>
-          <option value='older'>Older</option>
-          <option value='younger'>Younger</option>
-        </select>
-      </label>
-      <Button.Root onClick={() => clearFilters()}>
-        <Button.Label label='Clear filters' />
-      </Button.Root>
-    </div>
-  )
-}
+const Filter = forwardRef<HTMLSelectElement, FilterProps>(({ id, label, items, onChange }, ref) => (
+  <div className='filter-container__filter'>
+    <label htmlFor={id}>{label}</label>
+    <select id={id} ref={ref} onChange={onChange}>
+      {items.map((item) => (
+        <option key={item} value={item}>
+          {item}
+        </option>
+      ))}
+    </select>
+  </div>
+));
 
-export default Filter
+export default Filter;
