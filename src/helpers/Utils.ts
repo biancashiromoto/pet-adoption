@@ -31,6 +31,7 @@ export class Utils {
       pet.name = name;
       pet.age = age;
       pet.species = pet.url.includes('cat') ? 'cat' : 'dog';
+      pet.isFavorite = false;
 
     });
     return pets;
