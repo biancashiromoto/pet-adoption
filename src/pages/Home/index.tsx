@@ -1,4 +1,4 @@
-import { ChangeEvent, createRef, useEffect, useState } from 'react';
+import { createRef, useEffect, useState } from 'react';
 import Modal from '../../components/Modal';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
@@ -28,9 +28,9 @@ const Home = () => {
   const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [species, setSpecies] = useState<'none' | 'dog' | 'cat'>('none');
-  const [order, setOrder] = useState<'none' | 'older' | 'younger'>('none');
-  const [favoritesFilter, setFavoritesFilter] = useState<'none' | 'favorites' | 'non favorites'>('none');
+  const [speciesFilter, setSpeciesFilter] = useState<'all' | 'dog' | 'cat'>('all');
+  const [orderFilter, setOrderFilter] = useState<'none' | 'older' | 'younger'>('none');
+  const [favoritesFilter, setFavoritesFilter] = useState<'all' | 'favorites' | 'non favorites'>('all');
   const speciesRef = createRef<HTMLSelectElement>();
   const orderRef = createRef<HTMLSelectElement>();
   const favoriteRef = createRef<HTMLSelectElement>();
@@ -93,11 +93,11 @@ const Home = () => {
     const applyFilters = () => {
       let filteredPets = pets;
   
-      if (species !== 'none') {
-        filteredPets = pets.filter((pet: Pet) => pet.species === species);
+      if (speciesFilter !== 'all') {
+        filteredPets = pets.filter((pet: Pet) => pet.species === speciesFilter);
       }
 
-      if (favoritesFilter !== 'none') {
+      if (favoritesFilter !== 'all') {
         if (favoritesFilter === 'favorites') {
           filteredPets = filteredPets.filter((pet: Pet) => pet.isFavorite);
         } else {
@@ -106,16 +106,16 @@ const Home = () => {
       }
       
       let orderedPets = filteredPets;
-      if (order !== 'none') {
+      if (orderFilter !== 'none') {
         orderedPets = [...filteredPets].sort((a: Pet, b: Pet) => {
           if (!a.age || !b.age) return 0;
-          return order === 'younger' ? a.age - b.age : b.age - a.age;
+          return orderFilter === 'younger' ? a.age - b.age : b.age - a.age;
         });
       }
       setDisplayedPets(orderedPets);
     };
     applyFilters();
-  }, [pets, species, order, favoritesFilter]);
+  }, [pets, speciesFilter, orderFilter, favoritesFilter]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -138,11 +138,12 @@ const Home = () => {
 
   const clearFilters = () => {
     setDisplayedPets(pets);
-    setOrder('none');
-    setSpecies('none');
+    setOrderFilter('none');
+    setSpeciesFilter('all');
+    setFavoritesFilter('all');
 
     if (speciesRef.current) {
-      speciesRef.current.value = 'none';
+      speciesRef.current.value = 'all';
     }
     
     if (orderRef.current) {
@@ -173,9 +174,9 @@ const Home = () => {
       <FiltersContainer
         clearFilters={clearFilters}
         orderRef={orderRef}
-        setOrder={setOrder}
+        setOrder={setOrderFilter}
         speciesRef={speciesRef}
-        setSpecies={setSpecies}
+        setSpecies={setSpeciesFilter}
         favoriteRef={favoriteRef}
         setFavoritesFilter={setFavoritesFilter}
       />
