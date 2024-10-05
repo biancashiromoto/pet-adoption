@@ -72,6 +72,33 @@ main {
     background: none;
     border: none;
   }
+
+  &__text {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+
+    & >* {
+      align-items: baseline;
+      display: flex;
+      margin: 0;
+    }
+
+    h3 {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    p {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    button {
+      align-self: flex-end;
+      justify-self: end;
+    }
+  }
 }
 
 form {

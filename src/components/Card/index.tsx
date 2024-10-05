@@ -19,14 +19,16 @@ const Card = ({ pet, setSelectedPet, setShowModal, toggleFavorite }: CardProps) 
       }}
     >
       <img alt='Random picture of a cat' src={pet.url} />
-      <h3>{pet.name}</h3>
-      <p>Age: {pet.age}</p>
-      <button type="button" onClick={(e) => {
-        e.stopPropagation();
-        toggleFavorite(pet.id);
-      }}>
-        {!pet.isFavorite ? <FaRegHeart /> :<FaHeart />}
-      </button>
+      <div className="card__text">
+        <h3>{pet.name}</h3>
+        <p>Age: {pet.age}</p>
+        <button type="button" onClick={(e) => {
+          e.stopPropagation();
+          toggleFavorite(pet.id);
+        }}>
+          {!pet.isFavorite ? <FaRegHeart /> :<FaHeart />}
+        </button>
+      </div>
     </article>
   )
 }
