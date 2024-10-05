@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { catNames } from 'cat-names';
 import Modal from "../../components/Modal";
+import { Button } from "../../components/Button";
+import { useNavigate } from "react-router-dom";
+import Overlay from "../../components/Overlay";
 
 const MAX_PETS = 15;
 const API_KEY: string = 'live_zllOBSsaSmrsLy6r2n5z2SQ7Zqz4NkckgTWwPzxZJr90rcoeMUpSleldcvpv8v9r';
@@ -42,6 +45,7 @@ const Home = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
+    const navigate = useNavigate();
 
     useEffect(() => {
       const storaged = getLocalStorage('pets');
@@ -98,13 +102,26 @@ const Home = () => {
           </main>
           {showModal && (
             <>
-              <div
-                aria-label="Close modal"
-                className="overlay"
-                role="button"
-                onClick={() => setShowModal(false)}
-              />
-              <Modal pet={selectedPet} setShowModal={setShowModal} />
+              <Overlay setShowModal={setShowModal }/>
+              <Modal
+                title={`Go ahead and fill form to adopt ${selectedPet[0].name}?`}
+              >
+                <img alt="Random picture of a cat" src={selectedPet[0].url} />
+                <div className="modal__buttons-container">
+                  <Button.Root
+                    ariaLabel="Yes"
+                    onClick={() => navigate("/adopt")}
+                  >
+                    <Button.Label label="Yes" />
+                  </Button.Root>
+                  <Button.Root
+                    ariaLabel="No"
+                    onClick={() => setShowModal(false)}
+                  >
+                    <Button.Label label="No" />
+                  </Button.Root>
+                </div>
+              </Modal>
             </>
           )}
         </>

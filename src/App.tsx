@@ -6,7 +6,7 @@ import { Button } from './components/Button';
 
 const AppContent = () => {
   const navigate  = useNavigate();
-  const location = useLocation()
+  const location = useLocation();
   
   return (
     <>
@@ -15,6 +15,7 @@ const AppContent = () => {
         <strong>Attention: </strong>
         This is a fake adoption site created to practice my development skills. The pets' names and pictures were retrieved from an API, and their ages are randomly generated.
       </p>
+      <p>For more info, read <a href='https://github.com/biancashiromoto/pet-adoption/blob/main/README.md'>this file</a></p>
       {location.pathname !== '/' && (
         <Button.Root
           ariaLabel='Go back'
