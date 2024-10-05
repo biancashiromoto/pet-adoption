@@ -20,9 +20,9 @@ export class Utils {
   }
 
   /**
-   * addNameAndAgeToPets
+   * addPetsInfo
    */
-  public addNameAndAgeToPets(pets: Pet[]): Pet[] {
+  public addPetsInfo(pets: Pet[]): Pet[] {
     pets.forEach((pet: Pet) => {
       const randomIndex = Math.round((Math.random() * catNames.length));
       const name = catNames[randomIndex];
@@ -30,8 +30,16 @@ export class Utils {
 
       pet.name = name;
       pet.age = age;
+      pet.species = pet.url.includes('cat') ? 'cat' : 'dog';
 
     });
     return pets;
+  }
+  
+  /**
+   * removeGifs
+   */
+  public removeGifs(pets: Pet[]): Pet[] {
+    return pets.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
   }
 }
