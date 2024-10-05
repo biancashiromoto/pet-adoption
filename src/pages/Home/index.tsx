@@ -82,6 +82,11 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    setShowUpdatePetsModal(false);
+    setShowAdoptionModal(false);
+  }, []);
+
+  useEffect(() => {
     const filteredPets = [...pets].filter((pet: Pet) => pet.species === species);
     switch (species) {
       case 'none':
@@ -187,7 +192,10 @@ const Home = () => {
                 <div className='modal__buttons-container'>
                   <Button.Root
                     ariaLabel='Yes'
-                    onClick={() => fetchPets()}
+                    onClick={() => {
+                      fetchPets();
+                      setShowUpdatePetsModal(false);
+                    }}
                   >
                     <Button.Label label='Yes' />
                   </Button.Root>
