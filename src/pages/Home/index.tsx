@@ -1,10 +1,11 @@
-import { createRef, useEffect, useState } from "react";
-import Modal from "../../components/Modal";
-import { Button } from "../../components/Button";
-import { useNavigate } from "react-router-dom";
-import Overlay from "../../components/Overlay";
-import { Utils } from "../../helpers/Utils";
-import { info } from "../../helpers/info";
+import { createRef, useEffect, useState } from 'react';
+import Modal from '../../components/Modal';
+import { Button } from '../../components/Button';
+import { useNavigate } from 'react-router-dom';
+import Overlay from '../../components/Overlay';
+import { Utils } from '../../helpers/Utils';
+import { info } from '../../helpers/info';
+import Filter from '../../components/Filter';
 
 export interface Pet {
   age?: number;
@@ -24,7 +25,7 @@ const Home = () => {
     const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [species, setSpecies] = useState<'dog' | 'cat' | ''>('');
+    const [species, setSpecies] = useState<'none' | 'dog' | 'cat'>('none');
     const [order, setOrder] = useState<'none' | 'older' | 'younger'>('none');
     const speciesRef = createRef<HTMLSelectElement>();
     const orderRef = createRef<HTMLSelectElement>();
@@ -80,7 +81,7 @@ const Home = () => {
     useEffect(() => {
       const filteredPets = [...pets].filter((pet: Pet) => pet.species === species);
       switch (species) {
-        case '':
+        case 'none':
           setDisplayedPets(pets);
           break;
         default:
@@ -114,55 +115,37 @@ const Home = () => {
 
     const clearFilters = () => {
       setDisplayedPets(pets);
-      setOrder("none");
-      setSpecies("");
+      setOrder('none');
+      setSpecies('none');
 
       if (speciesRef.current) {
-        speciesRef.current.value = "";
+        speciesRef.current.value = '';
       }
       if (orderRef.current) {
-        orderRef.current.value = "none";
+        orderRef.current.value = 'none';
       }
     }
 
   return (
     <>
       {error && <p>Error: {error}</p>}
-      <label htmlFor="species">
-        Species: 
-        <select ref={speciesRef} id="species" onChange={(e) => {
-          const value = e.target.value as "" | "dog" | "cat";
-          setSpecies(value);
-        }}>
-          <option value="">Select species</option>
-          <option value="cat">Cats</option>
-          <option value="dog">Dogs</option>
-        </select>
-      </label>
-      <label htmlFor="sort">
-        Sort: 
-        <select ref={orderRef} id="sort" onChange={(e) => {
-          const value = e.target.value as "none" | "older" | "younger";
-          setOrder(value);
-        }}>
-          <option value="none">None</option>
-          <option value="older">Older</option>
-          <option value="younger">Younger</option>
-        </select>
-      </label>
-      <Button.Root onClick={() => clearFilters()}>
-        <Button.Label label="Clear filters" />
-      </Button.Root>
+      <Filter
+        clearFilters={clearFilters}
+        orderRef={orderRef}
+        setOrder={setOrder}
+        setSpecies={setSpecies}
+        speciesRef={speciesRef}
+       />
       {isLoading && <p>Loading...</p>}
       {!error && !isLoading && (
         <>
           <main>
             {displayedPets && displayedPets.map(pet => (
-              <div key={pet.id} className="card" onClick={() => {
+              <div key={pet.id} className='card' onClick={() => {
                 setSelectedPet([pet]);
                 setShowModal(true);
               }}>
-                <img alt="Random picture of a cat" src={pet.url} />
+                <img alt='Random picture of a cat' src={pet.url} />
                 <h3>{pet.name}</h3>
                 <p>Age: {pet.age}</p>
               </div>
@@ -174,19 +157,19 @@ const Home = () => {
               <Modal
                 title={`Go ahead and fill form to adopt ${selectedPet[0].name}?`}
               >
-                <img alt="Random picture of a cat" src={selectedPet[0].url} />
-                <div className="modal__buttons-container">
+                <img alt='Random picture of a cat' src={selectedPet[0].url} />
+                <div className='modal__buttons-container'>
                   <Button.Root
-                    ariaLabel="Yes"
-                    onClick={() => navigate("/adopt")}
+                    ariaLabel='Yes'
+                    onClick={() => navigate('/adopt')}
                   >
-                    <Button.Label label="Yes" />
+                    <Button.Label label='Yes' />
                   </Button.Root>
                   <Button.Root
-                    ariaLabel="No"
+                    ariaLabel='No'
                     onClick={() => setShowModal(false)}
                   >
-                    <Button.Label label="No" />
+                    <Button.Label label='No' />
                   </Button.Root>
                 </div>
               </Modal>
