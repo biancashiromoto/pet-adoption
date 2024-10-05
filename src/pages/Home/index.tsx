@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { catNames } from 'cat-names';
 import Modal from "../../components/Modal";
 import { Button } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
 import Overlay from "../../components/Overlay";
+import { Utils } from "../../helpers/Utils";
 
 const MAX_PETS = 15;
 const API_KEY: string = 'live_zllOBSsaSmrsLy6r2n5z2SQ7Zqz4NkckgTWwPzxZJr90rcoeMUpSleldcvpv8v9r';
@@ -18,29 +18,10 @@ export interface Pet {
   width: number;
 }
 
-const setLocalStorage = (key: string, value: any): void => {
-  localStorage.setItem(key, JSON.stringify(value));
-}
-
-const getLocalStorage = (key: string): any | null => {
-  const item = localStorage.getItem(key);
-  if (item) return JSON.parse(item);
-  return null;
-}
-
-const addNameAndAgeToPets = (pets: Pet[]) => {
-  pets.forEach((pet: Pet) => {
-    const randomIndex = Math.round((Math.random() * catNames.length));
-    const name = catNames[randomIndex];
-
-    const age = Math.round(Math.random() * 19) + 1;
-    pet.name = name;
-    pet.age = age;
-  });
-}
+const utils = new Utils();
 
 const Home = () => {
-    const [pets, setPets] = useState<Pet[]>([]);
+    const [pets, setPets] = useState<Pet[] | null>([]);
     const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -48,7 +29,7 @@ const Home = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-      const storaged = getLocalStorage('pets');
+      const storaged = utils.getLocalStorage('pets');
       if (!storaged || storaged.length === 0) {
         const fetchPets = async (url: string) => {
           setIsLoading(true);
@@ -63,9 +44,9 @@ const Home = () => {
             
             const data = await response.json();
             const filteredData = data.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
-            addNameAndAgeToPets(filteredData);
+            utils.addNameAndAgeToPets(filteredData);
             setPets(filteredData);
-            setLocalStorage('pets', filteredData);
+            utils.setLocalStorage('pets', filteredData);
           } catch (error) {
             if (error instanceof Error) {
               setError(error.message);
