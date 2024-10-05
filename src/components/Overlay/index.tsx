@@ -1,16 +1,16 @@
 import { Dispatch, SetStateAction } from "react"
 
 interface OverlayProps {
-  setShowModal: Dispatch<SetStateAction<boolean>>;
+  openModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const Overlay = ({ setShowModal }: OverlayProps) => {
+const Overlay = ({ openModal }: OverlayProps) => {
   return (
     <div
       aria-label="Close modal"
       className="overlay"
       role="button"
-      onClick={() => setShowModal(false)}
+      onClick={() => openModal(false)}
     />
   )
 }
