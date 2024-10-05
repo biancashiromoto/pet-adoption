@@ -4,12 +4,12 @@ import { ChangeEvent, Dispatch, RefObject, SetStateAction } from 'react';
 
 interface FiltersContainerProps {
   speciesRef: RefObject<HTMLSelectElement>;
-  setSpecies: Dispatch<SetStateAction<'none' | 'dog' | 'cat'>>;
+  setSpecies: Dispatch<SetStateAction<'all' | 'dog' | 'cat'>>;
   orderRef: RefObject<HTMLSelectElement>;
   setOrder: Dispatch<SetStateAction<'none' | 'younger' | 'older'>>;
   clearFilters: () => void;
   favoriteRef: RefObject<HTMLSelectElement>;
-  setFavoritesFilter: Dispatch<SetStateAction<'none' | 'favorites' | 'non favorites'>>;
+  setFavoritesFilter: Dispatch<SetStateAction<'all' | 'favorites' | 'non favorites'>>;
 }
 
 const selectFilter = (e: ChangeEvent<HTMLSelectElement>, callback: Dispatch<SetStateAction<any>>) => {
@@ -30,7 +30,7 @@ const FiltersContainer = ({
     <article className='filter-container'>
       <Filter
           id='species'
-          items={['none', 'cat', 'dog']}
+          items={['all', 'cat', 'dog']}
           label='Species: '
           ref={speciesRef}
           onChange={(e) => selectFilter(e, setSpecies)}
@@ -44,7 +44,7 @@ const FiltersContainer = ({
         />
         <Filter
           id='favorites'
-          items={['none', 'favorites', 'non favorites']}
+          items={['all', 'favorites', 'non favorites']}
           label='Favorite status: '
           ref={favoriteRef}
           onChange={(e) => selectFilter(e, setFavoritesFilter)}
