@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Button } from "../../components/Button";
 import Modal from "../../components/Modal";
 import Overlay from "../../components/Overlay";
@@ -8,15 +8,20 @@ const AdoptionForm = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const navigate = useNavigate();
 
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setShowModal(true);
+    }
+
     return (
         <>
             <form
                 className="form"
-                onSubmit={() => {}}
+                onSubmit={handleSubmit}
             >
                 <label htmlFor="input__first-name">
                     First name: 
-                    <input required type="text" id="input__first-name" />
+                    <input required type="text" id="input__first-name" autoFocus />
                 </label>
                 <label htmlFor="input__last-name">
                     Last name: 
@@ -30,14 +35,11 @@ const AdoptionForm = () => {
                     Phone number: 
                     <input required type="tel" id="input__phone-number" />
                 </label>
-                <button
-                    onClick={(e) => {
-                        e.preventDefault();
-                        console.log('submit');
-                        setShowModal(true);
-                    }}
-                    type="submit"
-                >
+                <label htmlFor="input__birth-date">
+                    Birth date: 
+                    <input required type="date" id="input__birth-date" />
+                </label>
+                <button type="submit">
                     Submit
                 </button>
             </form>
