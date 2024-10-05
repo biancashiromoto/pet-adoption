@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import Modal from "../../components/Modal";
 import { Button } from "../../components/Button";
 import { useNavigate } from "react-router-dom";
@@ -26,6 +26,8 @@ const Home = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [species, setSpecies] = useState<'dog' | 'cat' | ''>('');
     const [order, setOrder] = useState<'none' | 'older' | 'younger'>('none');
+    const speciesRef = createRef<HTMLSelectElement>();
+    const orderRef = createRef<HTMLSelectElement>();
 
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
@@ -110,12 +112,25 @@ const Home = () => {
       }
     }, [pets, order]);
 
+    const clearFilters = () => {
+      setDisplayedPets(pets);
+      setOrder("none");
+      setSpecies("");
+
+      if (speciesRef.current) {
+        speciesRef.current.value = "";
+      }
+      if (orderRef.current) {
+        orderRef.current.value = "none";
+      }
+    }
+
   return (
     <>
       {error && <p>Error: {error}</p>}
       <label htmlFor="species">
         Species: 
-        <select id="species" onChange={(e) => {
+        <select ref={speciesRef} id="species" onChange={(e) => {
           const value = e.target.value as "" | "dog" | "cat";
           setSpecies(value);
         }}>
@@ -126,7 +141,7 @@ const Home = () => {
       </label>
       <label htmlFor="sort">
         Sort: 
-        <select id="sort" onChange={(e) => {
+        <select ref={orderRef} id="sort" onChange={(e) => {
           const value = e.target.value as "none" | "older" | "younger";
           setOrder(value);
         }}>
@@ -135,6 +150,9 @@ const Home = () => {
           <option value="younger">Younger</option>
         </select>
       </label>
+      <Button.Root onClick={() => clearFilters()}>
+        <Button.Label label="Clear filters" />
+      </Button.Root>
       {isLoading && <p>Loading...</p>}
       {!error && !isLoading && (
         <>
