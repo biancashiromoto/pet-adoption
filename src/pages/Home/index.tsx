@@ -8,12 +8,15 @@ import { Utils } from "../../helpers/Utils";
 const MAX_PETS = 15;
 const API_KEY: string = 'live_zllOBSsaSmrsLy6r2n5z2SQ7Zqz4NkckgTWwPzxZJr90rcoeMUpSleldcvpv8v9r';
 const API_URL: string = `https://api.thecatapi.com/v1/images/search?limit=${MAX_PETS}&size=thumb `;
+const DOG_API_URL: string = `https://api.thedogapi.com/v1/images/search?limit=${MAX_PETS}&size=thumb `;
+const DOG_API_KEY: string = 'live_fjag8bs7S11T5sFU6WhjVtUBRslLyueJ97ohSNbjCn7hERUx5mjZQMa5XndLrQME';
 
 export interface Pet {
   age?: number;
   id: string;
   height: number;
   name?: string;
+  species?: 'cat' | 'dog';
   url: string;
   width: number;
 }
@@ -21,32 +24,46 @@ export interface Pet {
 const utils = new Utils();
 
 const Home = () => {
-    const [pets, setPets] = useState<Pet[] | null>([]);
+    const [pets, setPets] = useState<Pet[]>([]);
+    const [displayedPets, setDisplayedPets] = useState<Pet[]>(pets);
     const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [species, setSpecies] = useState<'dog' | 'cat' | ''>('');
+    const [order, setOrder] = useState<'none' | 'older' | 'younger'>('none');
+
     const [error, setError] = useState<string>('');
     const navigate = useNavigate();
 
     useEffect(() => {
       const storaged = utils.getLocalStorage('pets');
+      console.log('storaged: ', storaged);
+      
       if (!storaged || storaged.length === 0) {
         const fetchPets = async (url: string) => {
           setIsLoading(true);
           try {
-            const response = await fetch(url, {
+            const catsResponse = await fetch(url, {
               headers: { 'x-api-key': API_KEY }
             });
+            const dogsResponse = await fetch(DOG_API_URL, {
+              headers: { 'x-api-key': DOG_API_KEY }
+            });
             
-            if (!response.ok) {
+            if (!catsResponse.ok || !dogsResponse.ok) {
               throw new Error('Failed to fetch');
             }
             
-            const data = await response.json();
-            const filteredData = data.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
-            utils.addNameAndAgeToPets(filteredData);
-            setPets(filteredData);
-            utils.setLocalStorage('pets', filteredData);
+            const catsData = await catsResponse.json();
+            const dogsData = await dogsResponse.json();
+            
+            const filteredCatsData = utils.removeGifs(catsData);
+            const filteredDogsData = utils.removeGifs(dogsData)
+            const allPets = filteredCatsData.concat(filteredDogsData);
+            utils.addPetsInfo(allPets);
+            setPets(allPets);
+            setDisplayedPets(allPets);
+            utils.setLocalStorage('pets', allPets);
           } catch (error) {
             if (error instanceof Error) {
               setError(error.message);
@@ -59,18 +76,77 @@ const Home = () => {
           }
         }
         fetchPets(API_URL);
+      } else {
+        setPets(storaged);
+        setDisplayedPets(storaged);
       }
-      setPets(storaged);
     }, []);
+
+    useEffect(() => {
+      const filteredPets = [...pets].filter((pet: Pet) => pet.species === species);
+      switch (species) {
+        case '':
+          setDisplayedPets(pets);
+          break;
+        default:
+          setDisplayedPets(filteredPets);
+          break;
+      }
+    }, [pets, species]);
+
+    useEffect(() => {
+      let orderedPets;
+      switch (order) {
+        case 'younger':
+          orderedPets = [...pets].sort((a: Pet, b: Pet) => {
+            if (!a.age || !b.age) return 0;
+            return a.age - b.age;
+          });
+          setDisplayedPets(orderedPets);
+          break;
+        case 'older':
+          orderedPets = [...pets].sort((a: Pet, b: Pet) => {
+            if (!a.age || !b.age) return 0;
+            return b.age - a.age;
+          });
+          setDisplayedPets(orderedPets);
+          break;
+        default:
+          setDisplayedPets(pets);
+          break;
+      }
+    }, [pets, order]);
 
   return (
     <>
-      {isLoading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
+      <label htmlFor="species">
+        Species: 
+        <select id="species" onChange={(e) => {
+          const value = e.target.value as "" | "dog" | "cat";
+          setSpecies(value);
+        }}>
+          <option value="">Select species</option>
+          <option value="cat">Cats</option>
+          <option value="dog">Dogs</option>
+        </select>
+      </label>
+      <label htmlFor="sort">
+        Sort: 
+        <select id="sort" onChange={(e) => {
+          const value = e.target.value as "none" | "older" | "younger";
+          setOrder(value);
+        }}>
+          <option value="none">None</option>
+          <option value="older">Older</option>
+          <option value="younger">Younger</option>
+        </select>
+      </label>
+      {isLoading && <p>Loading...</p>}
       {!error && !isLoading && (
         <>
           <main>
-            {pets && pets.map(pet => (
+            {displayedPets && displayedPets.map(pet => (
               <div key={pet.id} className="card" onClick={() => {
                 setSelectedPet([pet]);
                 setShowModal(true);
