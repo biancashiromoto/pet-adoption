@@ -153,13 +153,17 @@ const Home = () => {
 
   const toggleFavorite = (id: Pet['id']) => {
     setPets(prevPets => {
-      return prevPets.map(pet => {
+      const updatedPets = prevPets.map(pet => {
         if (pet.id === id) {
           return { ...pet, isFavorite: !pet.isFavorite };
         }
         return pet;
-      })
-    })
+      });
+      
+      utils.setLocalStorage('pets', updatedPets);
+      
+      return updatedPets;
+    });
   }
 
   return (
