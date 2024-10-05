@@ -1,13 +1,15 @@
 import { Dispatch, SetStateAction } from "react";
 import { Pet } from "../../pages/Home";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 interface CardProps {
   pet: Pet;
   setSelectedPet: Dispatch<SetStateAction<Pet[]>>;
   setShowModal: Dispatch<SetStateAction<boolean>>;
+  toggleFavorite: (id: Pet['id']) => void;
 }
 
-const Card = ({ pet, setSelectedPet, setShowModal }: CardProps) => {
+const Card = ({ pet, setSelectedPet, setShowModal, toggleFavorite }: CardProps) => {
   return (
     <article
       className='card'
@@ -19,6 +21,12 @@ const Card = ({ pet, setSelectedPet, setShowModal }: CardProps) => {
       <img alt='Random picture of a cat' src={pet.url} />
       <h3>{pet.name}</h3>
       <p>Age: {pet.age}</p>
+      <button type="button" onClick={(e) => {
+        e.stopPropagation();
+        toggleFavorite(pet.id);
+      }}>
+        {!pet.isFavorite ? <FaRegHeart /> :<FaHeart />}
+      </button>
     </article>
   )
 }

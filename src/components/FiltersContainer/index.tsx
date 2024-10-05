@@ -8,6 +8,8 @@ interface FiltersContainerProps {
   orderRef: RefObject<HTMLSelectElement>;
   setOrder: Dispatch<SetStateAction<'none' | 'younger' | 'older'>>;
   clearFilters: () => void;
+  favoriteRef: RefObject<HTMLSelectElement>;
+  setFavoritesFilter: Dispatch<SetStateAction<'none' | 'favorites' | 'non favorites'>>;
 }
 
 const selectFilter = (e: ChangeEvent<HTMLSelectElement>, callback: Dispatch<SetStateAction<any>>) => {
@@ -20,7 +22,9 @@ const FiltersContainer = ({
   setSpecies,
   orderRef,
   setOrder,
-  clearFilters
+  clearFilters,
+  favoriteRef,
+  setFavoritesFilter
 }: FiltersContainerProps) => {
   return (
     <article className='filter-container'>
@@ -37,6 +41,13 @@ const FiltersContainer = ({
           label='Order: '
           ref={orderRef}
           onChange={(e) => selectFilter(e, setOrder)}
+        />
+        <Filter
+          id='favorites'
+          items={['none', 'favorites', 'non favorites']}
+          label='Favorite status: '
+          ref={favoriteRef}
+          onChange={(e) => selectFilter(e, setFavoritesFilter)}
         />
         <Button.Root
           ariaLabel='Clear filter'
