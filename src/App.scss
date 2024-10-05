@@ -15,9 +15,7 @@ main {
   align-items: center;
   background-color: white;
   border: solid 1px black;
-  display: flex;
   flex-direction: column;
-  gap: 20px;
   padding: 10px;
   position: fixed;
   top: 20%;
@@ -35,6 +33,7 @@ main {
     display: flex;
     gap: 10px;
     justify-content: center;
+    padding-top: 10px;
   }
 
   &-open {
@@ -58,9 +57,10 @@ form {
   align-items: center;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 10px;
 
   button {
-    width: 25%;
+    width: 200px;
   }
 }
