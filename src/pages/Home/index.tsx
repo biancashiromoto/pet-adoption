@@ -11,6 +11,7 @@ import FiltersContainer from '../../components/FiltersContainer';
 export interface Pet {
   age?: number;
   id: string;
+  isFavorite: boolean;
   height: number;
   name?: string;
   species?: 'cat' | 'dog';
@@ -27,10 +28,12 @@ const Home = () => {
   const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [species, setSpecies] = useState<'none' | 'dog' | 'cat'>('none');
-  const [order, setOrder] = useState<'none' | 'older' | 'younger'>('none');
+  const [speciesFilter, setSpeciesFilter] = useState<'all' | 'dog' | 'cat'>('all');
+  const [orderFilter, setOrderFilter] = useState<'none' | 'older' | 'younger'>('none');
+  const [favoritesFilter, setFavoritesFilter] = useState<'all' | 'favorites' | 'non favorites'>('all');
   const speciesRef = createRef<HTMLSelectElement>();
   const orderRef = createRef<HTMLSelectElement>();
+  const favoriteRef = createRef<HTMLSelectElement>();
 
   const [error, setError] = useState<string>('');
   const navigate = useNavigate();
@@ -90,21 +93,29 @@ const Home = () => {
     const applyFilters = () => {
       let filteredPets = pets;
   
-      if (species !== 'none') {
-        filteredPets = pets.filter((pet: Pet) => pet.species === species);
+      if (speciesFilter !== 'all') {
+        filteredPets = pets.filter((pet: Pet) => pet.species === speciesFilter);
       }
-  
+
+      if (favoritesFilter !== 'all') {
+        if (favoritesFilter === 'favorites') {
+          filteredPets = filteredPets.filter((pet: Pet) => pet.isFavorite);
+        } else {
+          filteredPets = filteredPets.filter((pet: Pet) => !pet.isFavorite);
+        }
+      }
+      
       let orderedPets = filteredPets;
-      if (order !== 'none') {
+      if (orderFilter !== 'none') {
         orderedPets = [...filteredPets].sort((a: Pet, b: Pet) => {
           if (!a.age || !b.age) return 0;
-          return order === 'younger' ? a.age - b.age : b.age - a.age;
+          return orderFilter === 'younger' ? a.age - b.age : b.age - a.age;
         });
       }
       setDisplayedPets(orderedPets);
     };
     applyFilters();
-  }, [pets, species, order]);
+  }, [pets, speciesFilter, orderFilter, favoritesFilter]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -127,15 +138,32 @@ const Home = () => {
 
   const clearFilters = () => {
     setDisplayedPets(pets);
-    setOrder('none');
-    setSpecies('none');
+    setOrderFilter('none');
+    setSpeciesFilter('all');
+    setFavoritesFilter('all');
 
     if (speciesRef.current) {
-      speciesRef.current.value = 'none';
+      speciesRef.current.value = 'all';
     }
+    
     if (orderRef.current) {
       orderRef.current.value = 'none';
     }
+  }
+
+  const toggleFavorite = (id: Pet['id']) => {
+    setPets(prevPets => {
+      const updatedPets = prevPets.map(pet => {
+        if (pet.id === id) {
+          return { ...pet, isFavorite: !pet.isFavorite };
+        }
+        return pet;
+      });
+      
+      utils.setLocalStorage('pets', updatedPets);
+      
+      return updatedPets;
+    });
   }
 
   return (
@@ -150,9 +178,11 @@ const Home = () => {
       <FiltersContainer
         clearFilters={clearFilters}
         orderRef={orderRef}
-        setOrder={setOrder}
+        setOrder={setOrderFilter}
         speciesRef={speciesRef}
-        setSpecies={setSpecies}
+        setSpecies={setSpeciesFilter}
+        favoriteRef={favoriteRef}
+        setFavoritesFilter={setFavoritesFilter}
       />
       {isLoading && <p>Loading...</p>}
       {!error && !isLoading && (
@@ -164,6 +194,7 @@ const Home = () => {
                 pet={pet}
                 setSelectedPet={setSelectedPet}
                 setShowModal={setShowAdoptionModal}
+                toggleFavorite={toggleFavorite}
               />
             ))}
           </main>
