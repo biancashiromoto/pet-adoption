@@ -8,8 +8,9 @@ If they are interested in adopting one of the available pets, they can fill out 
 
 The pets' pictures are fetched from [The Cat API](https://thecatapi.com/) and [The Dog API](https://www.thedogapi.com//), and their names from the [cat-names](https://www.npmjs.com/package/cat-names?activeTab=readme) library. Their age is a randomly generated number between 1 and 20 (so don't be surprised if you see some 12 year old kittens/puppies lol).
 
-The data is then stored in localStorage
-prevent unnecessary future API requests.
+It is also possible to update the fetched pets, and filter the fetched results by species and order them by age.
+
+The data is then stored in localStorage to prevent unnecessary future API requests.
 
 ## 📝 Installation
 
@@ -38,6 +39,8 @@ Este é um projeto desenvolvido com React que simula um site de adoção de pets
 Caso o usuário tenha interesse em adotar um dos pets disponíveis, é possível preencher um formulário de adoção com suas informações e enviar sua solicitação.
 
 As imagens dos pets são obtidas da [The Cat API](https://thecatapi.com/) e da [The Dog API](https://www.thedogapi.com//) e seus nomes vêm da biblioteca [cat-names](https://www.npmjs.com/package/cat-names?activeTab=readme). As idades são um número gerado aleatoriamente entre 1 e 20 (então não se surpreenda se vir alguns filhotes de 12 anos kkkk).
+
+Também é possível atualizar os pets buscados e filtrá-los por espécie e ordená-los por idade.
 
 Os dados são então armazenados no localStorage, para evitar requisições futuras desnecessárias.
 
