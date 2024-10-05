@@ -45,7 +45,7 @@ const AdoptionForm = () => {
             </form>
             {showModal && (
                 <>
-                    <Overlay setShowModal={setShowModal }/>
+                    <Overlay openModal={setShowModal }/>
                     <Modal
                         title="Thank you for submitting!"
                         text="We will contact you as soon as possible"
