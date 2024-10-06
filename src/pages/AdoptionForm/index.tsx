@@ -22,6 +22,10 @@ const AdoptionForm = () => {
         };
     }, [showModal]);
 
+    useEffect(() => {
+        document.title = "Form | Pet Adoption";
+      }, [])
+
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setShowModal(true);
