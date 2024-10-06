@@ -137,6 +137,16 @@ const Home = () => {
     };
   }, [showAdoptionModal, showUpdatePetsModal]);
 
+  useEffect(() => {
+    document.title = "Home | Pet Adoption";
+  }, []);
+
+  useEffect(() => {
+    if (showAdoptionModal) {
+      document.title = `${selectedPet[0].name} | Pet Adoption`;
+    }
+  }, [showAdoptionModal]);
+
   const clearFilters = () => {
     setDisplayedPets(pets);
     setOrderFilter('none');
