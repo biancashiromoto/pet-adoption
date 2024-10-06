@@ -5,6 +5,7 @@ import AdoptionForm from './pages/AdoptionForm';
 import { Button } from './components/Button';
 import Notice from './components/Notice';
 import { useEffect, useState } from 'react';
+import Header from './components/Header';
 
 const AppContent = () => {
   const navigate  = useNavigate();
@@ -17,7 +18,7 @@ const AppContent = () => {
   
   return (
     <>
-      <h1>Pet adoption</h1>
+      <Header />
       {showNotice && (
         <Notice setShowNotice={setShowNotice}>
           <p>
@@ -32,10 +33,11 @@ const AppContent = () => {
         <>
           <hr />
           <Button.Root
-            ariaLabel='Go back'
+            ariaLabel='Return to previous page'
+            className='button__return'
             onClick={() => navigate(-1)}
           >
-            <Button.Label label='Go back' />  
+            <Button.Label label='Previous page' />  
           </Button.Root>
         </>
       )}
