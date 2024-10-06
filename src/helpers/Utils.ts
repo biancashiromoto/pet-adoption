@@ -24,15 +24,19 @@ export class Utils {
    */
   public addPetsInfo(pets: Pet[]): Pet[] {
     pets.forEach((pet: Pet) => {
-      const randomIndex = Math.round((Math.random() * catNames.length));
-      const name = catNames[randomIndex];
+      const randomIndex = Math.round((Math.random() * catNames.length + 10));
+      let name = catNames[randomIndex];
+
+      if (!name) {
+        name = catNames[Math.floor(Math.random() * catNames.length)];
+      }
+
       const age = Math.round(Math.random() * 19) + 1;
 
       pet.name = name;
       pet.age = age;
       pet.species = pet.url.includes('cat') ? 'cat' : 'dog';
       pet.isFavorite = false;
-
     });
     return pets;
   }
@@ -42,5 +46,13 @@ export class Utils {
    */
   public removeGifs(pets: Pet[]): Pet[] {
     return pets.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
+  }
+
+  public shuffleArray(array: Pet[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 }
