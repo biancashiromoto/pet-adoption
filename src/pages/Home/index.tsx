@@ -186,6 +186,7 @@ const Home = () => {
       >
         <Button.Label label='Update pets' />
       </Button.Root>
+      <hr />
       <FiltersContainer
         clearFilters={clearFilters}
         orderRef={orderRef}
@@ -195,6 +196,7 @@ const Home = () => {
         favoriteRef={favoriteRef}
         setFavoritesFilter={setFavoritesFilter}
       />
+      <hr />
       {isLoading && <Loader />}
       {!error && !isLoading && (
         <>
