@@ -7,6 +7,7 @@ import { Utils } from '../../helpers/Utils';
 import { info } from '../../helpers/info';
 import Card from '../../components/Card';
 import FiltersContainer from '../../components/FiltersContainer';
+import Loader from '../../components/Loader';
 
 export interface Pet {
   age?: number;
@@ -184,7 +185,7 @@ const Home = () => {
         favoriteRef={favoriteRef}
         setFavoritesFilter={setFavoritesFilter}
       />
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <Loader />}
       {!error && !isLoading && (
         <>
           <main>
