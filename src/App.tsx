@@ -37,7 +37,7 @@ const AppContent = () => {
             className='button__return'
             onClick={() => navigate(-1)}
           >
-            <Button.Label label='Previous page' />  
+            <Button.Label label='Go back' />  
           </Button.Root>
         </>
       )}
