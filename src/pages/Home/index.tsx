@@ -146,7 +146,7 @@ const Home = () => {
 
   useEffect(() => {
     if (showAdoptionModal) {
-      document.title = `${selectedPet[0].name} | Pet Adoption`;
+      document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
     }
   }, [showAdoptionModal]);
 
@@ -222,9 +222,10 @@ const Home = () => {
             <>
               <Overlay openModal={setShowAdoptionModal} />
               <Modal
-                title={`Go ahead and fill form to adopt ${selectedPet[0].name}?`}
+                title={`Would you like to adopt ${selectedPet[0].name}?`}
+                text='You will be redirected to the adoption form'
               >
-                <img alt='Random picture of a cat' src={selectedPet[0].url} />
+                <img alt={`Random picture of a ${selectedPet[0].species}`} src={selectedPet[0].url} />
                 <div className='modal__buttons-container'>
                   <Button.Root
                     ariaLabel='Yes'
@@ -246,7 +247,7 @@ const Home = () => {
             <>
               <Overlay openModal={setShowUpdatePetsModal}/>
               <Modal
-                text='This action will fetch new pets and the current pets will be lost. Do you want to proceed?'
+                text='Updating pets will remove the current list and fetch new ones. Do you want to continue?'
                 title='Update pets?'
               >
                 <div className='modal__buttons-container'>
