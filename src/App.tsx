@@ -11,11 +11,15 @@ const AppContent = () => {
   return (
     <>
       <h1>Pet adoption</h1>
-      <p>
-        <strong>Attention: </strong>
-        This is a fake adoption site created to practice my development skills. The pets' names and pictures were retrieved from an API, and their ages are randomly generated.
-      </p>
-      <p>For more info, read <a href='https://github.com/biancashiromoto/pet-adoption/blob/main/README.md'>this file</a></p>
+      <section className='notice'>
+        <p>
+          <strong>Note: </strong>
+          This website is a demo created for learning and development purposes. The pet names and images are fetched from an external API, and their ages are randomly assigned. No real adoptions take place here.
+          <br />
+          For more details, see the <a href='https://github.com/biancashiromoto/pet-adoption/blob/main/README.md'>README</a> file.
+        </p>
+      </section>
+      <hr />
       {location.pathname !== '/' && (
         <Button.Root
           ariaLabel='Go back'
