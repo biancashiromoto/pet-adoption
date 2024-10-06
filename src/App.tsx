@@ -4,22 +4,30 @@ import Home from './pages/Home';
 import AdoptionForm from './pages/AdoptionForm';
 import { Button } from './components/Button';
 import Notice from './components/Notice';
+import { useEffect, useState } from 'react';
 
 const AppContent = () => {
   const navigate  = useNavigate();
   const location = useLocation();
+  const [showNotice, setShowNotice] = useState<boolean>(true);
+
+  useEffect(() => {
+    setShowNotice(true);
+  }, [location.pathname]);
   
   return (
     <>
       <h1>Pet adoption</h1>
-      <Notice>
-        <p>
-          <strong>Note: </strong>
-          This website is a demo created for learning and development purposes. The pet names and images are fetched from an external API, and their ages are randomly assigned. No real adoptions take place here.
-          <br />
-          For more details, see the <a href='https://github.com/biancashiromoto/pet-adoption/blob/main/README.md'>README</a> file.
-        </p>
-      </Notice>
+      {showNotice && (
+        <Notice setShowNotice={setShowNotice}>
+          <p>
+            <strong>Note: </strong>
+            This website is a demo created for learning and development purposes. The pet names and images are fetched from an external API, and their ages are randomly assigned. No real adoptions take place here.
+            <br />
+            For more details, see the <a href='https://github.com/biancashiromoto/pet-adoption/blob/main/README.md'>README</a> file.
+          </p>
+        </Notice>
+      )}
       {location.pathname !== '/' && (
         <>
           <hr />
