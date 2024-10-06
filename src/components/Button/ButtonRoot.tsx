@@ -4,7 +4,7 @@ interface ButtonRootProps {
   ariaLabel?: string;
   className?: string;
   children?: ReactNode;
-  onClick: () => void;
+  onClick: (arg0: any) => void;
 }
 
 const ButtonRoot = ({
