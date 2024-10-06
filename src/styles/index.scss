@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./__card.scss";
+@import "./__overlay.scss";
+@import "./__modal.scss";
+@import "./__filter-container.scss";
+@import "./__loader.scss";
+@import "./__form.scss";
+
+body {
+  text-align: center;
+}

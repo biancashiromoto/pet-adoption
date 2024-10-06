@@ -1,0 +1,35 @@
+.modal {
+  align-items: center;
+  background-color: white;
+  border: solid 1px black;
+  flex-direction: column;
+  padding: 10px;
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60dvw;
+  z-index: 100;
+
+  h2 {
+    margin: 0;
+  }
+
+  &__buttons-container {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  &-open {
+    overflow: hidden;
+  }
+
+  img {
+    width: 30dvw;
+    height: 30dvw;
+    object-fit: cover;
+  }
+}
