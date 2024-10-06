@@ -1,0 +1,51 @@
+.card {
+  cursor: pointer;
+  margin: 5px;
+  padding: 5px;
+
+  &:hover {
+    background-color: rgb(224, 224, 224);
+  }
+
+  img {
+    width: 40dvw;
+    height: 40dvw;
+    object-fit: cover;
+  }
+
+  button {
+    background: none;
+    border: none;
+  }
+
+  &__text {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    padding: 5px 15px;
+
+    & >* {
+      align-items: baseline;
+      display: flex;
+      margin: 0;
+    }
+
+    h3 {
+      grid-column: 1;
+      grid-row: 1;
+      font-size: 1rem;
+    }
+
+    p {
+      grid-column: 1;
+      grid-row: 2;
+      font-size: 0.75rem;
+    }
+
+    button {
+      align-self: flex-end;
+      font-size: 1.125rem;
+      justify-self: end;
+    }
+  }
+}
