@@ -9,6 +9,12 @@
 @import "./__loader.scss";
 @import "./__form.scss";
 @import "./__notice.scss";
+@import "./__header.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+}
 
 body {
   text-align: center;
