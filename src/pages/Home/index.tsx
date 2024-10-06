@@ -160,6 +160,10 @@ const Home = () => {
     if (orderRef.current) {
       orderRef.current.value = 'none';
     }
+
+    if (favoriteRef.current) {
+      favoriteRef.current.value = 'all';
+    }
   }
 
   const toggleFavorite = (id: Pet['id']) => {
