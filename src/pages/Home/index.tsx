@@ -60,6 +60,8 @@ const Home = () => {
       const filteredDogsData = utils.removeGifs(dogsData)
       const allPets = filteredCatsData.concat(filteredDogsData);
       utils.addPetsInfo(allPets);
+      utils.shuffleArray(allPets);
+
       setPets(allPets);
       setDisplayedPets(allPets);
       utils.setLocalStorage('pets', allPets);
@@ -75,8 +77,33 @@ const Home = () => {
     }
   }
 
+  const applyFilters = () => {
+    let filteredPets = pets;
+
+    if (speciesFilter !== 'all') {
+      filteredPets = pets.filter((pet: Pet) => pet.species === speciesFilter);
+    }
+
+    if (favoritesFilter !== 'all') {
+      if (favoritesFilter === 'favorites') {
+        filteredPets = filteredPets.filter((pet: Pet) => pet.isFavorite);
+      } else {
+        filteredPets = filteredPets.filter((pet: Pet) => !pet.isFavorite);
+      }
+    }
+    
+    let orderedPets = filteredPets;
+    if (orderFilter !== 'none') {
+      orderedPets = [...filteredPets].sort((a: Pet, b: Pet) => {
+        if (!a.age || !b.age) return 0;
+        return orderFilter === 'younger' ? a.age - b.age : b.age - a.age;
+      });
+    }
+    setDisplayedPets(orderedPets);
+  };
+
   useEffect(() => {
-    const storaged = utils.getLocalStorage('pets');     
+    const storaged = utils.getLocalStorage('pets');
     if (!storaged || storaged.length === 0) {
       fetchPets();
     } else {
@@ -84,37 +111,13 @@ const Home = () => {
       setDisplayedPets(storaged);
     }
   }, []);
-
+  
   useEffect(() => {
     setShowUpdatePetsModal(false);
     setShowAdoptionModal(false);
   }, []);
 
   useEffect(() => {
-    const applyFilters = () => {
-      let filteredPets = pets;
-  
-      if (speciesFilter !== 'all') {
-        filteredPets = pets.filter((pet: Pet) => pet.species === speciesFilter);
-      }
-
-      if (favoritesFilter !== 'all') {
-        if (favoritesFilter === 'favorites') {
-          filteredPets = filteredPets.filter((pet: Pet) => pet.isFavorite);
-        } else {
-          filteredPets = filteredPets.filter((pet: Pet) => !pet.isFavorite);
-        }
-      }
-      
-      let orderedPets = filteredPets;
-      if (orderFilter !== 'none') {
-        orderedPets = [...filteredPets].sort((a: Pet, b: Pet) => {
-          if (!a.age || !b.age) return 0;
-          return orderFilter === 'younger' ? a.age - b.age : b.age - a.age;
-        });
-      }
-      setDisplayedPets(orderedPets);
-    };
     applyFilters();
   }, [pets, speciesFilter, orderFilter, favoritesFilter]);
 
