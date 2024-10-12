@@ -39,6 +39,16 @@ const Home = () => {
   const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
+  const resetFavorites = () => {
+    const updatedPets = pets.map((pet) => ({
+      ...pet,
+      isFavorite: false
+    }));
+    setPets(updatedPets);
+    setDisplayedPets(updatedPets);
+    utils.setLocalStorage('pets', updatedPets);
+  };
+
   const fetchPets = async () => {
     setIsLoading(true);
     try {
@@ -121,6 +131,8 @@ const Home = () => {
     applyFilters();
   }, [pets, speciesFilter, orderFilter, favoritesFilter]);
 
+  useEffect(() => console.log(pets), [pets]);
+
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
@@ -202,6 +214,7 @@ const Home = () => {
         setSpecies={setSpeciesFilter}
         favoriteRef={favoriteRef}
         setFavoritesFilter={setFavoritesFilter}
+        resetFavorites={resetFavorites}
       />
       <hr />
       {isLoading && <Loader />}
