@@ -10,6 +10,7 @@ interface FiltersContainerProps {
   clearFilters: () => void;
   favoriteRef: RefObject<HTMLSelectElement>;
   setFavoritesFilter: Dispatch<SetStateAction<'all' | 'favorites' | 'non favorites'>>;
+  resetFavorites: () => void;
 }
 
 const selectFilter = (e: ChangeEvent<HTMLSelectElement>, callback: Dispatch<SetStateAction<any>>) => {
@@ -24,7 +25,8 @@ const FiltersContainer = ({
   setOrder,
   clearFilters,
   favoriteRef,
-  setFavoritesFilter
+  setFavoritesFilter,
+  resetFavorites
 }: FiltersContainerProps) => {
   return (
     <article className='filter-container'>
@@ -54,6 +56,12 @@ const FiltersContainer = ({
           onClick={() => clearFilters()}
         >
           <Button.Label label='Clear filter' />
+        </Button.Root>
+        <Button.Root
+          ariaLabel='Reset favorites'
+          onClick={() => resetFavorites()}
+        >
+          <Button.Label label='Reset favorites' />
         </Button.Root>
     </article>
   )
