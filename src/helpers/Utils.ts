@@ -1,5 +1,5 @@
-import { Pet } from "../pages/Home";
 import { catNames } from 'cat-names';
+import { Pet } from '../types/Pet';
 
 
 export class Utils {

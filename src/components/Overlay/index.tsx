@@ -1,8 +1,4 @@
-import { Dispatch, SetStateAction } from "react"
-
-interface OverlayProps {
-  openModal: Dispatch<SetStateAction<boolean>>;
-}
+import { OverlayProps } from "./index.types"
 
 const Overlay = ({ openModal }: OverlayProps) => {
   return (

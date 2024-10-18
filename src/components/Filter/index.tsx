@@ -1,11 +1,5 @@
 import { forwardRef } from 'react';
-
-interface FilterProps {
-  id: string;
-  label: string;
-  items: string[];
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-}
+import { FilterProps } from './index.types';
 
 const Filter = forwardRef<HTMLSelectElement, FilterProps>(({ id, label, items, onChange }, ref) => (
   <div className='filter-container__filter'>
