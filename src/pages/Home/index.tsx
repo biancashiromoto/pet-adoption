@@ -133,8 +133,6 @@ const Home = () => {
     applyFilters();
   }, [pets, speciesFilter, orderFilter, favoritesFilter]);
 
-  useEffect(() => console.log(pets), [pets]);
-
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
