@@ -3,13 +3,14 @@ import Modal from '../../components/Modal';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import Overlay from '../../components/Overlay';
-import { Utils } from '../../helpers/Utils';
-import { info } from '../../helpers/info';
+import { Utils } from '../../services/Utils';
 import Card from '../../components/Card';
 import FiltersContainer from '../../components/FiltersContainer';
 import Loader from '../../components/Loader';
 import { Pet } from '../../types/Pet';
 import { Context } from '../../context';
+import { useQuery } from '@tanstack/react-query';
+import { fetchCats, fetchDogs } from '../../services/fetch';
 
 const utils = new Utils();
 
@@ -36,8 +37,6 @@ const Home = () => {
     setOrderFilter,
     favoritesFilter,
     setFavoritesFilter,
-    error,
-    setError
   } = useContext(Context);
   const navigate = useNavigate();
 
@@ -51,89 +50,30 @@ const Home = () => {
     utils.setLocalStorage('pets', updatedPets);
   };
 
-  const fetchPets = async () => {
-    setIsLoading(true);
-    try {
-      const catsResponse = await fetch(info.CAT_API_URL, {
-        headers: { 'x-api-key': info.CAT_API_KEY }
-      });
-      const dogsResponse = await fetch(info.DOG_API_URL, {
-        headers: { 'x-api-key': info.DOG_API_KEY }
-      });
-      
-      if (!catsResponse.ok || !dogsResponse.ok) {
-        throw new Error('Failed to fetch');
-      }
-      
-      const catsData = await catsResponse.json();
-      const dogsData = await dogsResponse.json();
-      
-      const filteredCatsData = utils.removeGifs(catsData);
-      const filteredDogsData = utils.removeGifs(dogsData)
-      const allPets = filteredCatsData.concat(filteredDogsData);
-      utils.addPetsInfo(allPets);
-      utils.shuffleArray(allPets);
-
-      setPets(allPets);
-      setDisplayedPets(allPets);
-      utils.setLocalStorage('pets', allPets);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('An unknown error occurred');
-      }
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  const applyFilters = () => {
+  const applyFilters = (pets: Pet[]) => {
     let filteredPets = pets;
-
-    if (speciesFilter !== 'all') {
-      filteredPets = pets.filter((pet: Pet) => pet.species === speciesFilter);
-    }
-
-    if (favoritesFilter !== 'all') {
-      if (favoritesFilter === 'favorites') {
-        filteredPets = filteredPets.filter((pet: Pet) => pet.isFavorite);
-      } else {
-        filteredPets = filteredPets.filter((pet: Pet) => !pet.isFavorite);
-      }
-    }
     
     let orderedPets = filteredPets;
     if (orderFilter !== 'none') {
-      orderedPets = [...filteredPets].sort((a: Pet, b: Pet) => {
+      orderedPets = filteredPets && [...filteredPets].sort((a: Pet, b: Pet) => {
         if (!a.age || !b.age) return 0;
         return orderFilter === 'younger' ? a.age - b.age : b.age - a.age;
       });
     }
     setDisplayedPets(orderedPets);
   };
-
-  useEffect(() => {
-    const storaged = utils.getLocalStorage('pets');
-    if (!storaged || storaged.length === 0) {
-      fetchPets();
-    } else {
-      setPets(storaged);
-      setDisplayedPets(storaged);
-    }
-  }, []);
   
   useEffect(() => {
     setShowUpdatePetsModal(false);
     setShowAdoptionModal(false);
+    document.title = "Home | Pet Adoption";
   }, []);
 
   useEffect(() => {
-    applyFilters();
-  }, [pets, speciesFilter, orderFilter, favoritesFilter]);
+    if (showAdoptionModal) {
+      document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
+    }
 
-  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         if (showAdoptionModal) {
@@ -152,25 +92,26 @@ const Home = () => {
     };
   }, [showAdoptionModal, showUpdatePetsModal]);
 
-  useEffect(() => {
-    document.title = "Home | Pet Adoption";
-  }, []);
+  const { data: cats, isLoading: isLoadingCats, error: fetchErrorCats } = useQuery({
+    queryKey: ['fetchCats'],
+    queryFn: fetchCats
+  });
 
-  useEffect(() => {
-    if (showAdoptionModal) {
-      document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
-    }
-  }, [showAdoptionModal]);
+  const { data: dogs, isLoading: isLoadingDogs, error: fetchErrorDogs } = useQuery({
+    queryKey: ['fetchDogs'],
+    queryFn: fetchDogs,
+    enabled: speciesFilter === 'dog'
+  });
+  
+  if (isLoadingCats || isLoadingDogs) {
+    setIsLoading(true);
+  } else {
+    setIsLoading(false);
+  }
 
   const clearFilters = () => {
-    setDisplayedPets(pets);
     setOrderFilter('none');
-    setSpeciesFilter('all');
     setFavoritesFilter('all');
-
-    if (speciesRef.current) {
-      speciesRef.current.value = 'all';
-    }
     
     if (orderRef.current) {
       orderRef.current.value = 'none';
@@ -181,30 +122,51 @@ const Home = () => {
     }
   }
 
-  const toggleFavorite = (id: Pet['id']) => {
-    setPets((prevPets: Pet[]) => {
-      const updatedPets = prevPets.map(pet => {
-        if (pet.id === id) {
-          return { ...pet, isFavorite: !pet.isFavorite };
-        }
-        return pet;
-      });
-      
-      utils.setLocalStorage('pets', updatedPets);
-      
-      return updatedPets;
-    });
-  }
+  useEffect(() => {
+    applyFilters(displayedPets);
+  }, [favoritesFilter, orderFilter]);
+
+  useEffect(() => {
+    if (speciesFilter === 'cat') {
+      setDisplayedPets(cats || []);
+    } else {
+      setDisplayedPets(dogs || []);
+    }
+  }, [dogs, cats, speciesFilter]);
+
+  useEffect(() => {
+    clearFilters();
+  }, [speciesFilter])
 
   return (
     <>
-      {error && <p>Error: {error}</p>}
-      <Button.Root
-        ariaLabel='Update pets'
-        onClick={() => setShowUpdatePetsModal(true)}
-      >
-        <Button.Label label='Update pets' />
-      </Button.Root>
+      {speciesFilter === 'cat' ? (
+        fetchErrorCats && <p>Error: {fetchErrorCats.message}</p>
+      ) : (
+        fetchErrorDogs && <p>Error: {fetchErrorDogs.message}</p>
+      )}
+      <section>
+        <label htmlFor='cats'>
+          Cats
+          <input
+            checked={speciesFilter === 'cat'}
+            id="cats"
+            type='radio'
+            name='species'
+            onChange={() => setSpeciesFilter('cat')}
+          />
+        </label>
+        <label htmlFor='dogs'>
+          Dogs
+          <input
+            checked={speciesFilter === 'dog'}
+            id="dogs"
+            type='radio'
+            name='species'
+            onChange={() => setSpeciesFilter('dog')}
+          />
+        </label>
+      </section>
       <hr />
       <FiltersContainer
         clearFilters={clearFilters}
@@ -215,16 +177,15 @@ const Home = () => {
       />
       <hr />
       {isLoading && <Loader />}
-      {!error && !isLoading && (
+      {!fetchErrorCats && !fetchErrorDogs && !isLoading && (
         <>
           <main>
-            {displayedPets && displayedPets.map((pet: Pet) => (
+            {displayedPets.map((pet: Pet) => (
               <Card
                 key={pet.id}
                 pet={pet}
                 setSelectedPet={setSelectedPet}
                 setShowModal={setShowAdoptionModal}
-                toggleFavorite={toggleFavorite}
               />
             ))}
           </main>
@@ -246,33 +207,6 @@ const Home = () => {
                   <Button.Root
                     ariaLabel='No'
                     onClick={() => setShowAdoptionModal(false)}
-                  >
-                    <Button.Label label='No' />
-                  </Button.Root>
-                </div>
-              </Modal>
-            </>
-          )}
-          {showUpdatePetsModal && (
-            <>
-              <Overlay openModal={setShowUpdatePetsModal}/>
-              <Modal
-                text='Updating pets will remove the current list and fetch new ones. Do you want to continue?'
-                title='Update pets?'
-              >
-                <div className='modal__buttons-container'>
-                  <Button.Root
-                    ariaLabel='Yes'
-                    onClick={() => {
-                      fetchPets();
-                      setShowUpdatePetsModal(false);
-                    }}
-                  >
-                    <Button.Label label='Yes' />
-                  </Button.Root>
-                  <Button.Root
-                    ariaLabel='No'
-                    onClick={() => setShowUpdatePetsModal(false)}
                   >
                     <Button.Label label='No' />
                   </Button.Root>

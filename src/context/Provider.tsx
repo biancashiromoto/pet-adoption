@@ -11,11 +11,11 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [speciesFilter, setSpeciesFilter] = useState<SpeciesFilter>('all');
+  const [speciesFilter, setSpeciesFilter] = useState<SpeciesFilter>('cat');
   const [orderFilter, setOrderFilter] = useState<OrderByAgeFilter>('none');
   const [favoritesFilter, setFavoritesFilter] = useState<FavoritesFilter>('all');
   const [error, setError] = useState<string>('');
-  const [species, setSpecies] = useState<SpeciesFilter>('all');
+  const [species, setSpecies] = useState<SpeciesFilter>('cat');
 
   const value: ContextProps = {
     pets,
