@@ -94,12 +94,30 @@ const Home = () => {
 
   const { data: cats, isLoading: isLoadingCats, error: fetchErrorCats } = useQuery({
     queryKey: ['fetchCats'],
-    queryFn: fetchCats
+    queryFn: async () => {
+      const localCats = utils.getLocalStorage('cats');
+      if (localCats) {
+        return localCats;
+      }
+      const fetchedCats = await fetchCats();
+      utils.setLocalStorage('cats', fetchedCats); 
+      return fetchedCats;
+    },
+    staleTime: Infinity,
   });
 
   const { data: dogs, isLoading: isLoadingDogs, error: fetchErrorDogs } = useQuery({
     queryKey: ['fetchDogs'],
-    queryFn: fetchDogs,
+    queryFn: async () => {
+      const localDogs = utils.getLocalStorage('dogs');
+      if (localDogs) {
+        return localDogs;
+      }
+
+      const fetchedDogs = await fetchDogs();
+      utils.setLocalStorage('dogs', fetchedDogs);
+      return fetchedDogs;
+    },
     enabled: speciesFilter === 'dog'
   });
   
@@ -136,7 +154,26 @@ const Home = () => {
 
   useEffect(() => {
     clearFilters();
-  }, [speciesFilter])
+  }, [speciesFilter]);
+
+  const toggleFavorite = (id: Pet['id']) => {
+    setDisplayedPets((prevPets: Pet[]) => {
+      const updatedPets = prevPets.map(pet => {
+        if (pet.id === id) {
+          return { ...pet, isFavorite: !pet.isFavorite };
+        }
+        return pet;
+      });
+      
+      if (speciesFilter === 'cat') {
+        utils.setLocalStorage('cats', updatedPets);
+      } else {
+        utils.setLocalStorage('dogs', updatedPets);
+      }
+      
+      return updatedPets;
+    });
+  }
 
   return (
     <>
@@ -186,6 +223,7 @@ const Home = () => {
                 pet={pet}
                 setSelectedPet={setSelectedPet}
                 setShowModal={setShowAdoptionModal}
+                toggleFavorite={toggleFavorite}
               />
             ))}
           </main>
