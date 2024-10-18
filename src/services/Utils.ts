@@ -45,7 +45,7 @@ export class Utils {
    * removeGifs
    */
   public removeGifs(pets: Pet[]): Pet[] {
-    return pets.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
+    return pets.filter((pet: Pet) => !pet.url.endsWith('gif'));
   }
 
   public shuffleArray(array: Pet[]) {
