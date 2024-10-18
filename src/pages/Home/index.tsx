@@ -1,4 +1,4 @@
-import { createRef, useEffect, useState } from 'react';
+import { createRef, useContext, useEffect } from 'react';
 import Modal from '../../components/Modal';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
@@ -8,39 +8,41 @@ import { info } from '../../helpers/info';
 import Card from '../../components/Card';
 import FiltersContainer from '../../components/FiltersContainer';
 import Loader from '../../components/Loader';
-
-export interface Pet {
-  age?: number;
-  id: string;
-  isFavorite: boolean;
-  height: number;
-  name?: string;
-  species?: 'cat' | 'dog';
-  url: string;
-  width: number;
-}
+import { Pet } from '../../types/Pet';
+import { Context } from '../../context';
 
 const utils = new Utils();
 
 const Home = () => {
-  const [pets, setPets] = useState<Pet[]>([]);
-  const [displayedPets, setDisplayedPets] = useState<Pet[]>(pets);
-  const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
-  const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
-  const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [speciesFilter, setSpeciesFilter] = useState<'all' | 'dog' | 'cat'>('all');
-  const [orderFilter, setOrderFilter] = useState<'none' | 'older' | 'younger'>('none');
-  const [favoritesFilter, setFavoritesFilter] = useState<'all' | 'favorites' | 'non favorites'>('all');
   const speciesRef = createRef<HTMLSelectElement>();
   const orderRef = createRef<HTMLSelectElement>();
   const favoriteRef = createRef<HTMLSelectElement>();
-
-  const [error, setError] = useState<string>('');
+  const {
+    pets,
+    setPets,
+    displayedPets,
+    setDisplayedPets,
+    selectedPet,
+    setSelectedPet,
+    showAdoptionModal,
+    setShowAdoptionModal,
+    showUpdatePetsModal,
+    setShowUpdatePetsModal,
+    isLoading,
+    setIsLoading,
+    speciesFilter,
+    setSpeciesFilter,
+    orderFilter,
+    setOrderFilter,
+    favoritesFilter,
+    setFavoritesFilter,
+    error,
+    setError
+  } = useContext(Context);
   const navigate = useNavigate();
 
   const resetFavorites = () => {
-    const updatedPets = pets.map((pet) => ({
+    const updatedPets = pets.map((pet: Pet) => ({
       ...pet,
       isFavorite: false
     }));
@@ -182,7 +184,7 @@ const Home = () => {
   }
 
   const toggleFavorite = (id: Pet['id']) => {
-    setPets(prevPets => {
+    setPets((prevPets: Pet[]) => {
       const updatedPets = prevPets.map(pet => {
         if (pet.id === id) {
           return { ...pet, isFavorite: !pet.isFavorite };
@@ -209,11 +211,8 @@ const Home = () => {
       <FiltersContainer
         clearFilters={clearFilters}
         orderRef={orderRef}
-        setOrder={setOrderFilter}
         speciesRef={speciesRef}
-        setSpecies={setSpeciesFilter}
         favoriteRef={favoriteRef}
-        setFavoritesFilter={setFavoritesFilter}
         resetFavorites={resetFavorites}
       />
       <hr />
@@ -221,7 +220,7 @@ const Home = () => {
       {!error && !isLoading && (
         <>
           <main>
-            {displayedPets && displayedPets.map(pet => (
+            {displayedPets && displayedPets.map((pet: Pet) => (
               <Card
                 key={pet.id}
                 pet={pet}
