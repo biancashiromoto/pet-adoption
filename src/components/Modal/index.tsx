@@ -1,11 +1,4 @@
-import { ReactNode } from 'react'
-
-interface ModalProps {
-  children: ReactNode;
-  className?: string;
-  title?: string;
-  text?: string;
-}
+import { ModalProps } from './index.types'
 
 const Modal = ({
   children,
