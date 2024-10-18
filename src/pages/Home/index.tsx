@@ -41,14 +41,22 @@ const Home = () => {
   const navigate = useNavigate();
 
   const resetFavorites = () => {
-    const updatedPets = pets.map((pet: Pet) => ({
-      ...pet,
-      isFavorite: false
-    }));
-    setPets(updatedPets);
-    setDisplayedPets(updatedPets);
-    utils.setLocalStorage('pets', updatedPets);
+    setDisplayedPets((prevPets: Pet[]) => {
+      const updatedPets = prevPets.map((pet: Pet) => ({
+        ...pet,
+        isFavorite: false
+      }));
+  
+      if (speciesFilter === 'cat') {
+        utils.setLocalStorage('cats', updatedPets);
+      } else {
+        utils.setLocalStorage('dogs', updatedPets);
+      }
+  
+      return updatedPets;
+    });
   };
+  
 
   const applyFilters = (pets: Pet[]) => {
     let filteredPets = pets;
