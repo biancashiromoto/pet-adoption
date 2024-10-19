@@ -19,8 +19,6 @@ const Home = () => {
   const orderRef = createRef<HTMLSelectElement>();
   const favoriteRef = createRef<HTMLSelectElement>();
   const {
-    pets,
-    setPets,
     displayedPets,
     setDisplayedPets,
     selectedPet,
@@ -32,7 +30,6 @@ const Home = () => {
     isLoading,
     setIsLoading,
     speciesFilter,
-    setSpeciesFilter,
     orderFilter,
     setOrderFilter,
     favoritesFilter,
@@ -195,29 +192,6 @@ const Home = () => {
       ) : (
         fetchErrorDogs && <p>Error: {fetchErrorDogs.message}</p>
       )}
-      <section>
-        <label htmlFor='cats'>
-          Cats
-          <input
-            checked={speciesFilter === 'cat'}
-            id="cats"
-            type='radio'
-            name='species'
-            onChange={() => setSpeciesFilter('cat')}
-          />
-        </label>
-        <label htmlFor='dogs'>
-          Dogs
-          <input
-            checked={speciesFilter === 'dog'}
-            id="dogs"
-            type='radio'
-            name='species'
-            onChange={() => setSpeciesFilter('dog')}
-          />
-        </label>
-      </section>
-      <hr />
       <FiltersContainer
         clearFilters={clearFilters}
         orderRef={orderRef}

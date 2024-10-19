@@ -18,35 +18,63 @@ const FiltersContainer = ({
   const {
     setFavoritesFilter,
     setOrderFilter,
+    speciesFilter,
+    setSpeciesFilter
   } = useContext(Context);
   return (
-    <article className='filter-container'>
-      <Filter
-        id='order'
-        items={['none', 'younger', 'older']}
-        label='Order: '
-        ref={orderRef}
-        onChange={(e) => selectFilter(e, setOrderFilter)}
-      />
-      <Filter
-        id='favorites'
-        items={['all', 'favorites', 'non favorites']}
-        label='Favorite status: '
-        ref={favoriteRef}
-        onChange={(e) => selectFilter(e, setFavoritesFilter)}
-      />
-      <Button.Root
-        ariaLabel='Clear filter'
-        onClick={() => clearFilters()}
-      >
-        <Button.Label label='Clear filter' />
-      </Button.Root>
-      <Button.Root
-        ariaLabel='Reset favorites'
-        onClick={() => resetFavorites()}
-      >
-        <Button.Label label='Reset favorites' />
-      </Button.Root>
+    <article className='filters'>
+      <section className='filters__species'>
+        <label htmlFor='cats'>
+          <input
+            checked={speciesFilter === 'cat'}
+            id="cats"
+            type='radio'
+            name='species'
+            onChange={() => setSpeciesFilter('cat')}
+          />
+          Cats
+        </label>
+        <label htmlFor='dogs'>
+          <input
+            checked={speciesFilter === 'dog'}
+            id="dogs"
+            type='radio'
+            name='species'
+            onChange={() => setSpeciesFilter('dog')}
+          />
+          Dogs
+        </label>
+      </section>
+      <section className='filters__selects'>
+        <Filter
+          id='order'
+          items={['none', 'younger', 'older']}
+          label='Order: '
+          ref={orderRef}
+          onChange={(e) => selectFilter(e, setOrderFilter)}
+        />
+        <Filter
+          id='favorites'
+          items={['all', 'favorites', 'non favorites']}
+          label='Favorite status: '
+          ref={favoriteRef}
+          onChange={(e) => selectFilter(e, setFavoritesFilter)}
+        />
+      </section>
+      <section className='filters__buttons'>
+        <Button.Root
+          ariaLabel='Clear filters'
+          onClick={() => clearFilters()}
+        >
+          <Button.Label label='Clear filters' />
+        </Button.Root>
+        <Button.Root
+          ariaLabel='Reset favorites'
+          onClick={() => resetFavorites()}
+        >
+          <Button.Label label='Reset favorites' />
+        </Button.Root>
+      </section>
     </article>
   )
 }
