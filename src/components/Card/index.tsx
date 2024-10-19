@@ -6,7 +6,7 @@ interface CardProps {
   pet: Pet;
   setSelectedPet: Dispatch<SetStateAction<Pet[]>>;
   setShowModal: Dispatch<SetStateAction<boolean>>;
-  toggleFavorite: (id: Pet['id']) => void;
+  toggleFavorite?: (id: Pet['id']) => void;
 }
 
 const Card = ({ pet, setSelectedPet, setShowModal, toggleFavorite }: CardProps) => {
@@ -24,7 +24,7 @@ const Card = ({ pet, setSelectedPet, setShowModal, toggleFavorite }: CardProps) 
         <p>Age: {pet.age}</p>
         <button type="button" onClick={(e) => {
           e.stopPropagation();
-          toggleFavorite(pet.id);
+          toggleFavorite && toggleFavorite(pet.id);
         }}>
           {!pet.isFavorite ? <FaRegHeart /> :<FaHeart />}
         </button>

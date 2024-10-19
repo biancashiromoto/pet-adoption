@@ -1,22 +1,17 @@
-import { createRef, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import Modal from '../../components/Modal';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
 import Overlay from '../../components/Overlay';
-import { Utils } from '../../services/Utils';
-import { info } from '../../services/info';
 import Card from '../../components/Card';
 import FiltersContainer from '../../components/FiltersContainer';
 import Loader from '../../components/Loader';
 import { Pet } from '../../types/Pet';
 import { Context } from '../../context';
-
-const utils = new Utils();
+import { fetchCats, fetchDogs } from '../../services/fetch';
+import { useQuery } from '@tanstack/react-query';
 
 const Home = () => {
-  const speciesRef = createRef<HTMLSelectElement>();
-  const orderRef = createRef<HTMLSelectElement>();
-  const favoriteRef = createRef<HTMLSelectElement>();
   const {
     pets,
     setPets,
@@ -28,110 +23,14 @@ const Home = () => {
     setShowAdoptionModal,
     showUpdatePetsModal,
     setShowUpdatePetsModal,
-    isLoading,
-    setIsLoading,
-    speciesFilter,
-    setSpeciesFilter,
-    orderFilter,
-    setOrderFilter,
-    favoritesFilter,
-    setFavoritesFilter,
-    error,
-    setError
+    species
   } = useContext(Context);
   const navigate = useNavigate();
-
-  const resetFavorites = () => {
-    const updatedPets = pets.map((pet: Pet) => ({
-      ...pet,
-      isFavorite: false
-    }));
-    setPets(updatedPets);
-    setDisplayedPets(updatedPets);
-    utils.setLocalStorage('pets', updatedPets);
-  };
-
-  const fetchPets = async () => {
-    setIsLoading(true);
-    try {
-      const catsResponse = await fetch(info.CAT_API_URL, {
-        headers: { 'x-api-key': info.CAT_API_KEY }
-      });
-      const dogsResponse = await fetch(info.DOG_API_URL, {
-        headers: { 'x-api-key': info.DOG_API_KEY }
-      });
-      
-      if (!catsResponse.ok || !dogsResponse.ok) {
-        throw new Error('Failed to fetch');
-      }
-      
-      const catsData = await catsResponse.json();
-      const dogsData = await dogsResponse.json();
-      
-      const filteredCatsData = utils.removeGifs(catsData);
-      const filteredDogsData = utils.removeGifs(dogsData)
-      const allPets = filteredCatsData.concat(filteredDogsData);
-      utils.addPetsInfo(allPets);
-      utils.shuffleArray(allPets);
-
-      setPets(allPets);
-      setDisplayedPets(allPets);
-      utils.setLocalStorage('pets', allPets);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError('An unknown error occurred');
-      }
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  const applyFilters = () => {
-    let filteredPets = pets;
-
-    if (speciesFilter !== 'all') {
-      filteredPets = pets.filter((pet: Pet) => pet.species === speciesFilter);
-    }
-
-    if (favoritesFilter !== 'all') {
-      if (favoritesFilter === 'favorites') {
-        filteredPets = filteredPets.filter((pet: Pet) => pet.isFavorite);
-      } else {
-        filteredPets = filteredPets.filter((pet: Pet) => !pet.isFavorite);
-      }
-    }
-    
-    let orderedPets = filteredPets;
-    if (orderFilter !== 'none') {
-      orderedPets = [...filteredPets].sort((a: Pet, b: Pet) => {
-        if (!a.age || !b.age) return 0;
-        return orderFilter === 'younger' ? a.age - b.age : b.age - a.age;
-      });
-    }
-    setDisplayedPets(orderedPets);
-  };
-
-  useEffect(() => {
-    const storaged = utils.getLocalStorage('pets');
-    if (!storaged || storaged.length === 0) {
-      fetchPets();
-    } else {
-      setPets(storaged);
-      setDisplayedPets(storaged);
-    }
-  }, []);
   
   useEffect(() => {
     setShowUpdatePetsModal(false);
     setShowAdoptionModal(false);
   }, []);
-
-  useEffect(() => {
-    applyFilters();
-  }, [pets, speciesFilter, orderFilter, favoritesFilter]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -147,6 +46,10 @@ const Home = () => {
 
     document.addEventListener('keydown', handleKeyDown);
 
+    if (showAdoptionModal) {
+      document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
+    }
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
@@ -156,75 +59,73 @@ const Home = () => {
     document.title = "Home | Pet Adoption";
   }, []);
 
+  const {
+    data: cats,
+    isLoading: isLoadingCats,
+    isFetching: isFetchingCats,
+    error: fetchErrorCats,
+    refetch: refetchCats
+  } = useQuery({
+    queryKey: ['fetchCats'],
+    queryFn: async () => {
+      const fetchedCats = await fetchCats();
+      setPets({ ...pets, cats: fetchedCats });
+      setDisplayedPets({ ...pets, cats: fetchedCats });
+      return fetchedCats;     
+    },
+    staleTime: Infinity,
+  });
+
+  const {
+    data: dogs,
+    isLoading: isLoadingDogs,
+    isFetching: isFetchingDogs,
+    error: fetchErrorDogs,
+    refetch: refetchDogs
+  } = useQuery({
+    queryKey: ['fetchDogs'],
+    queryFn: async () => {
+      const fetchedDogs = await fetchDogs();
+      setPets({ ...pets, dogs: fetchedDogs });
+      setDisplayedPets({ ...pets, dogs: fetchedDogs });
+      return fetchedDogs;     
+    },
+    staleTime: Infinity,
+  });
+
   useEffect(() => {
-    if (showAdoptionModal) {
-      document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
+    if (cats && dogs) {
+      setPets({ cats, dogs });
+      setDisplayedPets({ cats, dogs });
     }
-  }, [showAdoptionModal]);
-
-  const clearFilters = () => {
-    setDisplayedPets(pets);
-    setOrderFilter('none');
-    setSpeciesFilter('all');
-    setFavoritesFilter('all');
-
-    if (speciesRef.current) {
-      speciesRef.current.value = 'all';
-    }
-    
-    if (orderRef.current) {
-      orderRef.current.value = 'none';
-    }
-
-    if (favoriteRef.current) {
-      favoriteRef.current.value = 'all';
-    }
-  }
-
-  const toggleFavorite = (id: Pet['id']) => {
-    setPets((prevPets: Pet[]) => {
-      const updatedPets = prevPets.map(pet => {
-        if (pet.id === id) {
-          return { ...pet, isFavorite: !pet.isFavorite };
-        }
-        return pet;
-      });
-      
-      utils.setLocalStorage('pets', updatedPets);
-      
-      return updatedPets;
-    });
-  }
+  }, [cats, dogs]);
 
   return (
     <>
-      {error && <p>Error: {error}</p>}
+      {fetchErrorDogs && fetchErrorCats && <p>Error: {species === 'cats' ? fetchErrorCats.message : fetchErrorDogs.message}</p>}
       <Button.Root
         ariaLabel='Update pets'
-        onClick={() => setShowUpdatePetsModal(true)}
+        onClick={() => {
+          setShowUpdatePetsModal(true);
+          refetchCats();
+          refetchDogs();
+        }}
       >
         <Button.Label label='Update pets' />
       </Button.Root>
       <hr />
-      <FiltersContainer
-        clearFilters={clearFilters}
-        orderRef={orderRef}
-        speciesRef={speciesRef}
-        favoriteRef={favoriteRef}
-        resetFavorites={resetFavorites}
-      />
+      <FiltersContainer />
       <hr />
-      {isLoading && <Loader />}
-      {!error && !isLoading && (
+      {(isLoadingCats || isFetchingCats) || (isLoadingDogs || isFetchingDogs) && <Loader />}
+      {!fetchErrorDogs && !fetchErrorCats && !isLoadingCats && !isLoadingDogs && (
         <>
           <main>
-            {displayedPets && displayedPets.map((pet: Pet) => (
+            {displayedPets && displayedPets[species].map((pet: Pet) => (
               <Card
                 key={pet.id}
                 pet={pet}
                 setSelectedPet={setSelectedPet}
                 setShowModal={setShowAdoptionModal}
-                toggleFavorite={toggleFavorite}
               />
             ))}
           </main>
@@ -264,7 +165,7 @@ const Home = () => {
                   <Button.Root
                     ariaLabel='Yes'
                     onClick={() => {
-                      fetchPets();
+                      // fetchPets();
                       setShowUpdatePetsModal(false);
                     }}
                   >
