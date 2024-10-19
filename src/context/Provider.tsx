@@ -1,18 +1,18 @@
 import { useState, ReactNode } from 'react';
 import { Context } from '.';
-import { Pet } from '../types/Pet';
+import { PetData } from '../types/PetData';
 import { ContextProps } from './index.types';
 import { FavoritesFilter, OrderByAgeFilter, SpeciesFilter } from '../components/FiltersContainer/index.types';
 
 export type Pets = {
-  dogs: Pet[];
-  cats: Pet[];
+  dogs: PetData[];
+  cats: PetData[];
 };
 
 const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [pets, setPets] = useState<Pets>({ cats: [], dogs: [] });
   const [displayedPets, setDisplayedPets] = useState<Pets>({ cats: [], dogs: [] });
-  const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
+  const [selectedPet, setSelectedPet] = useState<PetData[]>([]);
   const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
