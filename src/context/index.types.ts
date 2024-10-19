@@ -3,8 +3,6 @@ import { Pet } from "../types/Pet";
 import { FavoritesFilter, OrderByAgeFilter, SpeciesFilter } from "../components/FiltersContainer/index.types";
 
 export interface ContextProps {
-  pets: Pet[],
-  setPets: Dispatch<SetStateAction<Pet[]>>,
   displayedPets: Pet[],
   setDisplayedPets: Dispatch<SetStateAction<Pet[]>>,
   selectedPet: Pet[],

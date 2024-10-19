@@ -5,8 +5,7 @@ import { ContextProps } from './index.types';
 import { FavoritesFilter, OrderByAgeFilter, SpeciesFilter } from '../components/FiltersContainer/index.types';
 
 const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [pets, setPets] = useState<Pet[]>([]);
-  const [displayedPets, setDisplayedPets] = useState<Pet[]>(pets);
+  const [displayedPets, setDisplayedPets] = useState<Pet[]>([]);
   const [selectedPet, setSelectedPet] = useState<Pet[]>([]);
   const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
@@ -18,8 +17,6 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [species, setSpecies] = useState<SpeciesFilter>('cat');
 
   const value: ContextProps = {
-    pets,
-    setPets,
     displayedPets,
     setDisplayedPets,
     selectedPet,
