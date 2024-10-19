@@ -6,16 +6,18 @@ import Overlay from '../../components/Overlay';
 import Card from '../../components/Card';
 import FiltersContainer from '../../components/FiltersContainer';
 import Loader from '../../components/Loader';
-import { Pet } from '../../types/Pet';
+import { PetData } from '../../types/PetData';
 import { Context } from '../../context';
-import { fetchCats, fetchDogs } from '../../services/fetch';
+import { fetchPets } from '../../services/fetch';
 import { useQuery } from '@tanstack/react-query';
 import { Utils } from '../../services/Utils';
+import { Pets } from '../../context/Provider';
 
 const utils = new Utils();
 
 const Home = () => {
   const {
+    displayedPets,
     setDisplayedPets,
     selectedPet,
     setSelectedPet,
@@ -26,11 +28,15 @@ const Home = () => {
     species
   } = useContext(Context);
   const navigate = useNavigate();
-  
+  const localPets = utils.getLocalStorage('pets') as unknown as Pets;
+
   useEffect(() => {
     setShowUpdatePetsModal(false);
     setShowAdoptionModal(false);
     document.title = "Home | Pet Adoption";
+    if (localPets) {
+      setDisplayedPets(localPets);
+    }
   }, []);
 
   useEffect(() => {
@@ -61,31 +67,48 @@ const Home = () => {
     isLoading,
     isFetching,
     error,
-    refetch: refetchPets
+    refetch: refetchPets,
   } = useQuery({
     queryKey: ['fetchPets'],
-    queryFn: async () => {
-      const localPets = utils.getLocalStorage('pets');
-        if (!localPets) {
-          const fetchedCats = await fetchCats();
-          const fetchedDogs = await fetchDogs();
-          const fetchedPets = { dogs: fetchedDogs, cats: fetchedCats };
-          setDisplayedPets(fetchedPets);
-          return fetchedPets;
-        }
-        return localPets;
-    },
+    queryFn: fetchPets,
     staleTime: Infinity,
+    enabled: !localPets || !localPets.cats || !localPets.dogs
   });
 
   useEffect(() => {
-    utils.setLocalStorage('pets', pets);
+    if (!pets) return;
+    setDisplayedPets(pets);
   }, [pets]);
+
+  useEffect(() => {
+    utils.setLocalStorage('pets', displayedPets);
+  }, [displayedPets]);
+
+  const toggleFavorite = (id: PetData['id']) => {
+    setDisplayedPets((prevPets: Pets) => {
+      const updatedDogs = prevPets.dogs.map(pet => {
+        if (pet.id === id) {
+          return { ...pet, isFavorite: !pet.isFavorite };
+        }
+        return pet;
+      });
+      utils.setLocalStorage('pets', { ...pets, dogs: updatedDogs });
+      const updatedCats = prevPets.cats.map(pet => {
+        if (pet.id === id) {
+          return { ...pet, isFavorite: !pet.isFavorite };
+        }
+        return pet;
+      });
+      utils.setLocalStorage('pets', { ...pets, cats: updatedCats });
+      return { dogs: updatedDogs, cats: updatedCats };
+    });
+  }
 
   return (
     <>
       {error && <p>Error: {error.message}</p>}
       <Button.Root
+        disabled={isFetching || isLoading}
         ariaLabel='Update pets'
         onClick={() => {
           setShowUpdatePetsModal(true);
@@ -99,12 +122,13 @@ const Home = () => {
       {(isLoading || isFetching) && <Loader />}
         <>
           <main>
-            {!isFetching && pets && !Array.isArray(pets) && pets[species]?.map((pet: Pet) => (
+            {!isFetching && displayedPets && !Array.isArray(displayedPets) && displayedPets[species]?.map((pet: PetData) => (
               <Card
                 key={pet.id}
                 pet={pet}
                 setSelectedPet={setSelectedPet}
                 setShowModal={setShowAdoptionModal}
+                toggleFavorite={toggleFavorite}
               />
           ))}
           </main>
@@ -118,12 +142,14 @@ const Home = () => {
                 <img alt={`Random picture of a ${selectedPet[0].species}`} src={selectedPet[0].url} />
                 <div className='modal__buttons-container'>
                   <Button.Root
+                    disabled={false}
                     ariaLabel='Yes'
                     onClick={() => navigate('/adopt')}
                   >
                     <Button.Label label='Yes' />
                   </Button.Root>
                   <Button.Root
+                    disabled={false}
                     ariaLabel='No'
                     onClick={() => setShowAdoptionModal(false)}
                   >
@@ -142,16 +168,18 @@ const Home = () => {
               >
                 <div className='modal__buttons-container'>
                   <Button.Root
+                    disabled={false}
                     ariaLabel='Yes'
-                    onClick={() => {
+                    onClick={async () => {
                       localStorage.removeItem('pets');
-                      refetchPets();
                       setShowUpdatePetsModal(false);
+                      refetchPets();
                     }}
                   >
                     <Button.Label label='Yes' />
                   </Button.Root>
                   <Button.Root
+                    disabled={false}
                     ariaLabel='No'
                     onClick={() => setShowUpdatePetsModal(false)}
                   >
