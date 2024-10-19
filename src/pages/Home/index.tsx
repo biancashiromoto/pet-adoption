@@ -10,12 +10,12 @@ import { Pet } from '../../types/Pet';
 import { Context } from '../../context';
 import { fetchCats, fetchDogs } from '../../services/fetch';
 import { useQuery } from '@tanstack/react-query';
+import { Utils } from '../../services/Utils';
+
+const utils = new Utils();
 
 const Home = () => {
   const {
-    pets,
-    setPets,
-    displayedPets,
     setDisplayedPets,
     selectedPet,
     setSelectedPet,
@@ -30,6 +30,7 @@ const Home = () => {
   useEffect(() => {
     setShowUpdatePetsModal(false);
     setShowAdoptionModal(false);
+    document.title = "Home | Pet Adoption";
   }, []);
 
   useEffect(() => {
@@ -55,60 +56,39 @@ const Home = () => {
     };
   }, [showAdoptionModal, showUpdatePetsModal]);
 
-  useEffect(() => {
-    document.title = "Home | Pet Adoption";
-  }, []);
-
   const {
-    data: cats,
-    isLoading: isLoadingCats,
-    isFetching: isFetchingCats,
-    error: fetchErrorCats,
-    refetch: refetchCats
+    data: pets,
+    isLoading,
+    isFetching,
+    error,
+    refetch: refetchPets
   } = useQuery({
-    queryKey: ['fetchCats'],
+    queryKey: ['fetchPets'],
     queryFn: async () => {
-      const fetchedCats = await fetchCats();
-      setPets({ ...pets, cats: fetchedCats });
-      setDisplayedPets({ ...pets, cats: fetchedCats });
-      return fetchedCats;     
-    },
-    staleTime: Infinity,
-  });
-
-  const {
-    data: dogs,
-    isLoading: isLoadingDogs,
-    isFetching: isFetchingDogs,
-    error: fetchErrorDogs,
-    refetch: refetchDogs
-  } = useQuery({
-    queryKey: ['fetchDogs'],
-    queryFn: async () => {
-      const fetchedDogs = await fetchDogs();
-      setPets({ ...pets, dogs: fetchedDogs });
-      setDisplayedPets({ ...pets, dogs: fetchedDogs });
-      return fetchedDogs;     
+      const localPets = utils.getLocalStorage('pets');
+        if (!localPets) {
+          const fetchedCats = await fetchCats();
+          const fetchedDogs = await fetchDogs();
+          const fetchedPets = { dogs: fetchedDogs, cats: fetchedCats };
+          setDisplayedPets(fetchedPets);
+          return fetchedPets;
+        }
+        return localPets;
     },
     staleTime: Infinity,
   });
 
   useEffect(() => {
-    if (cats && dogs) {
-      setPets({ cats, dogs });
-      setDisplayedPets({ cats, dogs });
-    }
-  }, [cats, dogs]);
+    utils.setLocalStorage('pets', pets);
+  }, [pets]);
 
   return (
     <>
-      {fetchErrorDogs && fetchErrorCats && <p>Error: {species === 'cats' ? fetchErrorCats.message : fetchErrorDogs.message}</p>}
+      {error && <p>Error: {error.message}</p>}
       <Button.Root
         ariaLabel='Update pets'
         onClick={() => {
           setShowUpdatePetsModal(true);
-          refetchCats();
-          refetchDogs();
         }}
       >
         <Button.Label label='Update pets' />
@@ -116,18 +96,17 @@ const Home = () => {
       <hr />
       <FiltersContainer />
       <hr />
-      {(isLoadingCats || isFetchingCats) || (isLoadingDogs || isFetchingDogs) && <Loader />}
-      {!fetchErrorDogs && !fetchErrorCats && !isLoadingCats && !isLoadingDogs && (
+      {(isLoading || isFetching) && <Loader />}
         <>
           <main>
-            {displayedPets && displayedPets[species].map((pet: Pet) => (
+            {!isFetching && pets && !Array.isArray(pets) && pets[species]?.map((pet: Pet) => (
               <Card
                 key={pet.id}
                 pet={pet}
                 setSelectedPet={setSelectedPet}
                 setShowModal={setShowAdoptionModal}
               />
-            ))}
+          ))}
           </main>
           {showAdoptionModal && (
             <>
@@ -165,7 +144,8 @@ const Home = () => {
                   <Button.Root
                     ariaLabel='Yes'
                     onClick={() => {
-                      // fetchPets();
+                      localStorage.removeItem('pets');
+                      refetchPets();
                       setShowUpdatePetsModal(false);
                     }}
                   >
@@ -182,7 +162,6 @@ const Home = () => {
             </>
           )}
         </>
-      )}
     </>
   )
 }
