@@ -57,9 +57,14 @@ const Home = () => {
     });
   };
   
-
-  const applyFilters = (pets: Pet[]) => {
+  const applyFilters = () => {
+    const pets: Pet[] = speciesFilter === 'cat' ? utils.getLocalStorage('cats') || [] : utils.getLocalStorage('dogs') || [];
     let filteredPets = pets;
+    if (favoritesFilter === 'favorites') {
+      filteredPets = pets.filter((pet: Pet) => pet.isFavorite);
+    } else if (favoritesFilter === 'non favorites') {
+      filteredPets = pets.filter((pet: Pet) => !pet.isFavorite);
+    }
     
     let orderedPets = filteredPets;
     if (orderFilter !== 'none') {
@@ -149,7 +154,7 @@ const Home = () => {
   }
 
   useEffect(() => {
-    applyFilters(displayedPets);
+    applyFilters();
   }, [favoritesFilter, orderFilter]);
 
   useEffect(() => {

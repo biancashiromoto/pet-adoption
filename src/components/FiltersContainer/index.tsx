@@ -1,6 +1,6 @@
 import Filter from '../Filter'
 import { Button } from '../Button'
-import { ChangeEvent, Dispatch, SetStateAction, useContext } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from 'react';
 import { FiltersContainerProps } from './index.types';
 import { Context } from '../../context';
 
@@ -10,7 +10,6 @@ const selectFilter = (e: ChangeEvent<HTMLSelectElement>, callback: Dispatch<SetS
 }
 
 const FiltersContainer = ({
-  speciesRef,
   orderRef,
   clearFilters,
   favoriteRef,
@@ -19,17 +18,9 @@ const FiltersContainer = ({
   const {
     setFavoritesFilter,
     setOrderFilter,
-    setSpeciesFilter
   } = useContext(Context);
   return (
     <article className='filter-container'>
-      <Filter
-          id='species'
-          items={['all', 'cat', 'dog']}
-          label='Species: '
-          ref={speciesRef}
-          onChange={(e) => selectFilter(e, setSpeciesFilter)}
-      />
       <Filter
         id='order'
         items={['none', 'younger', 'older']}
