@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { Pet } from "../../types/Pet";
+import { PetData } from "../../types/PetData";
 
 interface CardProps {
-  pet: Pet;
-  setSelectedPet: Dispatch<SetStateAction<Pet[]>>;
+  pet: PetData;
+  setSelectedPet: Dispatch<SetStateAction<PetData[]>>;
   setShowModal: Dispatch<SetStateAction<boolean>>;
-  toggleFavorite?: (id: Pet['id']) => void;
+  toggleFavorite: (id: PetData["id"]) => void;
 }
 
 const Card = ({ pet, setSelectedPet, setShowModal, toggleFavorite }: CardProps) => {

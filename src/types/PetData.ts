@@ -1,4 +1,4 @@
-export type Pet = {
+export type PetData = {
   age?: number;
   id: string;
   isFavorite: boolean;
