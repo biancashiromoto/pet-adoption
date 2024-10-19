@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Pet } from "../types/Pet";
+import { PetData } from "../types/PetData";
 import { FavoritesFilter, OrderByAgeFilter, SpeciesFilter } from "../components/FiltersContainer/index.types";
 import { Pets } from "./Provider";
 
@@ -8,8 +8,8 @@ export interface ContextProps {
   setPets: Dispatch<SetStateAction<Pets>>,
   displayedPets: Pets,
   setDisplayedPets: Dispatch<SetStateAction<Pets>>,
-  selectedPet: Pet[],
-  setSelectedPet: Dispatch<SetStateAction<Pet[]>>,
+  selectedPet: PetData[],
+  setSelectedPet: Dispatch<SetStateAction<PetData[]>>,
   showAdoptionModal: boolean,
   setShowAdoptionModal: Dispatch<SetStateAction<boolean>>,
   showUpdatePetsModal: boolean,
