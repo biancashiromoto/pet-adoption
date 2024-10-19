@@ -1,6 +1,6 @@
 import Filter from '../Filter'
 import { Button } from '../Button'
-import { ChangeEvent, Dispatch, SetStateAction, useContext, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useContext } from 'react';
 import { FiltersContainerProps } from './index.types';
 import { Context } from '../../context';
 
