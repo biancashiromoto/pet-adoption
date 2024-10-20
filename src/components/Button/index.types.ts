@@ -4,6 +4,6 @@ export interface ButtonRootProps {
   ariaLabel?: string;
   className?: string;
   children?: ReactNode;
-  disabled: boolean | false;
+  disabled?: boolean;
   onClick: (arg0: any) => void;
 }

@@ -4,11 +4,13 @@ const ButtonRoot = ({
   ariaLabel,
   children,
   className = '',
+  disabled = false,
   onClick,
   ...rest
 }: ButtonRootProps) => {
   return (
     <button
+      disabled={disabled}
       aria-label={ariaLabel}
       className={className}
       onClick={onClick}
