@@ -1,12 +1,7 @@
 import { memo, useContext } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { PetData } from "../../types/PetData";
 import { Context } from "../../context";
-
-interface CardProps {
-  pet: PetData;
-  toggleFavorite: (id: PetData["id"]) => void;
-}
+import { CardProps } from "./index.types";
 
 const Card = memo(({ pet, toggleFavorite }: CardProps) => {
   const { setSelectedPet, setShowAdoptionModal } = useContext(Context);
@@ -26,7 +21,11 @@ const Card = memo(({ pet, toggleFavorite }: CardProps) => {
           e.stopPropagation();
           toggleFavorite && toggleFavorite(pet.id);
         }}>
-          {!pet.isFavorite ? <FaRegHeart /> :<FaHeart />}
+          {pet.isFavorite ? (
+            <FaHeart data-testid="FaHeart" />
+          ) : (
+            <FaRegHeart data-testid="FaRegHeart" />
+          )}
         </button>
       </div>
     </article>
