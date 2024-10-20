@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { PetData } from "../types/PetData";
-import { FavoritesFilter, OrderByAgeFilter, SpeciesFilter } from "../components/FiltersContainer/index.types";
+import { SpeciesFilter } from "../components/FiltersContainer/index.types";
 import { Pets } from "./Provider";
 
 export interface ContextProps {
@@ -14,16 +14,6 @@ export interface ContextProps {
   setShowAdoptionModal: Dispatch<SetStateAction<boolean>>,
   showUpdatePetsModal: boolean,
   setShowUpdatePetsModal: Dispatch<SetStateAction<boolean>>,
-  isLoading: boolean,
-  setIsLoading: Dispatch<SetStateAction<boolean>>,
-  speciesFilter: SpeciesFilter,
-  setSpeciesFilter: Dispatch<SetStateAction<SpeciesFilter>>,
-  orderFilter: OrderByAgeFilter,
-  setOrderFilter: Dispatch<SetStateAction<OrderByAgeFilter>>,
-  favoritesFilter: FavoritesFilter,
-  setFavoritesFilter: Dispatch<SetStateAction<FavoritesFilter>>,
-  error: string,
-  setError: Dispatch<SetStateAction<string>>;
   species: SpeciesFilter;
   setSpecies: Dispatch<SetStateAction<SpeciesFilter>>;
 }

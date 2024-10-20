@@ -2,7 +2,7 @@ import { useState, ReactNode } from 'react';
 import { Context } from '.';
 import { PetData } from '../types/PetData';
 import { ContextProps } from './index.types';
-import { FavoritesFilter, OrderByAgeFilter, SpeciesFilter } from '../components/FiltersContainer/index.types';
+import { SpeciesFilter } from '../components/FiltersContainer/index.types';
 import { Utils } from '../services/Utils';
 
 export type Pets = {
@@ -19,11 +19,6 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedPet, setSelectedPet] = useState<PetData[]>([]);
   const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [speciesFilter, setSpeciesFilter] = useState<SpeciesFilter>('cats');
-  const [orderFilter, setOrderFilter] = useState<OrderByAgeFilter>('none');
-  const [favoritesFilter, setFavoritesFilter] = useState<FavoritesFilter>('all');
-  const [error, setError] = useState<string>('');
   const [species, setSpecies] = useState<SpeciesFilter>(localSpecies as SpeciesFilter);
 
   const value: ContextProps = {
@@ -37,16 +32,6 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setShowAdoptionModal,
     showUpdatePetsModal,
     setShowUpdatePetsModal,
-    isLoading,
-    setIsLoading,
-    speciesFilter,
-    setSpeciesFilter,
-    orderFilter,
-    setOrderFilter,
-    favoritesFilter,
-    setFavoritesFilter,
-    error,
-    setError,
     species,
     setSpecies,
   };
