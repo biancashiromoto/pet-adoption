@@ -70,6 +70,7 @@ const AdoptionForm = () => {
                     >
                         <div className="modal__buttons-container">
                             <Button.Root
+                                disabled={false}
                                 ariaLabel="ok"
                                 onClick={() => {
                                     setShowModal(false);
