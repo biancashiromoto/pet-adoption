@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, memo, SetStateAction } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { PetData } from "../../types/PetData";
 
@@ -9,7 +9,7 @@ interface CardProps {
   toggleFavorite: (id: PetData["id"]) => void;
 }
 
-const Card = ({ pet, setSelectedPet, setShowModal, toggleFavorite }: CardProps) => {
+const Card = memo(({ pet, setSelectedPet, setShowModal, toggleFavorite }: CardProps) => {
   return (
     <article
       className='card'
@@ -31,6 +31,6 @@ const Card = ({ pet, setSelectedPet, setShowModal, toggleFavorite }: CardProps) 
       </div>
     </article>
   )
-}
+})
 
 export default Card
