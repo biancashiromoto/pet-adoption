@@ -3,11 +3,15 @@ import { Context } from '.';
 import { PetData } from '../types/PetData';
 import { ContextProps } from './index.types';
 import { FavoritesFilter, OrderByAgeFilter, SpeciesFilter } from '../components/FiltersContainer/index.types';
+import { Utils } from '../services/Utils';
 
 export type Pets = {
   dogs: PetData[];
   cats: PetData[];
 };
+
+const { getLocalStorage } = new Utils();
+const localSpecies: string = getLocalStorage('species');
 
 const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [pets, setPets] = useState<Pets>({ cats: [], dogs: [] });
@@ -20,7 +24,7 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [orderFilter, setOrderFilter] = useState<OrderByAgeFilter>('none');
   const [favoritesFilter, setFavoritesFilter] = useState<FavoritesFilter>('all');
   const [error, setError] = useState<string>('');
-  const [species, setSpecies] = useState<SpeciesFilter>('cats');
+  const [species, setSpecies] = useState<SpeciesFilter>(localSpecies as SpeciesFilter);
 
   const value: ContextProps = {
     pets,
