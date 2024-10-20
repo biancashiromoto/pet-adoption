@@ -1,21 +1,21 @@
-import { Dispatch, memo, SetStateAction } from "react";
+import { memo, useContext } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { PetData } from "../../types/PetData";
+import { Context } from "../../context";
 
 interface CardProps {
   pet: PetData;
-  setSelectedPet: Dispatch<SetStateAction<PetData[]>>;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
   toggleFavorite: (id: PetData["id"]) => void;
 }
 
-const Card = memo(({ pet, setSelectedPet, setShowModal, toggleFavorite }: CardProps) => {
+const Card = memo(({ pet, toggleFavorite }: CardProps) => {
+  const { setSelectedPet, setShowAdoptionModal } = useContext(Context);
   return (
     <article
       className='card'
       onClick={() => {
         setSelectedPet([pet]);
-        setShowModal(true);
+        setShowAdoptionModal(true);
       }}
     >
       <img alt='Random picture of a cat' src={pet.url} />
