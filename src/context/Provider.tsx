@@ -19,7 +19,7 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedPet, setSelectedPet] = useState<PetData[]>([]);
   const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
-  const [species, setSpecies] = useState<SpeciesFilter>(localSpecies as SpeciesFilter);
+  const [species, setSpecies] = useState<SpeciesFilter>(localSpecies as SpeciesFilter || 'cats');
 
   const value: ContextProps = {
     pets,
