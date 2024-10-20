@@ -12,6 +12,7 @@ import { fetchPets } from '../../services/fetch';
 import { useQuery } from '@tanstack/react-query';
 import { Utils } from '../../services/Utils';
 import { Pets } from '../../context/Provider';
+import useFavorites from '../../hooks/useFavorites';
 
 const utils = new Utils();
 
@@ -29,6 +30,7 @@ const Home = () => {
   } = useContext(Context);
   const navigate = useNavigate();
   const localPets = utils.getLocalStorage('pets') as unknown as Pets;
+  const { toggleFavorite } = useFavorites();
 
   useEffect(() => {
     setShowUpdatePetsModal(false);
@@ -83,26 +85,6 @@ const Home = () => {
   useEffect(() => {
     utils.setLocalStorage('pets', displayedPets);
   }, [displayedPets]);
-
-  const toggleFavorite = (id: PetData['id']) => {
-    setDisplayedPets((prevPets: Pets) => {
-      const updatedDogs = prevPets.dogs.map(pet => {
-        if (pet.id === id) {
-          return { ...pet, isFavorite: !pet.isFavorite };
-        }
-        return pet;
-      });
-      utils.setLocalStorage('pets', { ...pets, dogs: updatedDogs });
-      const updatedCats = prevPets.cats.map(pet => {
-        if (pet.id === id) {
-          return { ...pet, isFavorite: !pet.isFavorite };
-        }
-        return pet;
-      });
-      utils.setLocalStorage('pets', { ...pets, cats: updatedCats });
-      return { dogs: updatedDogs, cats: updatedCats };
-    });
-  }
 
   return (
     <>
