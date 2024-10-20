@@ -21,7 +21,6 @@ const Home = () => {
     displayedPets,
     setDisplayedPets,
     selectedPet,
-    setSelectedPet,
     showAdoptionModal,
     setShowAdoptionModal,
     showUpdatePetsModal,
@@ -40,6 +39,10 @@ const Home = () => {
       setDisplayedPets(localPets);
     }
   }, []);
+
+  useEffect(() => {
+    utils.setLocalStorage('species', species);
+  }, [species])
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -108,8 +111,6 @@ const Home = () => {
               <Card
                 key={pet.id}
                 pet={pet}
-                setSelectedPet={setSelectedPet}
-                setShowModal={setShowAdoptionModal}
                 toggleFavorite={toggleFavorite}
               />
           ))}
