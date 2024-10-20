@@ -8,11 +8,10 @@ import FiltersContainer from '../../components/FiltersContainer';
 import Loader from '../../components/Loader';
 import { PetData } from '../../types/PetData';
 import { Context } from '../../context';
-import { fetchPets } from '../../services/fetch';
-import { useQuery } from '@tanstack/react-query';
 import { Utils } from '../../services/Utils';
 import { Pets } from '../../context/Provider';
 import useFavorites from '../../hooks/useFavorites';
+import useFetchPets from '../../hooks/useFetchPets';
 
 const utils = new Utils();
 
@@ -30,6 +29,7 @@ const Home = () => {
   const navigate = useNavigate();
   const localPets = utils.getLocalStorage('pets') as unknown as Pets;
   const { toggleFavorite } = useFavorites();
+  const { pets, isLoading, isFetching, error, refetchPets } = useFetchPets();
 
   useEffect(() => {
     setShowUpdatePetsModal(false);
@@ -67,18 +67,6 @@ const Home = () => {
     };
   }, [showAdoptionModal, showUpdatePetsModal]);
 
-  const {
-    data: pets,
-    isLoading,
-    isFetching,
-    error,
-    refetch: refetchPets,
-  } = useQuery({
-    queryKey: ['fetchPets'],
-    queryFn: fetchPets,
-    staleTime: Infinity,
-    enabled: !localPets || !localPets.cats || !localPets.dogs
-  });
 
   useEffect(() => {
     if (!pets) return;
