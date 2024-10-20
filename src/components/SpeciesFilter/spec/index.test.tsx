@@ -32,7 +32,6 @@ describe('SpeciesFilter component - initially set to cats', () => {
   it('should toggle species to dogs', async () => {
     fireEvent.click(screen.getByLabelText(/dogs/i));
     expect(setSpecies).toHaveBeenCalledWith('dogs');
-    screen.debug()
   });
 });
 
@@ -55,6 +54,5 @@ describe('SpeciesFilter component - initially set to dogs', () => {
   it('should toggle species to dogs', async () => {
     fireEvent.click(screen.getByLabelText(/cats/i));
     expect(setSpecies).toHaveBeenCalledWith('cats');
-    screen.debug()
   });
 });
