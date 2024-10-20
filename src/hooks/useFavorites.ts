@@ -1,4 +1,3 @@
-// useFavorites.ts
 import { useContext } from 'react';
 import { Utils } from '../services/Utils';
 import { Context } from '../context';
