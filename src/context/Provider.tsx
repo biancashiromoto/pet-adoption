@@ -2,7 +2,7 @@ import { useState, ReactNode } from 'react';
 import { Context } from '.';
 import { PetData } from '../types/PetData';
 import { ContextProps } from './index.types';
-import { SpeciesFilter } from '../components/FiltersContainer/index.types';
+import { OrderByAgeFilter, SpeciesFilter } from '../components/FiltersContainer/index.types';
 import { Utils } from '../services/Utils';
 
 export type Pets = {
@@ -20,6 +20,7 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [showAdoptionModal, setShowAdoptionModal] = useState<boolean>(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] = useState<boolean>(false);
   const [species, setSpecies] = useState<SpeciesFilter>(localSpecies as SpeciesFilter || 'cats');
+  const [order, setOrder] = useState<OrderByAgeFilter>('none');
 
   const value: ContextProps = {
     pets,
@@ -34,6 +35,8 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setShowUpdatePetsModal,
     species,
     setSpecies,
+    order,
+    setOrder
   };
 
   return (
