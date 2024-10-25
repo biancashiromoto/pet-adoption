@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { createRef, RefObject, useContext, useEffect } from 'react';
 import Modal from '../../components/Modal';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
@@ -8,12 +8,11 @@ import FiltersContainer from '../../components/FiltersContainer';
 import Loader from '../../components/Loader';
 import { PetData } from '../../types/PetData';
 import { Context } from '../../context';
-import { Utils } from '../../services/Utils';
-import { Pets } from '../../context/Provider';
 import useFavorites from '../../hooks/useFavorites';
 import useFetchPets from '../../hooks/useFetchPets';
-
-const utils = new Utils();
+import useAdoptionModal from '../../hooks/useAdoptionModal';
+import useSetLocalStorage from '../../hooks/useSetLocalStorage';
+import { Pets } from '../../context/Provider';
 
 const Home = () => {
   const {
@@ -24,58 +23,46 @@ const Home = () => {
     setShowAdoptionModal,
     showUpdatePetsModal,
     setShowUpdatePetsModal,
-    species
+    species,
+    order
   } = useContext(Context);
   const navigate = useNavigate();
-  const localPets = utils.getLocalStorage('pets') as unknown as Pets;
   const { toggleFavorite } = useFavorites();
   const { pets, isLoading, isFetching, error, refetchPets } = useFetchPets();
+  const speciesRef: RefObject<HTMLSelectElement> = createRef();
+  useAdoptionModal();
+  useSetLocalStorage();
+
+  const applyFilters = () => {
+    const { dogs, cats } = pets as Pets;
+    let orderedPets: PetData[] = [];
+    if (order !== 'none') {
+      orderedPets = [...dogs, ...cats].sort((a: PetData, b: PetData) => {
+        if (!a.age || !b.age) return 0;
+        return order === 'younger' ? a.age - b.age : b.age - a.age;
+      });
+    }
+    setDisplayedPets({
+      cats: orderedPets.filter((pet: PetData) => pet.species === 'cat'),
+      dogs: orderedPets.filter((pet: PetData) => pet.species === 'dog')
+    });
+  }
 
   useEffect(() => {
     setShowUpdatePetsModal(false);
     setShowAdoptionModal(false);
     document.title = "Home | Pet Adoption";
-    if (localPets) {
-      setDisplayedPets(localPets);
-    }
   }, []);
 
   useEffect(() => {
-    utils.setLocalStorage('species', species);
-  }, [species])
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        if (showAdoptionModal) {
-          setShowAdoptionModal(false);
-        }
-        if (showUpdatePetsModal) {
-          setShowUpdatePetsModal(false);
-        }
-      }
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-
-    if (showAdoptionModal) {
-      document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [showAdoptionModal, showUpdatePetsModal]);
-
+    if (!pets) return;
+    applyFilters();
+  }, [order])
 
   useEffect(() => {
     if (!pets) return;
     setDisplayedPets(pets);
   }, [pets]);
-
-  useEffect(() => {
-    utils.setLocalStorage('pets', displayedPets);
-  }, [displayedPets]);
 
   return (
     <>
@@ -90,7 +77,9 @@ const Home = () => {
         <Button.Label label='Update pets' />
       </Button.Root>
       <hr />
-      <FiltersContainer />
+      <FiltersContainer
+        speciesRef={speciesRef}
+      />
       <hr />
       {(isLoading || isFetching) && <Loader />}
         <>
