@@ -29,7 +29,7 @@ const Home = () => {
   const navigate = useNavigate();
   const { toggleFavorite } = useFavorites();
   const { pets, isLoading, isFetching, error, refetchPets } = useFetchPets();
-  const speciesRef: RefObject<HTMLSelectElement> = createRef();
+  const orderByAgeRef: RefObject<HTMLSelectElement> = createRef();
   useAdoptionModal();
   useSetLocalStorage();
 
@@ -41,11 +41,14 @@ const Home = () => {
         if (!a.age || !b.age) return 0;
         return order === 'younger' ? a.age - b.age : b.age - a.age;
       });
+
+      setDisplayedPets({
+        cats: orderedPets.filter((pet: PetData) => pet.species === 'cat'),
+        dogs: orderedPets.filter((pet: PetData) => pet.species === 'dog')
+      });
+    } else {
+      setDisplayedPets({ cats, dogs });
     }
-    setDisplayedPets({
-      cats: orderedPets.filter((pet: PetData) => pet.species === 'cat'),
-      dogs: orderedPets.filter((pet: PetData) => pet.species === 'dog')
-    });
   }
 
   useEffect(() => {
@@ -78,7 +81,7 @@ const Home = () => {
       </Button.Root>
       <hr />
       <FiltersContainer
-        speciesRef={speciesRef}
+        orderByAgeRef={orderByAgeRef}
       />
       <hr />
       {(isLoading || isFetching) && <Loader />}
