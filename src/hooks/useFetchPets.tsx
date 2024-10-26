@@ -6,7 +6,7 @@ import { useContext, useEffect } from "react";
 import { Context } from "../context";
 
 const utils = new Utils();
-const localPets = utils.getLocalStorage('pets') as unknown as Pets;
+const localPets = utils.getLocalStorage("pets") as unknown as Pets;
 
 const useFetchPets = () => {
   const { setPets } = useContext(Context);
@@ -17,15 +17,15 @@ const useFetchPets = () => {
     error,
     refetch: refetchPets,
   } = useQuery({
-    queryKey: ['fetchPets'],
+    queryKey: ["fetchPets"],
     queryFn: fetchPets,
     staleTime: Infinity,
-    enabled: !localPets || !localPets.cats || !localPets.dogs
+    enabled: !localPets || !localPets.cats || !localPets.dogs,
   });
 
   useEffect(() => fetchedPets && setPets(fetchedPets), [fetchedPets]);
 
   return { fetchedPets, isLoading, isFetching, error, refetchPets };
-}
+};
 
-export default useFetchPets
+export default useFetchPets;

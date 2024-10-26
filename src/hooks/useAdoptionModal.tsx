@@ -2,11 +2,8 @@ import { useContext, useEffect } from "react";
 import { Context } from "../context";
 
 const useAdoptionModal = () => {
-  const {
-    selectedPet,
-    showAdoptionModal,
-    setShowAdoptionModal,
-  } = useContext(Context);
+  const { selectedPet, showAdoptionModal, setShowAdoptionModal } =
+    useContext(Context);
 
   useEffect(() => {
     if (showAdoptionModal) {
@@ -15,19 +12,19 @@ const useAdoptionModal = () => {
       document.title = `Home | Pet Adoption`;
     }
 
-    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [showAdoptionModal]);
 
   const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') {
+    if (event.key === "Escape") {
       if (showAdoptionModal) {
         setShowAdoptionModal(false);
       }
     }
   };
-}
+};
 
 export default useAdoptionModal;
