@@ -119,7 +119,7 @@ const Home = () => {
       />
       <hr />
 
-      <section className="filter-container__buttons">
+      <section className="home__buttons-container">
         <Button.Root
           onClick={clearFilters}
           ariaLabel="Clear filters"
