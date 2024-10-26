@@ -1,0 +1,9 @@
+.filters__species {
+  display: flex;
+  flex-direction: column;
+
+  label {
+    display: flex;
+    gap: 8px;
+  }
+}
