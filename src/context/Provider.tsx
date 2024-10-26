@@ -3,6 +3,7 @@ import { Context } from ".";
 import { PetData } from "../types/PetData";
 import { ContextProps } from "./index.types";
 import {
+  FavoritesFilter,
   OrderByAgeFilter,
   SpeciesFilter,
 } from "../components/FiltersContainer/index.types";
@@ -30,6 +31,7 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
     (localSpecies as SpeciesFilter) || "cats"
   );
   const [order, setOrder] = useState<OrderByAgeFilter>("none");
+  const [favorites, setFavorites] = useState<FavoritesFilter>("all");
 
   const value: ContextProps = {
     pets,
@@ -46,6 +48,8 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setSpecies,
     order,
     setOrder,
+    favorites,
+    setFavorites,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
