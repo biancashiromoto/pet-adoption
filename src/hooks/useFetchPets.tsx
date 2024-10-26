@@ -2,13 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import { Utils } from "../services/Utils";
 import { Pets } from "../context/Provider";
 import { fetchPets } from "../services/fetch";
+import { useContext, useEffect } from "react";
+import { Context } from "../context";
 
 const utils = new Utils();
 const localPets = utils.getLocalStorage('pets') as unknown as Pets;
 
 const useFetchPets = () => {
+  const { setPets } = useContext(Context);
   const {
-    data: pets,
+    data: fetchedPets,
     isLoading,
     isFetching,
     error,
@@ -19,7 +22,10 @@ const useFetchPets = () => {
     staleTime: Infinity,
     enabled: !localPets || !localPets.cats || !localPets.dogs
   });
-  return { pets, isLoading, isFetching, error, refetchPets };
+
+  useEffect(() => fetchedPets && setPets(fetchedPets), [fetchedPets]);
+
+  return { fetchedPets, isLoading, isFetching, error, refetchPets };
 }
 
 export default useFetchPets
