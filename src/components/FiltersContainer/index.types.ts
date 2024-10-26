@@ -7,6 +7,6 @@ export type FavoritesFilter = "all" | "favorites" | "non favorites";
 export interface FiltersContainerProps {
   orderByAgeRef?: RefObject<HTMLSelectElement>;
   clearFilters?: () => void;
-  favoriteRef?: RefObject<HTMLSelectElement>;
+  favoritesRef: RefObject<HTMLSelectElement>;
   resetFavorites?: () => void;
 }
