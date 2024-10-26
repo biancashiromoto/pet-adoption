@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { PetData } from "../types/PetData";
 import {
+  FavoritesFilter,
   OrderByAgeFilter,
   SpeciesFilter,
 } from "../components/FiltersContainer/index.types";
@@ -21,4 +22,6 @@ export interface ContextProps {
   setSpecies: Dispatch<SetStateAction<SpeciesFilter>>;
   order: OrderByAgeFilter;
   setOrder: Dispatch<SetStateAction<OrderByAgeFilter>>;
+  favorites: FavoritesFilter;
+  setFavorites: Dispatch<SetStateAction<FavoritesFilter>>;
 }
