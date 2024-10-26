@@ -1,20 +1,31 @@
 import { useContext } from "react";
 import Filter from "../Filter";
 import SpeciesFilter from "../SpeciesFilter";
-import { FiltersContainerProps, OrderByAgeFilter } from "./index.types";
+import {
+  FavoritesFilter,
+  FiltersContainerProps,
+  OrderByAgeFilter,
+} from "./index.types";
 import { Context } from "../../context";
 import { Button } from "../Button";
 import { PetData } from "../../types/PetData";
 import useSetLocalStorage from "../../hooks/useSetLocalStorage";
 
-const FiltersContainer = ({ orderByAgeRef }: FiltersContainerProps) => {
-  const { setOrder, pets, setPets } = useContext(Context);
+const FiltersContainer = ({
+  orderByAgeRef,
+  favoritesRef,
+}: FiltersContainerProps) => {
+  const { setOrder, pets, setPets, setFavorites } = useContext(Context);
   useSetLocalStorage();
 
   const clearFilters = () => {
     setOrder("none");
+    setFavorites("all");
     if (orderByAgeRef?.current) {
       orderByAgeRef.current.value = "none";
+    }
+    if (favoritesRef?.current) {
+      favoritesRef.current.value = "all";
     }
   };
 
@@ -44,6 +55,17 @@ const FiltersContainer = ({ orderByAgeRef }: FiltersContainerProps) => {
           }
         }}
         ref={orderByAgeRef}
+      />
+      <Filter
+        id="favorites"
+        label="Favorites:"
+        items={["all", "favorites", "non favorites"]}
+        onChange={() => {
+          if (favoritesRef?.current) {
+            setFavorites(favoritesRef.current.value as FavoritesFilter);
+          }
+        }}
+        ref={favoritesRef}
       />
       <Button.Root
         onClick={clearFilters}
