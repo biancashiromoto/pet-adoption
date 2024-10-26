@@ -25,7 +25,7 @@ const mockContextValue = {
 };
 
 
-describe('Card Component', () => {
+describe('Card component', () => {
   const toggleFavorite = vi.fn();
 
   const renderCard = (pet: PetData) => {
