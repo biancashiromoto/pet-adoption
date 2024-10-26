@@ -7,20 +7,23 @@ const Card = memo(({ pet, toggleFavorite }: CardProps) => {
   const { setSelectedPet, setShowAdoptionModal } = useContext(Context);
   return (
     <article
-      className='card'
+      className="card"
       onClick={() => {
         setSelectedPet([pet]);
         setShowAdoptionModal(true);
       }}
     >
-      <img alt='Random picture of a cat' src={pet.url} />
+      <img alt="Random picture of a cat" src={pet.url} />
       <div className="card__text">
         <h3>{pet.name}</h3>
         <p>Age: {pet.age}</p>
-        <button type="button" onClick={(e) => {
-          e.stopPropagation();
-          toggleFavorite && toggleFavorite(pet.id);
-        }}>
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleFavorite && toggleFavorite(pet.id);
+          }}
+        >
           {pet.isFavorite ? (
             <FaHeart data-testid="FaHeart" />
           ) : (
@@ -29,7 +32,7 @@ const Card = memo(({ pet, toggleFavorite }: CardProps) => {
         </button>
       </div>
     </article>
-  )
-})
+  );
+});
 
-export default Card
+export default Card;

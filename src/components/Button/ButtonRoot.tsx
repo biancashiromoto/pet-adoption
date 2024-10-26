@@ -3,7 +3,7 @@ import { ButtonRootProps } from "./index.types";
 const ButtonRoot = ({
   ariaLabel,
   children,
-  className = '',
+  className = "",
   disabled = false,
   onClick,
   ...rest
@@ -18,9 +18,9 @@ const ButtonRoot = ({
       type="button"
       {...rest}
     >
-      { children }
+      {children}
     </button>
-  )
-}
+  );
+};
 
-export default ButtonRoot
+export default ButtonRoot;

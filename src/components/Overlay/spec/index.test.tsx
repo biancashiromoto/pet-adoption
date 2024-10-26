@@ -7,7 +7,7 @@ describe("Overlay component", () => {
     const openModalMock = vi.fn();
     render(<Overlay openModal={openModalMock} />);
 
-    const overlay = screen.getByRole('button', { name: /close modal/i });
+    const overlay = screen.getByRole("button", { name: /close modal/i });
     expect(overlay).toBeInTheDocument();
   });
 
@@ -15,7 +15,7 @@ describe("Overlay component", () => {
     const openModalMock = vi.fn();
     render(<Overlay openModal={openModalMock} />);
 
-    const overlay = screen.getByRole('button', { name: /close modal/i });
+    const overlay = screen.getByRole("button", { name: /close modal/i });
     fireEvent.click(overlay);
 
     expect(openModalMock).toHaveBeenCalledWith(false);

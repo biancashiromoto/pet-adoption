@@ -1,6 +1,5 @@
-import { catNames } from 'cat-names';
-import { PetData } from '../types/PetData';
-
+import { catNames } from "cat-names";
+import { PetData } from "../types/PetData";
 
 export class Utils {
   /**
@@ -24,7 +23,7 @@ export class Utils {
    */
   public addPetsInfo(pets: PetData[]): PetData[] {
     pets.forEach((pet: PetData) => {
-      const randomIndex = Math.round((Math.random() * catNames.length + 10));
+      const randomIndex = Math.round(Math.random() * catNames.length + 10);
       let name = catNames[randomIndex];
 
       if (!name) {
@@ -35,17 +34,17 @@ export class Utils {
 
       pet.name = name;
       pet.age = age;
-      pet.species = pet.url.includes('cat') ? 'cat' : 'dog';
+      pet.species = pet.url.includes("cat") ? "cat" : "dog";
       pet.isFavorite = false;
     });
     return pets;
   }
-  
+
   /**
    * removeGifs
    */
   public removeGifs(pets: PetData[]): PetData[] {
-    return pets.filter((pet: PetData) => !pet.url.endsWith('gif'));
+    return pets.filter((pet: PetData) => !pet.url.endsWith("gif"));
   }
 
   public shuffleArray(array: PetData[]) {

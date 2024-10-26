@@ -4,12 +4,12 @@ import SpeciesFilter from "..";
 import { Context } from "../../../context";
 import { ContextProps } from "../../../context/index.types";
 
-const setSpecies = vi.fn(); 
+const setSpecies = vi.fn();
 const setShowAdoptionModal = vi.fn();
 
-describe('SpeciesFilter component - initially set to cats', () => {
+describe("SpeciesFilter component - initially set to cats", () => {
   const mockContextValue = {
-    species: 'cats',
+    species: "cats",
     setSpecies,
     setShowAdoptionModal,
   };
@@ -23,21 +23,21 @@ describe('SpeciesFilter component - initially set to cats', () => {
     );
   });
 
-  it('should be correctly rendered', () => {
-    const inputs = screen.getAllByRole('radio');
+  it("should be correctly rendered", () => {
+    const inputs = screen.getAllByRole("radio");
     expect(inputs[0]).toHaveAttribute("id", "cats");
     expect(inputs[1]).toHaveAttribute("id", "dogs");
   });
 
-  it('should toggle species to dogs', async () => {
+  it("should toggle species to dogs", async () => {
     fireEvent.click(screen.getByLabelText(/dogs/i));
-    expect(setSpecies).toHaveBeenCalledWith('dogs');
+    expect(setSpecies).toHaveBeenCalledWith("dogs");
   });
 });
 
-describe('SpeciesFilter component - initially set to dogs', () => {
+describe("SpeciesFilter component - initially set to dogs", () => {
   const mockContextValue = {
-    species: 'dogs',
+    species: "dogs",
     setSpecies,
     setShowAdoptionModal,
   };
@@ -51,8 +51,8 @@ describe('SpeciesFilter component - initially set to dogs', () => {
     );
   });
 
-  it('should toggle species to dogs', async () => {
+  it("should toggle species to dogs", async () => {
     fireEvent.click(screen.getByLabelText(/cats/i));
-    expect(setSpecies).toHaveBeenCalledWith('cats');
+    expect(setSpecies).toHaveBeenCalledWith("cats");
   });
 });
