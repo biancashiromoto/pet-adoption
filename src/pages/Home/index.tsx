@@ -26,30 +26,37 @@ const Home = () => {
     species,
     order,
     pets,
+    favorites,
   } = useContext(Context);
   const navigate = useNavigate();
   const { toggleFavorite } = useFavorites();
   const { isLoading, isFetching, error, refetchPets } = useFetchPets();
   const orderByAgeRef: RefObject<HTMLSelectElement> = createRef();
+  const favoritesRef: RefObject<HTMLSelectElement> = createRef();
   useAdoptionModal();
   useSetLocalStorage();
 
   const applyFilters = () => {
     const { dogs, cats } = pets as Pets;
-    let orderedPets: PetData[] = [];
+    let filteredPets: PetData[] = [...dogs, ...cats];
+
+    if (favorites !== "all") {
+      filteredPets = filteredPets.filter((pet: PetData) =>
+        favorites === "favorites" ? pet.isFavorite : !pet.isFavorite
+      );
+    }
+
     if (order !== "none") {
-      orderedPets = [...dogs, ...cats].sort((a: PetData, b: PetData) => {
+      filteredPets = filteredPets.sort((a: PetData, b: PetData) => {
         if (!a.age || !b.age) return 0;
         return order === "younger" ? a.age - b.age : b.age - a.age;
       });
-
-      setDisplayedPets({
-        cats: orderedPets.filter((pet: PetData) => pet.species === "cat"),
-        dogs: orderedPets.filter((pet: PetData) => pet.species === "dog"),
-      });
-    } else {
-      setDisplayedPets({ cats, dogs });
     }
+
+    setDisplayedPets({
+      cats: filteredPets.filter((pet: PetData) => pet.species === "cat"),
+      dogs: filteredPets.filter((pet: PetData) => pet.species === "dog"),
+    });
   };
 
   useEffect(() => {
@@ -60,7 +67,7 @@ const Home = () => {
 
   useEffect(() => {
     applyFilters();
-  }, [order]);
+  }, [order, favorites]);
 
   useEffect(() => {
     setDisplayedPets(pets);
@@ -79,7 +86,10 @@ const Home = () => {
         <Button.Label label="Update pets" />
       </Button.Root>
       <hr />
-      <FiltersContainer orderByAgeRef={orderByAgeRef} />
+      <FiltersContainer
+        orderByAgeRef={orderByAgeRef}
+        favoritesRef={favoritesRef}
+      />
       <hr />
       {(isLoading || isFetching) && <Loader />}
       <>
