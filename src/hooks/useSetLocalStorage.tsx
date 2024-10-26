@@ -8,9 +8,10 @@ const localPets = utils.getLocalStorage('pets') as unknown as Pets;
 
 const useSetLocalStorage = () => {
   const {
-    displayedPets,
-    setDisplayedPets,
-    species
+    pets,
+    setPets,
+    species,
+    setDisplayedPets
   } = useContext(Context);
 
   useEffect(() => {
@@ -18,11 +19,12 @@ const useSetLocalStorage = () => {
   }, [species]);
 
   useEffect(() => {
-    utils.setLocalStorage('pets', displayedPets);
-  }, [displayedPets]);
+    utils.setLocalStorage('pets', pets);
+  }, [pets]);
 
   useEffect(() => {
     if (localPets) {
+      setPets(localPets);
       setDisplayedPets(localPets);
     }
   }, []);
