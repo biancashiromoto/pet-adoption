@@ -24,11 +24,12 @@ const Home = () => {
     showUpdatePetsModal,
     setShowUpdatePetsModal,
     species,
-    order
+    order,
+    pets
   } = useContext(Context);
   const navigate = useNavigate();
   const { toggleFavorite } = useFavorites();
-  const { pets, isLoading, isFetching, error, refetchPets } = useFetchPets();
+  const { isLoading, isFetching, error, refetchPets } = useFetchPets();
   const orderByAgeRef: RefObject<HTMLSelectElement> = createRef();
   useAdoptionModal();
   useSetLocalStorage();
@@ -58,12 +59,10 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    if (!pets) return;
     applyFilters();
-  }, [order])
+  }, [order]);
 
   useEffect(() => {
-    if (!pets) return;
     setDisplayedPets(pets);
   }, [pets]);
 
