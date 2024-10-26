@@ -7,10 +7,10 @@ import { Pets } from '../context/Provider';
 const utils = new Utils();
 
 const useFavorites = () => {
-  const { setDisplayedPets } = useContext(Context);
+  const { setPets } = useContext(Context);
 
   const toggleFavorite = (id: PetData['id']) => {
-    setDisplayedPets((prevPets: Pets) => {
+    setPets((prevPets: Pets) => {
       const updatedDogs = prevPets.dogs.map(pet => {
         if (pet.id === id) {
           return { ...pet, isFavorite: !pet.isFavorite };
