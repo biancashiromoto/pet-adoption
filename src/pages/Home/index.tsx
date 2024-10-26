@@ -27,6 +27,9 @@ const Home = () => {
     order,
     pets,
     favorites,
+    setPets,
+    setOrder,
+    setFavorites,
   } = useContext(Context);
   const navigate = useNavigate();
   const { toggleFavorite } = useFavorites();
@@ -56,6 +59,30 @@ const Home = () => {
     setDisplayedPets({
       cats: filteredPets.filter((pet: PetData) => pet.species === "cat"),
       dogs: filteredPets.filter((pet: PetData) => pet.species === "dog"),
+    });
+  };
+
+  const clearFilters = () => {
+    setOrder("none");
+    setFavorites("all");
+    if (orderByAgeRef?.current) {
+      orderByAgeRef.current.value = "none";
+    }
+    if (favoritesRef?.current) {
+      favoritesRef.current.value = "all";
+    }
+  };
+
+  const resetFavorites = () => {
+    const { cats, dogs } = pets;
+    const updatedPets = [...cats, ...dogs].map((pet: PetData) => ({
+      ...pet,
+      isFavorite: false,
+    }));
+
+    setPets({
+      cats: updatedPets.filter((pet: PetData) => pet.species === "cat"),
+      dogs: updatedPets.filter((pet: PetData) => pet.species === "dog"),
     });
   };
 
@@ -90,6 +117,26 @@ const Home = () => {
         orderByAgeRef={orderByAgeRef}
         favoritesRef={favoritesRef}
       />
+      <hr />
+
+      <section className="filter-container__buttons">
+        <Button.Root
+          onClick={clearFilters}
+          ariaLabel="Clear filters"
+          className="button__clear-filters"
+          disabled={false}
+        >
+          <Button.Label label="Clear filters" />
+        </Button.Root>
+        <Button.Root
+          onClick={() => resetFavorites()}
+          ariaLabel="Reset favorites"
+          className="button__reset-favorites"
+          disabled={false}
+        >
+          <Button.Label label="Reset favorites" />
+        </Button.Root>
+      </section>
       <hr />
       {(isLoading || isFetching) && <Loader />}
       <>
