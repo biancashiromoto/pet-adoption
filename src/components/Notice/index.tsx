@@ -4,16 +4,16 @@ import { NoticeProps } from "./index.types";
 
 const Notice = ({ children, setShowNotice }: NoticeProps) => {
   return (
-    <section className='notice'>
+    <section className="notice" data-testid="notice">
       <Button.Root
         onClick={() => setShowNotice(false)}
         ariaLabel="Close notice"
       >
         <IoMdCloseCircleOutline />
       </Button.Root>
-      { children }
+      {children}
     </section>
-  )
-}
+  );
+};
 
-export default Notice
+export default Notice;

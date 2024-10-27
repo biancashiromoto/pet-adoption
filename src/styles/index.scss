@@ -1,15 +1,15 @@
+@use "./__card.scss";
+@use "./__overlay.scss";
+@use "./__modal.scss";
+@use "./__filter-container.scss";
+@use "./__loader.scss";
+@use "./__form.scss";
+@use "./__notice.scss";
+@use "./__header.scss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import "./__card.scss";
-@import "./__overlay.scss";
-@import "./__modal.scss";
-@import "./__filter-container.scss";
-@import "./__loader.scss";
-@import "./__form.scss";
-@import "./__notice.scss";
-@import "./__header.scss";
 
 * {
   margin: 0;
