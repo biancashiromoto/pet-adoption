@@ -14,9 +14,9 @@ const pet: Pet = {
   isFavorite: false,
 };
 describe("Card component", () => {
-  const setSelectedPet: vi.Mock = vi.fn();
-  const setShowModal: vi.Mock = vi.fn();
-  const toggleFavorite: vi.Mock = vi.fn();
+  const setSelectedPet = vi.fn();
+  const setShowModal = vi.fn();
+  const toggleFavorite = vi.fn();
 
   const mockProps = {
     pet,

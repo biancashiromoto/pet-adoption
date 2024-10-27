@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from "vitest";
 import Notice from "..";
 
 describe("Modal component", () => {
-  const setShowNotice: vi.Mock = vi.fn();
+  const setShowNotice = vi.fn();
 
   beforeEach(() => {
     render(

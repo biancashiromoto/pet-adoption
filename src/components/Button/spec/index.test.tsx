@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { Button } from "..";
 describe("Button component", () => {
-  const onClick: vi.Mock = vi.fn();
+  const onClick = vi.fn();
 
   const renderButton = () => {
     render(

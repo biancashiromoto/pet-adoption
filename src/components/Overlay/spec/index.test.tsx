@@ -3,7 +3,7 @@ import { describe, it, expect, vi } from "vitest";
 import Overlay from "..";
 
 describe("Card component", () => {
-  const openModal: vi.Mock = vi.fn();
+  const openModal = vi.fn();
 
   it("should call openModal function when clicked", () => {
     render(<Overlay openModal={openModal} />);
