@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @use "./__card.scss";
 @use "./__overlay.scss";
 @use "./__modal.scss";
@@ -10,6 +6,10 @@
 @use "./__form.scss";
 @use "./__notice.scss";
 @use "./__header.scss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
   margin: 0;
