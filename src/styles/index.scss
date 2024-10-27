@@ -2,16 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-@import "./components/__card.scss";
-@import "./components/__overlay.scss";
-@import "./components/__modal.scss";
-@import "./components/__filter-container.scss";
-@import "./components/__loader.scss";
-@import "./components/__form.scss";
-@import "./components/__notice.scss";
-@import "./components/__header.scss";
-@import "./components/__species-filter.scss";
-@import "./pages/__home.scss";
+@import "./__card.scss";
+@import "./__overlay.scss";
+@import "./__modal.scss";
+@import "./__filter-container.scss";
+@import "./__loader.scss";
+@import "./__form.scss";
+@import "./__notice.scss";
+@import "./__header.scss";
 
 * {
   margin: 0;

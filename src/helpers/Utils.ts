@@ -1,5 +1,6 @@
-import { catNames } from "cat-names";
-import { PetData } from "../types/PetData";
+import { catNames } from 'cat-names';
+import { Pet } from '../types/Pet';
+
 
 export class Utils {
   /**
@@ -12,7 +13,7 @@ export class Utils {
   /**
    * getLocalStorage
    */
-  public getLocalStorage(key: string): any | null {
+  public getLocalStorage(key: string): Pet[] | null {
     const item = localStorage.getItem(key);
     if (item) return JSON.parse(item);
     return null;
@@ -21,9 +22,9 @@ export class Utils {
   /**
    * addPetsInfo
    */
-  public addPetsInfo(pets: PetData[]): PetData[] {
-    pets.forEach((pet: PetData) => {
-      const randomIndex = Math.round(Math.random() * catNames.length + 10);
+  public addPetsInfo(pets: Pet[]): Pet[] {
+    pets.forEach((pet: Pet) => {
+      const randomIndex = Math.round((Math.random() * catNames.length + 10));
       let name = catNames[randomIndex];
 
       if (!name) {
@@ -34,20 +35,20 @@ export class Utils {
 
       pet.name = name;
       pet.age = age;
-      pet.species = pet.url.includes("cat") ? "cat" : "dog";
+      pet.species = pet.url.includes('cat') ? 'cat' : 'dog';
       pet.isFavorite = false;
     });
     return pets;
   }
-
+  
   /**
    * removeGifs
    */
-  public removeGifs(pets: PetData[]): PetData[] {
-    return pets.filter((pet: PetData) => !pet.url.endsWith("gif"));
+  public removeGifs(pets: Pet[]): Pet[] {
+    return pets.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
   }
 
-  public shuffleArray(array: PetData[]) {
+  public shuffleArray(array: Pet[]) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];

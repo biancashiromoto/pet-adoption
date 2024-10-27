@@ -1,16 +1,21 @@
-import { ButtonRootProps } from "./index.types";
+import { ReactNode } from "react";
+
+interface ButtonRootProps {
+  ariaLabel?: string;
+  className?: string;
+  children?: ReactNode;
+  onClick: (arg0: any) => void;
+}
 
 const ButtonRoot = ({
   ariaLabel,
   children,
-  className = "",
-  disabled = false,
+  className = '',
   onClick,
   ...rest
 }: ButtonRootProps) => {
   return (
     <button
-      disabled={disabled}
       aria-label={ariaLabel}
       className={className}
       onClick={onClick}
@@ -18,9 +23,9 @@ const ButtonRoot = ({
       type="button"
       {...rest}
     >
-      {children}
+      { children }
     </button>
-  );
-};
+  )
+}
 
-export default ButtonRoot;
+export default ButtonRoot

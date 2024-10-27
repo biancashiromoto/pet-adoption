@@ -5,4 +5,4 @@ export type ModalProps = {
   className?: string;
   title?: string;
   text?: string;
-};
+}

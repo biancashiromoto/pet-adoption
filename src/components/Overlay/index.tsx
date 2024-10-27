@@ -1,4 +1,4 @@
-import { OverlayProps } from "./index.types";
+import { OverlayProps } from "./index.types"
 
 const Overlay = ({ openModal }: OverlayProps) => {
   return (
@@ -8,7 +8,7 @@ const Overlay = ({ openModal }: OverlayProps) => {
       role="button"
       onClick={() => openModal(false)}
     />
-  );
-};
+  )
+}
 
-export default Overlay;
+export default Overlay

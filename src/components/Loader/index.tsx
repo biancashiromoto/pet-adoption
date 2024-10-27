@@ -1,12 +1,15 @@
-import Loading from "../../assets/loading.gif";
+import Loading from '../../assets/loading.gif'
 
 const Loader = () => {
   return (
-    <div className="loader">
+    <div className='loader'>
       Loading...
-      <img alt="Loading gif" src={Loading} />
+      <img
+        alt='Loading gif'
+        src={Loading}
+      />
     </div>
-  );
-};
+  )
+}
 
-export default Loader;
+export default Loader
