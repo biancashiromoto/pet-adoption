@@ -10,6 +10,7 @@ import { Pet } from "../../types/Pet";
 import { Context } from "../../context";
 import fetchPets from "../../services/fetchPets";
 import { useQuery } from "@tanstack/react-query";
+import useEscapeKeyClose from "../../hooks/useEscapeKeyClose";
 
 const Home = () => {
   const speciesRef = createRef<HTMLSelectElement>();
@@ -34,6 +35,7 @@ const Home = () => {
     setFavoritesFilter,
   } = useContext(Context);
   const navigate = useNavigate();
+  useEscapeKeyClose();
 
   const {
     isLoading,
@@ -93,33 +95,16 @@ const Home = () => {
   }, [pets, speciesFilter, orderFilter, favoritesFilter]);
 
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        if (showAdoptionModal) {
-          setShowAdoptionModal(false);
-        }
-        if (showUpdatePetsModal) {
-          setShowUpdatePetsModal(false);
-        }
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [showAdoptionModal, showUpdatePetsModal]);
+    if (showAdoptionModal) {
+      document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
+    } else {
+      document.title = "Home | Pet Adoption";
+    }
+  }, [showAdoptionModal]);
 
   useEffect(() => {
     document.title = "Home | Pet Adoption";
   }, []);
-
-  useEffect(() => {
-    if (showAdoptionModal) {
-      document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
-    }
-  }, [showAdoptionModal]);
 
   const clearFilters = () => {
     setDisplayedPets(pets);
