@@ -1,8 +1,5 @@
 import { createRef, useContext, useEffect } from "react";
-import Modal from "../../components/Modal";
 import { Button } from "../../components/Button";
-import { useNavigate } from "react-router-dom";
-import Overlay from "../../components/Overlay";
 import Card from "../../components/Card";
 import FiltersContainer from "../../components/FiltersContainer";
 import Loader from "../../components/Loader";
@@ -11,6 +8,8 @@ import { Context } from "../../context";
 import fetchPets from "../../services/fetchPets";
 import { useQuery } from "@tanstack/react-query";
 import useEscapeKeyClose from "../../hooks/useEscapeKeyClose";
+import ModalAdoptPets from "../../ModalAdoptPets";
+import ModalUpdatePets from "../../components/ModalUpdatePets";
 
 const Home = () => {
   const speciesRef = createRef<HTMLSelectElement>();
@@ -34,17 +33,17 @@ const Home = () => {
     favoritesFilter,
     setFavoritesFilter,
   } = useContext(Context);
-  const navigate = useNavigate();
   useEscapeKeyClose();
 
   const {
     isLoading,
+    isFetching,
     error,
     data: fetchedPets,
+    refetch,
   } = useQuery({
     queryKey: ["fetchPets"],
     queryFn: fetchPets,
-    staleTime: Infinity,
   });
 
   useEffect(() => {
@@ -156,8 +155,8 @@ const Home = () => {
         resetFavorites={resetFavorites}
       />
       <hr />
-      {isLoading && <Loader />}
-      {!error && !isLoading && (
+      {(isLoading || isFetching) && <Loader />}
+      {!error && !isLoading && !isFetching && (
         <>
           <main>
             {displayedPets &&
@@ -171,61 +170,8 @@ const Home = () => {
                 />
               ))}
           </main>
-          {showAdoptionModal && (
-            <>
-              <Overlay openModal={setShowAdoptionModal} />
-              <Modal
-                title={`Would you like to adopt ${selectedPet[0].name}?`}
-                text="You will be redirected to the adoption form"
-              >
-                <img
-                  alt={`Random picture of a ${selectedPet[0].species}`}
-                  src={selectedPet[0].url}
-                />
-                <div className="modal__buttons-container">
-                  <Button.Root
-                    ariaLabel="Yes"
-                    onClick={() => navigate("/adopt")}
-                  >
-                    <Button.Label label="Yes" />
-                  </Button.Root>
-                  <Button.Root
-                    ariaLabel="No"
-                    onClick={() => setShowAdoptionModal(false)}
-                  >
-                    <Button.Label label="No" />
-                  </Button.Root>
-                </div>
-              </Modal>
-            </>
-          )}
-          {showUpdatePetsModal && (
-            <>
-              <Overlay openModal={setShowUpdatePetsModal} />
-              <Modal
-                text="Updating pets will remove the current list and fetch new ones. Do you want to continue?"
-                title="Update pets?"
-              >
-                <div className="modal__buttons-container">
-                  <Button.Root
-                    ariaLabel="Yes"
-                    onClick={() => {
-                      fetchPets();
-                      setShowUpdatePetsModal(false);
-                    }}
-                  >
-                    <Button.Label label="Yes" />
-                  </Button.Root>
-                  <Button.Root
-                    ariaLabel="No"
-                    onClick={() => setShowUpdatePetsModal(false)}
-                  >
-                    <Button.Label label="No" />
-                  </Button.Root>
-                </div>
-              </Modal>
-            </>
-          )}
+          {showAdoptionModal && <ModalAdoptPets />}
+          {showUpdatePetsModal && <ModalUpdatePets refetch={refetch} />}
         </>
       )}
     </>
