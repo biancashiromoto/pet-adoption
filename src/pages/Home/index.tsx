@@ -8,7 +8,7 @@ import { Context } from "../../context";
 import fetchPets from "../../services/fetchPets";
 import { useQuery } from "@tanstack/react-query";
 import useEscapeKeyClose from "../../hooks/useEscapeKeyClose";
-import ModalAdoptPets from "../../ModalAdoptPets";
+import ModalAdoptPets from "../../components/ModalAdoptPets";
 import ModalUpdatePets from "../../components/ModalUpdatePets";
 
 const Home = () => {
