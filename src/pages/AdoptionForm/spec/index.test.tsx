@@ -4,6 +4,8 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 import AdoptionForm from "..";
 
+const mockNavigate = vi.fn();
+
 vi.mock("react-router-dom", async () => {
   const original =
     await vi.importActual<typeof import("react-router-dom")>(
@@ -11,7 +13,7 @@ vi.mock("react-router-dom", async () => {
     );
   return {
     ...original,
-    useNavigate: () => vi.fn(),
+    useNavigate: () => mockNavigate,
   };
 });
 
@@ -62,6 +64,8 @@ describe("AdoptionForm Component", () => {
     expect(
       screen.getByText(/we will contact you as soon as possible/i)
     ).toBeInTheDocument();
+    fireEvent.click(screen.getByText("Ok"));
+    expect(mockNavigate).toHaveBeenCalledWith("/");
   });
 
   it("closes modal when 'Escape' is pressed", async () => {
