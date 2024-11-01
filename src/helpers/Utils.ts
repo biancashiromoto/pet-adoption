@@ -1,6 +1,5 @@
-import { catNames } from 'cat-names';
-import { Pet } from '../types/Pet';
-
+import { catNames } from "cat-names";
+import { Pet } from "../types/Pet";
 
 export class Utils {
   /**
@@ -24,7 +23,7 @@ export class Utils {
    */
   public addPetsInfo(pets: Pet[]): Pet[] {
     pets.forEach((pet: Pet) => {
-      const randomIndex = Math.round((Math.random() * catNames.length + 10));
+      const randomIndex = Math.round(Math.random() * catNames.length + 10);
       let name = catNames[randomIndex];
 
       if (!name) {
@@ -35,17 +34,17 @@ export class Utils {
 
       pet.name = name;
       pet.age = age;
-      pet.species = pet.url.includes('cat') ? 'cat' : 'dog';
+      pet.species = pet.url.includes("cat") ? "cat" : "dog";
       pet.isFavorite = false;
     });
     return pets;
   }
-  
+
   /**
    * removeGifs
    */
   public removeGifs(pets: Pet[]): Pet[] {
-    return pets.filter((pet: Pet) => pet.url.split('.').pop() !== 'gif');
+    return pets.filter((pet: Pet) => pet.url.split(".").pop() !== "gif");
   }
 
   public shuffleArray(array: Pet[]) {
@@ -54,5 +53,13 @@ export class Utils {
       [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+  }
+
+  /**
+   * formatPetsData
+   */
+  public formatPetsData(pets: Pet[]): Pet[] {
+    const filtered = this.addPetsInfo(this.removeGifs(pets));
+    return this.shuffleArray(filtered) || [];
   }
 }
