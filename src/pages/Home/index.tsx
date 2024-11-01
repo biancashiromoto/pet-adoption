@@ -10,6 +10,9 @@ import { useQuery } from "@tanstack/react-query";
 import useEscapeKeyClose from "../../hooks/useEscapeKeyClose";
 import ModalAdoptPets from "../../components/ModalAdoptPets";
 import ModalUpdatePets from "../../components/ModalUpdatePets";
+import { Utils } from "../../helpers/Utils";
+
+const utils = new Utils();
 
 const Home = () => {
   const speciesRef = createRef<HTMLSelectElement>();
@@ -136,6 +139,10 @@ const Home = () => {
       return updatedPets;
     });
   };
+
+  useEffect(() => {
+    utils.setLocalStorage("pets", pets);
+  }, [pets]);
 
   return (
     <>
