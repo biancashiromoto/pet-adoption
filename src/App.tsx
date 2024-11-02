@@ -69,7 +69,11 @@ const AppContent = () => {
       {location.pathname !== "/" && (
         <>
           <hr />
-          <Link className="link" to="/" aria-label="Return to Home page">
+          <Link
+            className="link link__return"
+            to="/"
+            aria-label="Return to Home page"
+          >
             <PiKeyReturnThin />
           </Link>
         </>

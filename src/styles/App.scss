@@ -14,31 +14,33 @@ hr {
   align-items: center;
   justify-content: center;
   color: black;
-  font-size: 36px;
   text-decoration: none;
-  position: relative;
-  gap: 10px;
-  box-sizing: border-box;
 
-  &:hover::after {
-    content: "Return to previous page";
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #333;
-    color: #fff;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    z-index: 10;
-    opacity: 1;
-    transition: opacity 0.2s ease-in-out;
-  }
+  &__return {
+    font-size: 36px;
+    position: relative;
+    gap: 10px;
 
-  &::after {
-    content: "";
-    opacity: 0;
+    &:hover::after {
+      content: "Return to previous page";
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      z-index: 10;
+      opacity: 1;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    &::after {
+      content: "";
+      opacity: 0;
+    }
   }
 }
