@@ -15,29 +15,23 @@ import Header from "./components/Header";
 import { Utils } from "./helpers/Utils";
 
 const utils = new Utils();
+const storagedDontShowAgain: boolean =
+  utils.getLocalStorage("dont-show-again") === "true";
 
 const AppContent = () => {
-  const storagedShowNotice = utils.getLocalStorage("dont-show-again") === true;
   const navigate = useNavigate();
   const location = useLocation();
-  const [showNotice, setShowNotice] = useState<boolean>(true);
-  const [dontShowAgain, setDontShowAgain] = useState(
-    storagedShowNotice === true
+  const [showNotice, setShowNotice] = useState<boolean>(!storagedDontShowAgain);
+  const [dontShowAgain, setDontShowAgain] = useState<boolean>(
+    storagedDontShowAgain
   );
 
   useEffect(() => {
-    setShowNotice(true);
-    setShowNotice(storagedShowNotice === false);
+    setShowNotice(!dontShowAgain);
   }, [location.pathname]);
 
   useEffect(() => {
-    const storagedShowNotice = utils.getLocalStorage("dont-show-again");
-    setDontShowAgain(storagedShowNotice !== false);
-    setShowNotice(storagedShowNotice === false);
-  }, []);
-
-  useEffect(() => {
-    utils.setLocalStorage("dont-show-again", dontShowAgain);
+    utils.setLocalStorage("dont-show-again", dontShowAgain ? "true" : "false");
   }, [dontShowAgain]);
 
   return (
@@ -63,9 +57,7 @@ const AppContent = () => {
               id="dont-show-again"
               type="checkbox"
               checked={dontShowAgain}
-              onChange={() =>
-                setDontShowAgain((prevState: boolean) => !prevState)
-              }
+              onChange={() => setDontShowAgain((prevState) => !prevState)}
             />
             Don't show again
           </label>
