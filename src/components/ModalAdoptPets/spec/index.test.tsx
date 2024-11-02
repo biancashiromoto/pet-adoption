@@ -52,6 +52,10 @@ describe("ModalAdoptPets", () => {
     setOrderFilter: vi.fn(),
     favoritesFilter: "all",
     setFavoritesFilter: vi.fn(),
+    showNotice: false,
+    setShowNotice: vi.fn(),
+    dontShowNoticeAgain: false,
+    setDontShowNoticeAgain: vi.fn(),
   };
 
   const renderModal = () =>
