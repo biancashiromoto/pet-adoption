@@ -23,4 +23,8 @@ export interface ContextProps {
   setOrderFilter: Dispatch<SetStateAction<OrderByAgeFilter>>;
   favoritesFilter: FavoritesFilter;
   setFavoritesFilter: Dispatch<SetStateAction<FavoritesFilter>>;
+  showNotice: boolean;
+  setShowNotice: Dispatch<SetStateAction<boolean>>;
+  dontShowNoticeAgain: boolean;
+  setDontShowNoticeAgain: Dispatch<SetStateAction<boolean>>;
 }

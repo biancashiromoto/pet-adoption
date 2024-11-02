@@ -63,6 +63,10 @@ describe("AdoptionForm Component", () => {
           setSpeciesFilter: vi.fn(),
           showAdoptionModal: false,
           showUpdatePetsModal: false,
+          showNotice: false,
+          setShowNotice: vi.fn(),
+          dontShowNoticeAgain: false,
+          setDontShowNoticeAgain: vi.fn(),
         }}
       >
         <BrowserRouter>

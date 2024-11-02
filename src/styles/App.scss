@@ -21,26 +21,28 @@ hr {
     position: relative;
     gap: 10px;
 
-    &:hover::after {
-      content: "Return to previous page";
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #333;
-      color: #fff;
-      padding: 5px 10px;
-      border-radius: 4px;
-      font-size: 12px;
-      white-space: nowrap;
-      z-index: 10;
-      opacity: 1;
-      transition: opacity 0.2s ease-in-out;
-    }
+    @media screen and (min-width: 1024px) {
+      &:hover::after {
+        content: "Return to previous page";
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        z-index: 10;
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+      }
 
-    &::after {
-      content: "";
-      opacity: 0;
+      &::after {
+        content: "";
+        opacity: 0;
+      }
     }
   }
 }
