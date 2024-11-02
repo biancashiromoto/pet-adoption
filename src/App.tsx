@@ -3,23 +3,22 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  useNavigate,
   useLocation,
+  Link,
 } from "react-router-dom";
 import Home from "./pages/Home";
 import AdoptionForm from "./pages/AdoptionForm";
-import { Button } from "./components/Button";
 import Notice from "./components/Notice";
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import { Utils } from "./helpers/Utils";
+import { PiKeyReturnThin } from "react-icons/pi";
 
 const utils = new Utils();
 const storagedDontShowAgain: boolean =
   utils.getLocalStorage("dont-show-again") === "true";
 
 const AppContent = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const [showNotice, setShowNotice] = useState<boolean>(!storagedDontShowAgain);
   const [dontShowAgain, setDontShowAgain] = useState<boolean>(
@@ -34,45 +33,45 @@ const AppContent = () => {
     utils.setLocalStorage("dont-show-again", dontShowAgain ? "true" : "false");
   }, [dontShowAgain]);
 
+  const renderNotice = () => {
+    if (!showNotice) return null;
+    return (
+      <Notice setShowNotice={setShowNotice}>
+        <p>
+          <strong>Note: </strong>
+          This website is a demo created for learning and development purposes.
+          The pet names and images are fetched from an external API, and their
+          ages are randomly assigned. No real adoptions take place here.
+          <br />
+          For more details, see the{" "}
+          <a href="https://github.com/biancashiromoto/pet-adoption/blob/main/README.md">
+            README
+          </a>{" "}
+          file.
+        </p>
+        <label htmlFor="dont-show-again" className="show-notice-again">
+          <input
+            id="dont-show-again"
+            type="checkbox"
+            checked={dontShowAgain}
+            onChange={() => setDontShowAgain((prevState) => !prevState)}
+          />
+          Don't show again
+        </label>
+      </Notice>
+    );
+  };
+
   return (
     <>
       <Header />
-      {showNotice && (
-        <Notice setShowNotice={setShowNotice}>
-          <p>
-            <strong>Note: </strong>
-            This website is a demo created for learning and development
-            purposes. The pet names and images are fetched from an external API,
-            and their ages are randomly assigned. No real adoptions take place
-            here.
-            <br />
-            For more details, see the{" "}
-            <a href="https://github.com/biancashiromoto/pet-adoption/blob/main/README.md">
-              README
-            </a>{" "}
-            file.
-          </p>
-          <label htmlFor="dont-show-again" className="show-notice-again">
-            <input
-              id="dont-show-again"
-              type="checkbox"
-              checked={dontShowAgain}
-              onChange={() => setDontShowAgain((prevState) => !prevState)}
-            />
-            Don't show again
-          </label>
-        </Notice>
-      )}
+      {renderNotice()}
       {location.pathname !== "/" && (
         <>
           <hr />
-          <Button.Root
-            ariaLabel="Return to previous page"
-            className="button__return"
-            onClick={() => navigate(-1)}
-          >
-            <Button.Label label="Go back" />
-          </Button.Root>
+          <Link className="link" to="/" aria-label="Return to Home page">
+            <PiKeyReturnThin />
+          </Link>
         </>
       )}
       <hr />
