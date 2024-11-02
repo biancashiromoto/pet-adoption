@@ -17,23 +17,25 @@ import { Utils } from "./helpers/Utils";
 const utils = new Utils();
 
 const AppContent = () => {
-  const storagedShowNotice = utils.getLocalStorage("dont-show-again") === true;
+  const storagedShowNotice = utils.getLocalStorage("dont-show-again");
   const navigate = useNavigate();
   const location = useLocation();
   const [showNotice, setShowNotice] = useState<boolean>(true);
-  const [dontShowAgain, setDontShowAgain] = useState(
-    storagedShowNotice === true
-  );
+  const [dontShowAgain, setDontShowAgain] = useState(storagedShowNotice);
 
   useEffect(() => {
     setShowNotice(true);
-    setShowNotice(storagedShowNotice === false);
   }, [location.pathname]);
 
   useEffect(() => {
     const storagedShowNotice = utils.getLocalStorage("dont-show-again");
-    setDontShowAgain(storagedShowNotice !== false);
-    setShowNotice(storagedShowNotice === false);
+    if (!storagedShowNotice) {
+      setDontShowAgain(false);
+      setShowNotice(true);
+    } else {
+      setDontShowAgain(true);
+      setShowNotice(false);
+    }
   }, []);
 
   useEffect(() => {
