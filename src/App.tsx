@@ -9,29 +9,33 @@ import {
 import Home from "./pages/Home";
 import AdoptionForm from "./pages/AdoptionForm";
 import Notice from "./components/Notice";
-import { useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import Header from "./components/Header";
 import { Utils } from "./helpers/Utils";
 import { PiKeyReturnThin } from "react-icons/pi";
+import { Context } from "./context";
 
 const utils = new Utils();
-const storagedDontShowAgain: boolean =
-  utils.getLocalStorage("dont-show-again") === "true";
 
 const AppContent = () => {
   const location = useLocation();
-  const [showNotice, setShowNotice] = useState<boolean>(!storagedDontShowAgain);
-  const [dontShowAgain, setDontShowAgain] = useState<boolean>(
-    storagedDontShowAgain
-  );
+  const {
+    dontShowNoticeAgain,
+    setShowNotice,
+    showNotice,
+    setDontShowNoticeAgain,
+  } = useContext(Context);
 
   useEffect(() => {
-    setShowNotice(!dontShowAgain);
+    setShowNotice(!dontShowNoticeAgain);
   }, [location.pathname]);
 
   useEffect(() => {
-    utils.setLocalStorage("dont-show-again", dontShowAgain ? "true" : "false");
-  }, [dontShowAgain]);
+    utils.setLocalStorage(
+      "dont-show-again",
+      dontShowNoticeAgain ? "true" : "false"
+    );
+  }, [dontShowNoticeAgain]);
 
   const renderNotice = () => {
     if (!showNotice) return null;
@@ -53,8 +57,8 @@ const AppContent = () => {
           <input
             id="dont-show-again"
             type="checkbox"
-            checked={dontShowAgain}
-            onChange={() => setDontShowAgain((prevState) => !prevState)}
+            checked={dontShowNoticeAgain}
+            onChange={() => setDontShowNoticeAgain((prevState) => !prevState)}
           />
           Don't show again
         </label>
