@@ -12,6 +12,12 @@ Users can also make a new request to refresh the displayed pets, mark pets as fa
 
 The data is then stored in localStorage to prevent unnecessary future API requests.
 
+## 📱 Responsiveness
+
+This project is currently optimized for mobile devices. The design and layout prioritize a smooth user experience on smaller screens, ensuring that users can easily navigate, view, and interact with all features on smartphones and tablets.
+
+For the best experience, try using the app on a mobile device.
+
 ## 📝 Installation
 
 To run this app, make sure you have Node.js installed on your computer and then follow the following instructions.
@@ -41,6 +47,12 @@ As imagens dos pets são obtidas da [The Cat API](https://thecatapi.com/) e da [
 Também é possível fazer uma nova requisição e atualizar os pets exibidos, além de marcá-los como favoritos e filtrá-los por espécie e ordená-los por idade.
 
 Os dados são então armazenados no localStorage, para evitar requisições futuras desnecessárias.
+
+## 📱 Responsividade
+
+Este projeto foi desenvolvido com foco em dispositivos móveis. O design e o layout foram pensados para proporcionar uma experiência de usuário fluida em telas menores, garantindo que os usuários possam navegar, visualizar e interagir facilmente com todas as funcionalidades em smartphones e tablets.
+
+Para a melhor experiência, experimente usar o app em um dispositivo móvel.
 
 ## 📝 Instalação
 
