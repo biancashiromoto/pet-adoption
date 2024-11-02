@@ -1,4 +1,4 @@
-import { createRef, useContext, useEffect } from "react";
+import { createRef, RefObject, useContext, useEffect } from "react";
 import { Button } from "../../components/Button";
 import Card from "../../components/Card";
 import FiltersContainer from "../../components/FiltersContainer";
@@ -12,6 +12,11 @@ import ModalAdoptPets from "../../components/ModalAdoptPets";
 import ModalUpdatePets from "../../components/ModalUpdatePets";
 import { Utils } from "../../helpers/Utils";
 import useUpdatePageTitle from "../../hooks/useUpdatePageTitle";
+import {
+  FavoritesFilter,
+  OrderByAgeFilter,
+  SpeciesFilter,
+} from "../../components/FiltersContainer/index.types";
 
 const utils = new Utils();
 
@@ -103,23 +108,23 @@ const Home = () => {
       : "Home | Pet Adoption"
   );
 
+  const updateRef = (
+    ref: RefObject<HTMLSelectElement>,
+    newValue: SpeciesFilter | OrderByAgeFilter | FavoritesFilter
+  ) => {
+    if (!ref.current) return;
+    ref.current.value = newValue;
+  };
+
   const clearFilters = () => {
     setDisplayedPets(pets);
     setOrderFilter("none");
     setSpeciesFilter("all");
     setFavoritesFilter("all");
 
-    if (speciesRef.current) {
-      speciesRef.current.value = "all";
-    }
-
-    if (orderRef.current) {
-      orderRef.current.value = "none";
-    }
-
-    if (favoriteRef.current) {
-      favoriteRef.current.value = "all";
-    }
+    updateRef(speciesRef, "all");
+    updateRef(orderRef, "none");
+    updateRef(favoriteRef, "all");
   };
 
   const toggleFavorite = (id: Pet["id"]) => {
