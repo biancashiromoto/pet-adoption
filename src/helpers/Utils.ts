@@ -12,7 +12,7 @@ export class Utils {
   /**
    * getLocalStorage
    */
-  public getLocalStorage(key: string) {
+  public getLocalStorage(key: string): Pet[] | null {
     const item = localStorage.getItem(key);
     if (item) return JSON.parse(item);
     return null;
