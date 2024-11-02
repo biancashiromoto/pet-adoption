@@ -11,6 +11,7 @@ import useEscapeKeyClose from "../../hooks/useEscapeKeyClose";
 import ModalAdoptPets from "../../components/ModalAdoptPets";
 import ModalUpdatePets from "../../components/ModalUpdatePets";
 import { Utils } from "../../helpers/Utils";
+import useUpdatePageTitle from "../../hooks/useUpdatePageTitle";
 
 const utils = new Utils();
 
@@ -96,17 +97,11 @@ const Home = () => {
     applyFilters();
   }, [pets, speciesFilter, orderFilter, favoritesFilter]);
 
-  useEffect(() => {
-    if (showAdoptionModal) {
-      document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
-    } else {
-      document.title = "Home | Pet Adoption";
-    }
-  }, [showAdoptionModal]);
-
-  useEffect(() => {
-    document.title = "Home | Pet Adoption";
-  }, []);
+  useUpdatePageTitle(
+    showAdoptionModal && selectedPet.length > 0
+      ? `Adopt ${selectedPet[0].name} | Pet Adoption`
+      : "Home | Pet Adoption"
+  );
 
   const clearFilters = () => {
     setDisplayedPets(pets);
