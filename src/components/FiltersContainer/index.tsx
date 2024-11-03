@@ -18,8 +18,7 @@ const FiltersContainer = ({
   favoriteRef,
   resetFavorites,
 }: FiltersContainerProps) => {
-  const { setFavoritesFilter, setOrderFilter, setSpeciesFilter } =
-    useContext(Context);
+  const { setFavoritesFilter, setOrderFilter } = useContext(Context);
   return (
     <article className="filter-container">
       <Filter
