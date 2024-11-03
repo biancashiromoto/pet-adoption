@@ -5,6 +5,7 @@ import {
   OrderByAgeFilter,
   SpeciesFilter,
 } from "../components/FiltersContainer/index.types";
+import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
 
 export interface ContextProps {
   pets: Pet[];
@@ -27,4 +28,9 @@ export interface ContextProps {
   setShowNotice: Dispatch<SetStateAction<boolean>>;
   dontShowNoticeAgain: boolean;
   setDontShowNoticeAgain: Dispatch<SetStateAction<boolean>>;
+  isLoadingOrFetchingData: boolean;
+  error: Error | null;
+  refetch: (
+    options?: RefetchOptions | undefined
+  ) => Promise<QueryObserverResult<Pet[], Error>>;
 }
