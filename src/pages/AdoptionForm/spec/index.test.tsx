@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import AdoptionForm from "..";
 import { Context } from "../../../context";
 import { Pet } from "../../../types/Pet";
+import { ContextProps } from "../../../context/index.types";
 
 const mockNavigate = vi.fn();
 
@@ -46,28 +47,11 @@ describe("AdoptionForm Component", () => {
   const renderAdoptionForm = () => {
     return render(
       <Context.Provider
-        value={{
-          selectedPet: [pets[0]],
-          pets,
-          displayedPets: pets,
-          favoritesFilter: "all",
-          orderFilter: "none",
-          speciesFilter: "all",
-          setDisplayedPets: vi.fn(),
-          setFavoritesFilter: vi.fn(),
-          setOrderFilter: vi.fn(),
-          setPets: vi.fn(),
-          setSelectedPet: vi.fn(),
-          setShowAdoptionModal: vi.fn(),
-          setShowUpdatePetsModal: vi.fn(),
-          setSpeciesFilter: vi.fn(),
-          showAdoptionModal: false,
-          showUpdatePetsModal: false,
-          showNotice: false,
-          setShowNotice: vi.fn(),
-          dontShowNoticeAgain: false,
-          setDontShowNoticeAgain: vi.fn(),
-        }}
+        value={
+          {
+            selectedPet: [pets[0]],
+          } as unknown as ContextProps
+        }
       >
         <BrowserRouter>
           <AdoptionForm />
