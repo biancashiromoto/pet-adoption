@@ -13,7 +13,6 @@ describe("FiltersContainer component", () => {
   const resetFavorites = vi.fn();
 
   const props: FiltersContainerProps = {
-    speciesRef: { current: null },
     orderRef: { current: null },
     favoriteRef: { current: null },
     clearFilters,
