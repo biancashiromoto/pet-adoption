@@ -36,8 +36,7 @@ const PetList = ({ species }: PetListProps) => {
   }, [species]);
 
   return (
-    <article>
-      <h3>{species}</h3>
+    <article className="pet-list">
       {!isLoadingOrFetchingData &&
         displayedPets &&
         displayedPets
