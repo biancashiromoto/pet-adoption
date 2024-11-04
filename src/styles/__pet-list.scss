@@ -1,0 +1,6 @@
+.pet-list {
+  display: grid;
+  grid-template-columns: repeat(2, 40%);
+  justify-content: center;
+  gap: 24px;
+}
