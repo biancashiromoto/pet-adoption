@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { Pet } from "../../types/Pet";
+import { GoHeart, GoHeartFill } from "react-icons/go";
 
 export interface CardProps {
   pet: Pet;
@@ -35,9 +35,9 @@ const Card = ({
           }}
         >
           {!pet.isFavorite ? (
-            <FaRegHeart data-testid="heart__unfilled" />
+            <GoHeart data-testid="heart__unfilled" />
           ) : (
-            <FaHeart data-testid="heart__filled" />
+            <GoHeartFill data-testid="heart__filled" />
           )}
         </button>
       </div>
