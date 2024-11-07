@@ -2,9 +2,10 @@ import { info } from "../helpers/info";
 import { Utils } from "../helpers/Utils";
 import { Pet } from "../types/Pet";
 
+const utils = new Utils();
+
 const fetchPets = async (): Promise<Pet[]> => {
-  const utils = new Utils();
-  const stored: Pet[] = utils.getLocalStorage("pets");
+  const stored = utils.getLocalStorage("pets");
 
   if (stored && stored.length > 0) {
     return stored;
