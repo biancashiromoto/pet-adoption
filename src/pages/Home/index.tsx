@@ -1,9 +1,12 @@
 import { createRef, RefObject, useContext, useEffect } from "react";
 import { Button } from "../../components/Button";
+import Card from "../../components/Card";
 import FiltersContainer from "../../components/FiltersContainer";
 import Loader from "../../components/Loader";
 import { Pet } from "../../types/Pet";
 import { Context } from "../../context";
+import fetchPets from "../../services/fetchPets";
+import { useQuery } from "@tanstack/react-query";
 import useEscapeKeyClose from "../../hooks/useEscapeKeyClose";
 import ModalAdoptPets from "../../components/ModalAdoptPets";
 import ModalUpdatePets from "../../components/ModalUpdatePets";
@@ -14,31 +17,47 @@ import {
   OrderByAgeFilter,
   SpeciesFilter,
 } from "../../components/FiltersContainer/index.types";
-import { NavLink } from "react-router-dom";
 
 const utils = new Utils();
 
 const Home = () => {
+  const speciesRef = createRef<HTMLSelectElement>();
   const orderRef = createRef<HTMLSelectElement>();
   const favoriteRef = createRef<HTMLSelectElement>();
   const {
     pets,
     setPets,
+    displayedPets,
     setDisplayedPets,
     selectedPet,
+    setSelectedPet,
     showAdoptionModal,
+    setShowAdoptionModal,
     showUpdatePetsModal,
     setShowUpdatePetsModal,
     speciesFilter,
+    setSpeciesFilter,
     orderFilter,
     setOrderFilter,
     favoritesFilter,
     setFavoritesFilter,
-    error,
-    refetch,
-    isLoadingOrFetchingData,
   } = useContext(Context);
   useEscapeKeyClose();
+
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data: fetchedPets,
+    refetch,
+  } = useQuery({
+    queryKey: ["fetchPets"],
+    queryFn: fetchPets,
+  });
+
+  useEffect(() => {
+    setPets(fetchedPets || []);
+  }, [fetchedPets]);
 
   const resetFavorites = () => {
     const updatedPets = pets.map((pet: Pet) => ({
@@ -51,6 +70,11 @@ const Home = () => {
 
   const applyFilters = () => {
     let filteredPets = pets;
+
+    if (speciesFilter !== "all") {
+      filteredPets = pets.filter((pet: Pet) => pet.species === speciesFilter);
+    }
+
     if (favoritesFilter !== "all") {
       if (favoritesFilter === "favorites") {
         filteredPets = filteredPets.filter((pet: Pet) => pet.isFavorite);
@@ -68,6 +92,11 @@ const Home = () => {
     }
     setDisplayedPets(orderedPets);
   };
+
+  useEffect(() => {
+    setShowUpdatePetsModal(false);
+    setShowAdoptionModal(false);
+  }, []);
 
   useEffect(() => {
     applyFilters();
@@ -90,10 +119,25 @@ const Home = () => {
   const clearFilters = () => {
     setDisplayedPets(pets);
     setOrderFilter("none");
+    setSpeciesFilter("all");
     setFavoritesFilter("all");
 
+    updateRef(speciesRef, "all");
     updateRef(orderRef, "none");
     updateRef(favoriteRef, "all");
+  };
+
+  const toggleFavorite = (id: Pet["id"]) => {
+    setPets((prevPets: Pet[]) => {
+      const updatedPets = prevPets.map((pet) => {
+        if (pet.id === id) {
+          return { ...pet, isFavorite: !pet.isFavorite };
+        }
+        return pet;
+      });
+
+      return updatedPets;
+    });
   };
 
   useEffect(() => {
@@ -113,15 +157,26 @@ const Home = () => {
       <FiltersContainer
         clearFilters={clearFilters}
         orderRef={orderRef}
+        speciesRef={speciesRef}
         favoriteRef={favoriteRef}
         resetFavorites={resetFavorites}
       />
       <hr />
-      {isLoadingOrFetchingData && <Loader />}
-      {!error && !isLoadingOrFetchingData && (
+      {(isLoading || isFetching) && <Loader />}
+      {!error && !isLoading && !isFetching && (
         <>
-          <NavLink to="cats">Cats</NavLink>
-          <NavLink to="dogs">Dogs</NavLink>
+          <main>
+            {displayedPets &&
+              displayedPets.map((pet: Pet) => (
+                <Card
+                  key={pet.id}
+                  pet={pet}
+                  setSelectedPet={setSelectedPet}
+                  setShowModal={setShowAdoptionModal}
+                  toggleFavorite={toggleFavorite}
+                />
+              ))}
+          </main>
           {showAdoptionModal && <ModalAdoptPets />}
           {showUpdatePetsModal && <ModalUpdatePets refetch={refetch} />}
         </>

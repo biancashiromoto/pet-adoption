@@ -13,6 +13,7 @@ describe("FiltersContainer component", () => {
   const resetFavorites = vi.fn();
 
   const props: FiltersContainerProps = {
+    speciesRef: { current: null },
     orderRef: { current: null },
     favoriteRef: { current: null },
     clearFilters,
@@ -36,10 +37,18 @@ describe("FiltersContainer component", () => {
 
   it("should render correctly", () => {
     renderFiltersContainer();
+    expect(screen.getByLabelText(/species/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/order/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/favorite status/i)).toBeInTheDocument();
     expect(screen.getByLabelText("Clear filter")).toBeInTheDocument();
     expect(screen.getByLabelText("Reset favorites")).toBeInTheDocument();
+  });
+
+  it("should call setSpeciesFilter when a species is selected", () => {
+    renderFiltersContainer();
+    const speciesSelect = screen.getByLabelText(/species/i);
+    fireEvent.change(speciesSelect, { target: { value: "cat" } });
+    expect(setSpeciesFilter).toHaveBeenCalledWith("cat");
   });
 
   it("should call setOrderFilter when an order is selected", () => {

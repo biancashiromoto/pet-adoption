@@ -12,10 +12,28 @@ describe("ModalUpdatePets", () => {
     vi.clearAllMocks();
   });
 
-  const mockContext = {
+  const mockContext: ContextProps = {
+    pets: [],
+    setPets: vi.fn(),
+    displayedPets: [],
+    setDisplayedPets: vi.fn(),
+    selectedPet: [],
+    setSelectedPet: vi.fn(),
+    showAdoptionModal: false,
+    setShowAdoptionModal: vi.fn(),
     showUpdatePetsModal: false,
     setShowUpdatePetsModal,
-  } as unknown as ContextProps;
+    speciesFilter: "all",
+    setSpeciesFilter: vi.fn(),
+    orderFilter: "none",
+    setOrderFilter: vi.fn(),
+    favoritesFilter: "all",
+    setFavoritesFilter: vi.fn(),
+    showNotice: false,
+    setShowNotice: vi.fn(),
+    dontShowNoticeAgain: false,
+    setDontShowNoticeAgain: vi.fn(),
+  };
 
   const renderModal = () =>
     render(

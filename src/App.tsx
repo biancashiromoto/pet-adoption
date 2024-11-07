@@ -3,9 +3,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  useLocation,
   Link,
-  Outlet,
-  Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home";
 import AdoptionForm from "./pages/AdoptionForm";
@@ -15,17 +14,21 @@ import Header from "./components/Header";
 import { Utils } from "./helpers/Utils";
 import { PiKeyReturnThin } from "react-icons/pi";
 import { Context } from "./context";
-import PetList from "./components/PetList";
 
 const utils = new Utils();
 
-function App() {
+const AppContent = () => {
+  const location = useLocation();
   const {
     dontShowNoticeAgain,
     setShowNotice,
     showNotice,
     setDontShowNoticeAgain,
   } = useContext(Context);
+
+  useEffect(() => {
+    setShowNotice(!dontShowNoticeAgain);
+  }, [location.pathname]);
 
   useEffect(() => {
     utils.setLocalStorage(
@@ -63,20 +66,11 @@ function App() {
     );
   };
 
-  const HomeLayout = () => {
-    return (
-      <>
-        <Home />
-        <Outlet />
-      </>
-    );
-  };
-
   return (
-    <Router>
-      <>
-        <Header />
-        {renderNotice()}
+    <>
+      <Header />
+      {renderNotice()}
+      {location.pathname !== "/" && (
         <>
           <hr />
           <Link
@@ -87,17 +81,20 @@ function App() {
             <PiKeyReturnThin />
           </Link>
         </>
-        <hr />
-        <Routes>
-          <Route path="/" element={<Navigate to="cats" replace />} />
-          <Route path="/" element={<HomeLayout />}>
-            <Route path="cats" index element={<PetList species="cat" />} />
-            <Route path="dogs" element={<PetList species="dog" />} />
-          </Route>
-          <Route path="/adopt" element={<AdoptionForm />} />
-          <Route path="*" element={<p>Page not found</p>} />
-        </Routes>
-      </>
+      )}
+      <hr />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/adopt" element={<AdoptionForm />} />
+      </Routes>
+    </>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
 }
