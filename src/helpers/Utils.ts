@@ -1,5 +1,5 @@
 import { catNames } from "cat-names";
-import { Pet } from "../types/Pet";
+import { Pet } from "@/types/Pet";
 
 export class Utils {
   /**

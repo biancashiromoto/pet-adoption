@@ -1,6 +1,6 @@
 import { useState, ReactNode } from "react";
 import { Context } from ".";
-import { Pet } from "../types/Pet";
+import { Pet } from "@/types/Pet";
 import { ContextProps } from "./index.types";
 import {
   FavoritesFilter,

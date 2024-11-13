@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { Pet } from "../../types/Pet";
+import { Pet } from "@/types/Pet";
 
 export interface CardProps {
   pet: Pet;

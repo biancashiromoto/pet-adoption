@@ -1,17 +1,17 @@
 import { createRef, RefObject, useContext, useEffect } from "react";
-import { Button } from "../../components/Button";
-import Card from "../../components/Card";
-import FiltersContainer from "../../components/FiltersContainer";
-import Loader from "../../components/Loader";
-import { Pet } from "../../types/Pet";
-import { Context } from "../../context";
-import fetchPets from "../../services/fetchPets";
+import { Button } from "@/components/Button";
+import Card from "@/components/Card";
+import FiltersContainer from "@/components/FiltersContainer";
+import Loader from "@/components/Loader";
+import { Pet } from "@/types/Pet";
+import { Context } from "@/context";
+import fetchPets from "@/services/fetchPets";
 import { useQuery } from "@tanstack/react-query";
-import useEscapeKeyClose from "../../hooks/useEscapeKeyClose";
-import ModalAdoptPets from "../../components/ModalAdoptPets";
-import ModalUpdatePets from "../../components/ModalUpdatePets";
-import { Utils } from "../../helpers/Utils";
-import useUpdatePageTitle from "../../hooks/useUpdatePageTitle";
+import useEscapeKeyClose from "@/hooks/useEscapeKeyClose";
+import ModalAdoptPets from "@/components/ModalAdoptPets";
+import ModalUpdatePets from "@/components/ModalUpdatePets";
+import { Utils } from "@/helpers/Utils";
+import useUpdatePageTitle from "@/hooks/useUpdatePageTitle";
 import {
   FavoritesFilter,
   OrderByAgeFilter,

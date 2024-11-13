@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
-import { Pet } from "../types/Pet";
+import { Pet } from "@/types/Pet";
 import {
   FavoritesFilter,
   OrderByAgeFilter,
   SpeciesFilter,
-} from "../components/FiltersContainer/index.types";
+} from "@/components/FiltersContainer/index.types";
 
 export interface ContextProps {
   pets: Pet[];
