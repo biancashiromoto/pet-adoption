@@ -162,6 +162,28 @@ const Home = () => {
         resetFavorites={resetFavorites}
       />
       <hr />
+      Species:
+      <label htmlFor="cats">
+        Cats
+        <input
+          id="cats"
+          type="radio"
+          name="species"
+          onClick={() => setSpeciesFilter("cat")}
+          checked={speciesFilter === "cat"}
+        />
+      </label>
+      <label htmlFor="dogs">
+        Dogs
+        <input
+          id="dogs"
+          type="radio"
+          name="species"
+          onClick={() => setSpeciesFilter("dog")}
+          checked={speciesFilter === "dog"}
+        />
+      </label>
+      <hr />
       {(isLoading || isFetching) && <Loader />}
       {!error && !isLoading && !isFetching && (
         <>
