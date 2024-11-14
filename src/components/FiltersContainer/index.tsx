@@ -13,23 +13,14 @@ const selectFilter = (
 };
 
 const FiltersContainer = ({
-  speciesRef,
   orderRef,
   clearFilters,
   favoriteRef,
   resetFavorites,
 }: FiltersContainerProps) => {
-  const { setFavoritesFilter, setOrderFilter, setSpeciesFilter } =
-    useContext(Context);
+  const { setFavoritesFilter, setOrderFilter } = useContext(Context);
   return (
     <article className="filter-container">
-      <Filter
-        id="species"
-        items={["all", "cat", "dog"]}
-        label="Species: "
-        ref={speciesRef}
-        onChange={(e) => selectFilter(e, setSpeciesFilter)}
-      />
       <Filter
         id="order"
         items={["none", "younger", "older"]}
