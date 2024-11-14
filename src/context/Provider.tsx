@@ -20,7 +20,7 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] =
     useState<boolean>(false);
-  const [speciesFilter, setSpeciesFilter] = useState<SpeciesFilter>("all");
+  const [speciesFilter, setSpeciesFilter] = useState<SpeciesFilter>("cat");
   const [orderFilter, setOrderFilter] = useState<OrderByAgeFilter>("none");
   const [favoritesFilter, setFavoritesFilter] =
     useState<FavoritesFilter>("all");
