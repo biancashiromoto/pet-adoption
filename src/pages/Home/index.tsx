@@ -119,10 +119,10 @@ const Home = () => {
   const clearFilters = () => {
     setDisplayedPets(pets);
     setOrderFilter("none");
-    setSpeciesFilter("all");
+    setSpeciesFilter("cat");
     setFavoritesFilter("all");
 
-    updateRef(speciesRef, "all");
+    updateRef(speciesRef, "cat");
     updateRef(orderRef, "none");
     updateRef(favoriteRef, "all");
   };

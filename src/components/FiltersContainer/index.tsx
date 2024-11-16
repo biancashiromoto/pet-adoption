@@ -18,9 +18,37 @@ const FiltersContainer = ({
   favoriteRef,
   resetFavorites,
 }: FiltersContainerProps) => {
-  const { setFavoritesFilter, setOrderFilter } = useContext(Context);
+  const {
+    setFavoritesFilter,
+    setOrderFilter,
+    speciesFilter,
+    setSpeciesFilter,
+  } = useContext(Context);
   return (
     <article className="filter-container">
+      <section className="filter-container__species">
+        Species:
+        <label htmlFor="cats">
+          <input
+            id="cats"
+            type="radio"
+            name="species"
+            onClick={() => setSpeciesFilter("cat")}
+            checked={speciesFilter === "cat"}
+          />
+          Cats
+        </label>
+        <label htmlFor="dogs">
+          <input
+            id="dogs"
+            type="radio"
+            name="species"
+            onClick={() => setSpeciesFilter("dog")}
+            checked={speciesFilter === "dog"}
+          />
+          Dogs
+        </label>
+      </section>
       <Filter
         id="order"
         items={["none", "younger", "older"]}
