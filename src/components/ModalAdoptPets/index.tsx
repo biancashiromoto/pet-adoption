@@ -1,8 +1,8 @@
 import { useContext } from "react";
-import Modal from "../Modal";
-import Overlay from "../Overlay";
-import { Context } from "../../context";
-import { Button } from "../Button";
+import Modal from "@/components/Modal";
+import Overlay from "@/components/Overlay";
+import { Context } from "@/context";
+import { Button } from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 
 const ModalAdoptPets = () => {

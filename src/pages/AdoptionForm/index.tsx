@@ -1,9 +1,9 @@
 import { FormEvent, useContext, useEffect, useRef, useState } from "react";
-import { Button } from "../../components/Button";
-import Modal from "../../components/Modal";
-import Overlay from "../../components/Overlay";
+import { Button } from "@/components/Button";
+import Modal from "@/components/Modal";
+import Overlay from "@/components/Overlay";
 import { useNavigate } from "react-router-dom";
-import { Context } from "../../context";
+import { Context } from "@/context";
 
 const AdoptionForm = () => {
   const { selectedPet } = useContext(Context);

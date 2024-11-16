@@ -1,4 +1,4 @@
-import { Button } from "../Button";
+import { Button } from "@/components/Button";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { NoticeProps } from "./index.types";
 

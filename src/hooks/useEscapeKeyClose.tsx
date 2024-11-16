@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Context } from "../context";
+import { Context } from "@/context";
 
 const useEscapeKeyClose = () => {
   const {

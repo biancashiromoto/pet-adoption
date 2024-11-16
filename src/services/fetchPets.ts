@@ -1,6 +1,6 @@
-import { info } from "../helpers/info";
-import { Utils } from "../helpers/Utils";
-import { Pet } from "../types/Pet";
+import { info } from "@/helpers/info";
+import { Utils } from "@/helpers/Utils";
+import { Pet } from "@/types/Pet";
 
 const utils = new Utils();
 
