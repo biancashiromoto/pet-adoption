@@ -1,4 +1,3 @@
-// AdoptionForm.test.tsx
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { BrowserRouter } from "react-router-dom";
@@ -52,7 +51,7 @@ describe("AdoptionForm Component", () => {
           displayedPets: pets,
           favoritesFilter: "all",
           orderFilter: "none",
-          speciesFilter: "all",
+          speciesFilter: "cat",
           setDisplayedPets: vi.fn(),
           setFavoritesFilter: vi.fn(),
           setOrderFilter: vi.fn(),

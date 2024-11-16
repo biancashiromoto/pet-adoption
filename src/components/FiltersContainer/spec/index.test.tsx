@@ -37,7 +37,7 @@ describe("FiltersContainer component", () => {
 
   it("should render correctly", () => {
     renderFiltersContainer();
-    expect(screen.getByLabelText(/species/i)).toBeInTheDocument();
+    expect(screen.getByText(/species/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/order/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/favorite status/i)).toBeInTheDocument();
     expect(screen.getByLabelText("Clear filter")).toBeInTheDocument();
@@ -46,8 +46,7 @@ describe("FiltersContainer component", () => {
 
   it("should call setSpeciesFilter when a species is selected", () => {
     renderFiltersContainer();
-    const speciesSelect = screen.getByLabelText(/species/i);
-    fireEvent.change(speciesSelect, { target: { value: "cat" } });
+    fireEvent.click(screen.getByText(/cats/i));
     expect(setSpeciesFilter).toHaveBeenCalledWith("cat");
   });
 

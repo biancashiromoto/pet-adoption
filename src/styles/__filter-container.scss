@@ -3,5 +3,10 @@
   display: flex;
   gap: 10px;
   justify-content: center;
-  padding: 20px 0;
+  padding: 20px;
+
+  &__species {
+    display: flex;
+    flex-direction: column;
+  }
 }

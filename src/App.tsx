@@ -1,4 +1,4 @@
-import "./styles/App.scss";
+import "@/styles/App.scss";
 import {
   BrowserRouter as Router,
   Routes,
@@ -6,14 +6,14 @@ import {
   useLocation,
   Link,
 } from "react-router-dom";
-import Home from "./pages/Home";
-import AdoptionForm from "./pages/AdoptionForm";
-import Notice from "./components/Notice";
+import Home from "@/pages/Home";
+import AdoptionForm from "@/pages/AdoptionForm";
+import Notice from "@/components/Notice";
 import { useContext, useEffect } from "react";
-import Header from "./components/Header";
-import { Utils } from "./helpers/Utils";
+import Header from "@/components/Header";
+import { Utils } from "@/helpers/Utils";
 import { PiKeyReturnThin } from "react-icons/pi";
-import { Context } from "./context";
+import { Context } from "@/context";
 
 const utils = new Utils();
 
