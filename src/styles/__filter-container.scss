@@ -1,12 +1,29 @@
 .filter-container {
   align-items: center;
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 12px;
   justify-content: center;
-  padding: 20px;
+
+  &__selects,
+  &__buttons,
+  &__species {
+    display: flex;
+    gap: 12px;
+  }
 
   &__species {
     display: flex;
     flex-direction: column;
+
+    &--options {
+      display: flex;
+      gap: 12px;
+
+      label {
+        display: flex;
+        gap: 6px;
+      }
+    }
   }
 }
