@@ -14,8 +14,9 @@
     "isolatedModules": true,
     "moduleResolution": "node",
     "types": ["vitest/globals"],
-    "strict": true
+    "strict": true,
+    "noEmit": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["vite.config.ts", "src/**/*"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
 }
