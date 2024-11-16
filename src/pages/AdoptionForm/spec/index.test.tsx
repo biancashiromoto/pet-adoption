@@ -51,7 +51,7 @@ describe("AdoptionForm Component", () => {
           displayedPets: pets,
           favoritesFilter: "all",
           orderFilter: "none",
-          speciesFilter: "all",
+          speciesFilter: "cat",
           setDisplayedPets: vi.fn(),
           setFavoritesFilter: vi.fn(),
           setOrderFilter: vi.fn(),
