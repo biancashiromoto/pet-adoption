@@ -72,7 +72,6 @@ const AppContent = () => {
       {renderNotice()}
       {location.pathname !== "/" && (
         <>
-          <hr />
           <Link
             className="link link__return"
             to="/"
@@ -82,7 +81,6 @@ const AppContent = () => {
           </Link>
         </>
       )}
-      <hr />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/adopt" element={<AdoptionForm />} />
