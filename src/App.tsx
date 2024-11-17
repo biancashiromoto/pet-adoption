@@ -12,7 +12,6 @@ import Notice from "@/components/Notice";
 import { useContext, useEffect } from "react";
 import Header from "@/components/Header";
 import { Utils } from "@/helpers/Utils";
-import { PiKeyReturnThin } from "react-icons/pi";
 import { Context } from "@/context";
 
 const utils = new Utils();
@@ -71,17 +70,6 @@ const AppContent = () => {
       <Header />
       <div className="app-content">
         {renderNotice()}
-        {location.pathname !== "/" && (
-          <>
-            <Link
-              className="link link__return"
-              to="/"
-              aria-label="Return to Home page"
-            >
-              <PiKeyReturnThin />
-            </Link>
-          </>
-        )}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/adopt" element={<AdoptionForm />} />
