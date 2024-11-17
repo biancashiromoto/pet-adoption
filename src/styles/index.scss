@@ -6,10 +6,22 @@
 @use "./__form.scss";
 @use "./__notice.scss";
 @use "./__header.scss";
+@use "./components/filter-select";
+@use "./pages/home";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --brown: #764b36;
+  --light-brown: #996145;
+  --gray: #c6bcae;
+  --green: #869b90;
+  --offwhite: #fefff3;
+  --red: #dc4d41;
+  --warning: #db684256;
+}
 
 * {
   margin: 0;
@@ -18,4 +30,5 @@
 
 body {
   text-align: center;
+  background-color: var(--offwhite);
 }

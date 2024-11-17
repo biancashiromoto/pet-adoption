@@ -1,17 +1,14 @@
 .card {
+  background-color: var(--offwhite);
   cursor: pointer;
-  margin: 5px;
-  padding: 5px;
-
-  &:hover {
-    background-color: #5c4b4949;
-    transform: scale(105%, 105%);
-  }
+  padding: 12px;
 
   img {
-    width: 40dvw;
-    height: 40dvw;
+    width: 100%;
+    height: fit-content;
     object-fit: cover;
+    padding-bottom: 6px;
+    aspect-ratio: 1 / 1;
   }
 
   button {
@@ -23,9 +20,9 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    padding: 5px 15px;
+    margin: 0 auto;
 
-    & >* {
+    & > * {
       align-items: baseline;
       display: flex;
       margin: 0;
@@ -35,6 +32,7 @@
       grid-column: 1;
       grid-row: 1;
       font-size: 1rem;
+      padding-bottom: 6px;
     }
 
     p {
@@ -49,4 +47,21 @@
       justify-self: end;
     }
   }
+
+  .heart {
+    &__filled {
+      color: var(--red);
+    }
+  }
+
+  // @media screen and (min-width: 1024px) {
+  //   img {
+  //     width: 250px;
+  //     height: 250px;
+  //   }
+
+  //   &__text {
+  //     width: 250px;
+  //   }
+  // }
 }

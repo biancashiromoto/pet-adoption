@@ -22,24 +22,27 @@ const Card = ({
         setSelectedPet([pet]);
         setShowModal(true);
       }}
+      tabIndex={0}
     >
-      <img alt="Random picture of a cat" src={pet.url} />
-      <div className="card__text">
-        <h3>{pet.name}</h3>
-        <p>Age: {pet.age}</p>
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleFavorite(pet.id);
-          }}
-        >
-          {!pet.isFavorite ? (
-            <FaRegHeart data-testid="heart__unfilled" />
-          ) : (
-            <FaHeart data-testid="heart__filled" />
-          )}
-        </button>
+      <div className="card__content">
+        <img alt="Random picture of a cat" src={pet.url} />
+        <div className="card__text">
+          <h3>{pet.name}</h3>
+          <p>Age: {pet.age}</p>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleFavorite(pet.id);
+            }}
+          >
+            {!pet.isFavorite ? (
+              <FaRegHeart className="unfilled" data-testid="heart__unfilled" />
+            ) : (
+              <FaHeart className="heart__filled" data-testid="heart__filled" />
+            )}
+          </button>
+        </div>
       </div>
     </article>
   );

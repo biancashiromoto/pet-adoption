@@ -1,8 +1,8 @@
 import { RefObject } from "react";
 
-export type SpeciesFilter = 'all' | 'dog' | 'cat';
-export type OrderByAgeFilter = 'none' | 'older' | 'younger';
-export type FavoritesFilter = 'all' | 'favorites' | 'non favorites';
+export type SpeciesFilter = "all" | "dog" | "cat";
+export type OrderByAgeFilter = "order by" | "older" | "younger";
+export type FavoritesFilter = "favorite status" | "favorites" | "non favorites";
 
 export interface FiltersContainerProps {
   speciesRef: RefObject<HTMLSelectElement>;
