@@ -1,9 +1,11 @@
 .loader {
   align-items: center;
+  background-color: var(--offwhite);
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 10px;
+  padding-top: 36px;
 
   img {
     height: 25px;

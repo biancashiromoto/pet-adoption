@@ -5,6 +5,10 @@
   flex-direction: column;
   gap: 12px;
   justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: var(--offwhite);
 
   .selects-buttons {
     border-bottom: 1px solid var(--gray);
