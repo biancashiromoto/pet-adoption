@@ -22,6 +22,7 @@ const Card = ({
         setSelectedPet([pet]);
         setShowModal(true);
       }}
+      tabIndex={0}
     >
       <div className="card__content">
         <img alt="Random picture of a cat" src={pet.url} />
