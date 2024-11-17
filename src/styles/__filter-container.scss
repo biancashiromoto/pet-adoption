@@ -6,6 +6,14 @@
   gap: 12px;
   justify-content: center;
 
+  .selects-buttons {
+    border-bottom: 1px solid var(--gray);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+  }
+
   @media screen and (min-width: 1024px) {
     margin: 0 auto;
     width: 35%;
@@ -19,25 +27,23 @@
   }
 
   &__buttons {
-    gap: 30px;
-    padding: 12px;
+    flex-direction: column;
 
     button {
-      background-color: var(--brown);
-      border-radius: 25px;
-      color: var(--offwhite);
+      align-items: center;
+      gap: 6px;
+      display: flex;
+      background-color: unset;
+      color: var(--brown);
+      font-weight: 700;
       border: none;
-      padding: 12px 36px;
-
-      &:hover {
-        background-color: var(--light-brown);
-      }
+      text-wrap: nowrap;
+      text-decoration: underline;
     }
   }
 
   &__species {
     align-items: center;
-    border-top: 1px solid var(--gray);
     display: flex;
 
     label {
@@ -72,10 +78,9 @@
   }
 
   &__selects {
-    border-bottom: 1px solid var(--gray);
-    gap: 36px;
     padding: 12px 0;
     justify-content: center;
+    margin-right: 24px;
 
     label {
       align-items: baseline;
@@ -85,15 +90,19 @@
     }
 
     select {
-      border: solid 1px var(--gray);
       border-radius: 12px;
       height: 36px;
       padding: 6px 12px;
-      width: 150px;
+      width: max-content;
     }
 
     .filter-select {
       justify-content: space-between;
+    }
+
+    @media screen and (min-width: 1024px) {
+      border-bottom: none;
+      gap: 12px;
     }
   }
 }

@@ -3,6 +3,8 @@ import { Button } from "@/components/Button";
 import { ChangeEvent, Dispatch, SetStateAction, useContext } from "react";
 import { FiltersContainerProps } from "./index.types";
 import { Context } from "@/context";
+import { IoMdClose } from "react-icons/io";
+import { GrPowerReset } from "react-icons/gr";
 
 const selectFilter = (
   e: ChangeEvent<HTMLSelectElement>,
@@ -26,33 +28,37 @@ const FiltersContainer = ({
   } = useContext(Context);
   return (
     <article className="filter-container">
-      <section className="filter-container__selects">
-        <FilterSelect
-          title="order"
-          id="order"
-          items={["order by", "younger", "older"]}
-          ref={orderRef}
-          onChange={(e) => selectFilter(e, setOrderFilter)}
-        />
-        <FilterSelect
-          title="favorites"
-          id="favorites"
-          items={["favorite status", "favorites", "non favorites"]}
-          ref={favoriteRef}
-          onChange={(e) => selectFilter(e, setFavoritesFilter)}
-        />
-      </section>
-      <section className="filter-container__buttons">
-        <Button.Root ariaLabel="Clear filter" onClick={() => clearFilters()}>
-          <Button.Label label="Clear filter" />
-        </Button.Root>
-        <Button.Root
-          ariaLabel="Reset favorites"
-          onClick={() => resetFavorites()}
-        >
-          <Button.Label label="Reset favorites" />
-        </Button.Root>
-      </section>
+      <div className="selects-buttons">
+        <section className="filter-container__selects">
+          <FilterSelect
+            title="order"
+            id="order"
+            items={["order by", "younger", "older"]}
+            ref={orderRef}
+            onChange={(e) => selectFilter(e, setOrderFilter)}
+          />
+          <FilterSelect
+            title="favorites"
+            id="favorites"
+            items={["favorite status", "favorites", "non favorites"]}
+            ref={favoriteRef}
+            onChange={(e) => selectFilter(e, setFavoritesFilter)}
+          />
+        </section>
+        <section className="filter-container__buttons">
+          <Button.Root ariaLabel="Clear filters" onClick={() => clearFilters()}>
+            <IoMdClose />
+            <Button.Label label="Clear filters" />
+          </Button.Root>
+          <Button.Root
+            ariaLabel="Reset favorites"
+            onClick={() => resetFavorites()}
+          >
+            <GrPowerReset />
+            <Button.Label label="Reset favorites" />
+          </Button.Root>
+        </section>
+      </div>
       <section className="filter-container__species">
         <label
           className={`${speciesFilter === "cat" ? "active" : ""}`}
