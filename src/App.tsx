@@ -69,22 +69,24 @@ const AppContent = () => {
   return (
     <>
       <Header />
-      {renderNotice()}
-      {location.pathname !== "/" && (
-        <>
-          <Link
-            className="link link__return"
-            to="/"
-            aria-label="Return to Home page"
-          >
-            <PiKeyReturnThin />
-          </Link>
-        </>
-      )}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/adopt" element={<AdoptionForm />} />
-      </Routes>
+      <div className="app-content">
+        {renderNotice()}
+        {location.pathname !== "/" && (
+          <>
+            <Link
+              className="link link__return"
+              to="/"
+              aria-label="Return to Home page"
+            >
+              <PiKeyReturnThin />
+            </Link>
+          </>
+        )}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/adopt" element={<AdoptionForm />} />
+        </Routes>
+      </div>
     </>
   );
 };
