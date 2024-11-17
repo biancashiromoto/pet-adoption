@@ -5,6 +5,10 @@
   flex-direction: column;
   gap: 12px;
   justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: var(--offwhite);
 
   .selects-buttons {
     border-bottom: 1px solid var(--gray);
@@ -12,11 +16,6 @@
     flex-direction: row;
     align-items: center;
     gap: 12px;
-  }
-
-  @media screen and (min-width: 1024px) {
-    margin: 0 auto;
-    width: 35%;
   }
 
   &__selects,
