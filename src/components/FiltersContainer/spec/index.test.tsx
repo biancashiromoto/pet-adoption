@@ -37,7 +37,6 @@ describe("FiltersContainer component", () => {
 
   it("should render correctly", () => {
     renderFiltersContainer();
-    expect(screen.getByText(/species/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/order/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/favorite status/i)).toBeInTheDocument();
     expect(screen.getByLabelText("Clear filter")).toBeInTheDocument();

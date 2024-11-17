@@ -26,32 +26,6 @@ const FiltersContainer = ({
   } = useContext(Context);
   return (
     <article className="filter-container">
-      <section className="filter-container__species">
-        Species:
-        <div className="filter-container__species--options">
-          <label htmlFor="cats">
-            <input
-              id="cats"
-              type="radio"
-              name="species"
-              onClick={() => setSpeciesFilter("cat")}
-              checked={speciesFilter === "cat"}
-            />
-            Cats
-          </label>
-          <label htmlFor="dogs">
-            <input
-              id="dogs"
-              type="radio"
-              name="species"
-              onClick={() => setSpeciesFilter("dog")}
-              checked={speciesFilter === "dog"}
-            />
-            Dogs
-          </label>
-        </div>
-      </section>
-      <hr style={{ width: "90dvw" }} />
       <section className="filter-container__selects">
         <Filter
           id="order"
@@ -68,7 +42,6 @@ const FiltersContainer = ({
           onChange={(e) => selectFilter(e, setFavoritesFilter)}
         />
       </section>
-      <hr style={{ width: "90dvw" }} />
       <section className="filter-container__buttons">
         <Button.Root ariaLabel="Clear filter" onClick={() => clearFilters()}>
           <Button.Label label="Clear filter" />
@@ -79,6 +52,34 @@ const FiltersContainer = ({
         >
           <Button.Label label="Reset favorites" />
         </Button.Root>
+      </section>
+      <section className="filter-container__species">
+        <label
+          className={`${speciesFilter === "cat" ? "active" : ""}`}
+          htmlFor="cats"
+        >
+          <input
+            id="cats"
+            type="radio"
+            name="species"
+            onClick={() => setSpeciesFilter("cat")}
+            checked={speciesFilter === "cat"}
+          />
+          <span>Cats</span>
+        </label>
+        <label
+          className={`${speciesFilter === "dog" ? "active" : ""}`}
+          htmlFor="dogs"
+        >
+          <input
+            id="dogs"
+            type="radio"
+            name="species"
+            onClick={() => setSpeciesFilter("dog")}
+            checked={speciesFilter === "dog"}
+          />
+          <span>Dogs</span>
+        </label>
       </section>
     </article>
   );
