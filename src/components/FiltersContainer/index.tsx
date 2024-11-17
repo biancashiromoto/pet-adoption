@@ -1,4 +1,4 @@
-import Filter from "@/components/Filter";
+import FilterSelect from "@/components/FilterSelect";
 import { Button } from "@/components/Button";
 import { ChangeEvent, Dispatch, SetStateAction, useContext } from "react";
 import { FiltersContainerProps } from "./index.types";
@@ -27,17 +27,17 @@ const FiltersContainer = ({
   return (
     <article className="filter-container">
       <section className="filter-container__selects">
-        <Filter
+        <FilterSelect
+          title="order"
           id="order"
-          items={["none", "younger", "older"]}
-          label="Order: "
+          items={["order by", "younger", "older"]}
           ref={orderRef}
           onChange={(e) => selectFilter(e, setOrderFilter)}
         />
-        <Filter
+        <FilterSelect
+          title="favorites"
           id="favorites"
-          items={["all", "favorites", "non favorites"]}
-          label="Favorite status: "
+          items={["favorite status", "favorites", "non favorites"]}
           ref={favoriteRef}
           onChange={(e) => selectFilter(e, setFavoritesFilter)}
         />
@@ -62,7 +62,7 @@ const FiltersContainer = ({
             id="cats"
             type="radio"
             name="species"
-            onClick={() => setSpeciesFilter("cat")}
+            onChange={() => setSpeciesFilter("cat")}
             checked={speciesFilter === "cat"}
           />
           <span>Cats</span>
@@ -75,7 +75,7 @@ const FiltersContainer = ({
             id="dogs"
             type="radio"
             name="species"
-            onClick={() => setSpeciesFilter("dog")}
+            onChange={() => setSpeciesFilter("dog")}
             checked={speciesFilter === "dog"}
           />
           <span>Dogs</span>
