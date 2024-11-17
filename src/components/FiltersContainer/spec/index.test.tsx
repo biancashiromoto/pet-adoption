@@ -53,9 +53,9 @@ describe("FiltersContainer component", () => {
     screen.debug(orderSelect);
 
     fireEvent.change(orderSelect.children[1], {
-      target: { value: "younger" },
+      target: { value: "Younger" },
     });
-    expect(setOrderFilter).toHaveBeenCalledWith("younger");
+    expect(setOrderFilter).toHaveBeenCalledWith("Younger");
   });
 
   it("should call setFavoritesFilter when a favorite status is selected", () => {
@@ -64,9 +64,9 @@ describe("FiltersContainer component", () => {
     screen.debug(favoritesSelect);
 
     fireEvent.change(favoritesSelect.children[1], {
-      target: { value: "favorites" },
+      target: { value: "Favorites" },
     });
-    expect(setFavoritesFilter).toHaveBeenCalledWith("favorites");
+    expect(setFavoritesFilter).toHaveBeenCalledWith("Favorites");
   });
 
   it("should call clearFilters when Clear filter button is clicked", () => {

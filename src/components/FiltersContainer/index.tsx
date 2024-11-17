@@ -33,14 +33,14 @@ const FiltersContainer = ({
           <FilterSelect
             title="order"
             id="order"
-            items={["order by", "younger", "older"]}
+            items={["Order by", "Younger", "Older"]}
             ref={orderRef}
             onChange={(e) => selectFilter(e, setOrderFilter)}
           />
           <FilterSelect
             title="favorites"
             id="favorites"
-            items={["favorite status", "favorites", "non favorites"]}
+            items={["Favorite status", "Favorites", "Non favorites"]}
             ref={favoriteRef}
             onChange={(e) => selectFilter(e, setFavoritesFilter)}
           />
