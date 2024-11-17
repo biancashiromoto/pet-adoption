@@ -20,11 +20,6 @@
     border: solid 1px var(--gray);
     height: 36px;
     padding: 6px 12px;
-    width: max-content;
-  }
-
-  input[type="text"],
-  input[type="email"] {
     width: 320px;
   }
 
@@ -34,12 +29,6 @@
     align-items: baseline;
     gap: 6px;
     width: max-content;
-  }
-
-  &__phone-birth {
-    display: grid;
-    grid-template-columns: auto auto;
-    gap: 12px;
   }
 
   .name {

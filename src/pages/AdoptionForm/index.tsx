@@ -85,22 +85,20 @@ const AdoptionForm = () => {
                 E-mail:
                 <input required type="email" id="input__email" />
               </label>
-              <section className="form__phone-birth">
-                <label
-                  htmlFor="input__phone-number"
-                  className="input input__phone-number"
-                >
-                  Phone number:
-                  <input required type="tel" id="input__phone-number" />
-                </label>
-                <label
-                  htmlFor="input__birth-date"
-                  className="input input__birth-date"
-                >
-                  Birth date:
-                  <input required type="date" id="input__birth-date" />
-                </label>
-              </section>
+              <label
+                htmlFor="input__phone-number"
+                className="input input__phone-number"
+              >
+                Phone number:
+                <input required type="tel" id="input__phone-number" />
+              </label>
+              <label
+                htmlFor="input__birth-date"
+                className="input input__birth-date"
+              >
+                Birth date:
+                <input required type="date" id="input__birth-date" />
+              </label>
             </article>
             <button type="submit">Submit</button>
           </form>
