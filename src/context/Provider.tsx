@@ -21,9 +21,9 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [showUpdatePetsModal, setShowUpdatePetsModal] =
     useState<boolean>(false);
   const [speciesFilter, setSpeciesFilter] = useState<SpeciesFilter>("cat");
-  const [orderFilter, setOrderFilter] = useState<OrderByAgeFilter>("none");
+  const [orderFilter, setOrderFilter] = useState<OrderByAgeFilter>("order by");
   const [favoritesFilter, setFavoritesFilter] =
-    useState<FavoritesFilter>("all");
+    useState<FavoritesFilter>("favorite status");
   const [showNotice, setShowNotice] = useState(!storagedDontShowNoticeAgain);
   const [dontShowNoticeAgain, setDontShowNoticeAgain] = useState(
     storagedDontShowNoticeAgain
