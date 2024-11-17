@@ -127,7 +127,7 @@ const Home = () => {
   }, [pets]);
 
   return (
-    <div className="home">
+    <main className="home">
       {error && <p>Error: {error.message}</p>}
       <FiltersContainer
         clearFilters={clearFilters}
@@ -144,7 +144,7 @@ const Home = () => {
           {showUpdatePetsModal && <ModalUpdatePets refetch={refetch} />}
         </>
       )}
-    </div>
+    </main>
   );
 };
 

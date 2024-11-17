@@ -1,23 +1,13 @@
 .card {
   background-color: var(--offwhite);
   cursor: pointer;
-
-  // &:hover {
-  //   transform: scale(105%, 105%);
-  // }
-
-  &__content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 auto;
-    width: 80%;
-  }
+  padding: 24px 0 6px 0;
 
   img {
     width: 150px;
     height: 150px;
     object-fit: cover;
+    padding-bottom: 6px;
   }
 
   button {
@@ -29,6 +19,8 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
+    width: 150px;
+    margin: 0 auto;
 
     & > * {
       align-items: baseline;
@@ -40,6 +32,7 @@
       grid-column: 1;
       grid-row: 1;
       font-size: 1rem;
+      padding-bottom: 6px;
     }
 
     p {
@@ -61,7 +54,7 @@
     }
   }
 
-  @media screen and (min-width: 1024px) {
-    width: 200px;
-  }
+  // @media screen and (min-width: 1024px) {
+  //   width: 200px;
+  // }
 }
