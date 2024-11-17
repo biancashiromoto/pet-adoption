@@ -12,6 +12,12 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --green: #869b90;
+  --offwhite: #fefff3;
+  --gray: #c6bcae;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -19,5 +25,5 @@
 
 body {
   text-align: center;
-  background-color: #fefff3;
+  background-color: var(--offwhite);
 }

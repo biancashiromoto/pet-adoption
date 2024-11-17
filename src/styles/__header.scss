@@ -1,20 +1,17 @@
 header {
-  background-color: #fefff3;
   border-bottom: 1px solid #c6bcae;
-  display: flex;
-  padding-left: 15px;
-  color: black;
-
-  h1 {
-    margin: 12px;
-  }
+  padding: 12px;
 
   img {
-    padding-right: 5px;
     width: 35px;
   }
-}
 
-.link {
-  text-decoration: none;
+  .link {
+    align-items: center;
+    color: black;
+    display: flex;
+    gap: 12px;
+    text-decoration: none;
+    width: fit-content;
+  }
 }
