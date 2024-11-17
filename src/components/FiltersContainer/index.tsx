@@ -63,6 +63,12 @@ const FiltersContainer = ({
         <label
           className={`${speciesFilter === "cat" ? "active" : ""}`}
           htmlFor="cats"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              setSpeciesFilter("cat");
+            }
+          }}
         >
           <input
             id="cats"
@@ -76,6 +82,12 @@ const FiltersContainer = ({
         <label
           className={`${speciesFilter === "dog" ? "active" : ""}`}
           htmlFor="dogs"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              setSpeciesFilter("dog");
+            }
+          }}
         >
           <input
             id="dogs"
