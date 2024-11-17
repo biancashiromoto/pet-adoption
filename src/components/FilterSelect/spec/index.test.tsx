@@ -12,6 +12,7 @@ describe("Filter component", () => {
         items={options}
         label="Order by age:"
         onChange={vi.fn()}
+        title="order-by-age"
       />
     );
 
