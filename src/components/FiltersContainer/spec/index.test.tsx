@@ -37,7 +37,7 @@ describe("FiltersContainer component", () => {
 
   it("should render correctly", () => {
     renderFiltersContainer();
-    expect(screen.getByLabelText("Clear filter")).toBeInTheDocument();
+    expect(screen.getByLabelText("Clear filters")).toBeInTheDocument();
     expect(screen.getByLabelText("Reset favorites")).toBeInTheDocument();
   });
 
@@ -71,7 +71,7 @@ describe("FiltersContainer component", () => {
 
   it("should call clearFilters when Clear filter button is clicked", () => {
     renderFiltersContainer();
-    fireEvent.click(screen.getByLabelText("Clear filter"));
+    fireEvent.click(screen.getByLabelText("Clear filters"));
     expect(clearFilters).toHaveBeenCalled();
   });
 
