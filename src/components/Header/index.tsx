@@ -4,6 +4,7 @@ import { Button } from "../Button";
 import { useContext } from "react";
 import { Context } from "@/context";
 import { TbRefresh } from "react-icons/tb";
+import { MdKeyboardReturn } from "react-icons/md";
 
 const Header = () => {
   const location = useLocation();
@@ -23,6 +24,17 @@ const Header = () => {
         >
           <TbRefresh />
         </Button.Root>
+      )}
+      {location.pathname !== "/" && (
+        <>
+          <Link
+            className="link link__return"
+            to="/"
+            aria-label="Return to Home page"
+          >
+            <MdKeyboardReturn />
+          </Link>
+        </>
       )}
     </header>
   );

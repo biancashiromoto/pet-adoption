@@ -1,26 +1,48 @@
 .modal {
+  display: flex;
   align-items: center;
   background-color: white;
-  border: solid 1px black;
   flex-direction: column;
+  justify-content: center;
   padding: 10px;
+  height: 75dvw;
+  left: 50%;
   position: fixed;
   top: 20%;
-  left: 50%;
   transform: translateX(-50%);
-  width: 60dvw;
+  width: 75dvw;
   z-index: 100;
+
+  @media screen and (min-width: 1024px) {
+    max-width: 400px;
+    max-height: 400px;
+  }
+
+  section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
 
   h2 {
     margin: 0;
+    margin-bottom: 6px;
   }
 
   &__buttons-container {
     align-items: center;
     display: flex;
-    gap: 10px;
+    gap: 24px;
     justify-content: center;
-    padding-top: 10px;
+
+    button {
+      background-color: var(--green);
+      border: none;
+      border-radius: 18px;
+      font-weight: 700;
+      padding: 6px 24px;
+    }
   }
 
   &-open {
@@ -28,8 +50,17 @@
   }
 
   img {
-    width: 30dvw;
-    height: 30dvw;
+    width: 35dvw;
+    height: 35dvw;
     object-fit: cover;
+    padding-bottom: 18px;
+    max-width: 175px;
+    max-height: 175px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    h2 {
+      font-size: 24px;
+    }
   }
 }

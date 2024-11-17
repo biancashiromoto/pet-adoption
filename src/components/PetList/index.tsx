@@ -20,20 +20,23 @@ const PetList = () => {
     });
   };
 
-  if (displayedPets.length == 0 || !displayedPets) {
-    return <h2 className="no-pets">No pets found :/</h2>;
-  }
   return (
-    <div className="pet-list">
-      {displayedPets.map((pet: Pet) => (
-        <Card
-          key={pet.id}
-          pet={pet}
-          setSelectedPet={setSelectedPet}
-          setShowModal={setShowAdoptionModal}
-          toggleFavorite={toggleFavorite}
-        />
-      ))}
+    <div
+      className={`pet-list ${displayedPets.length === 0 || !displayedPets ? "offwhite" : ""}`}
+    >
+      {(displayedPets.length === 0 || !displayedPets) && (
+        <h2 className="no-pets">No pets found :/</h2>
+      )}
+      {displayedPets.length > 0 &&
+        displayedPets.map((pet: Pet) => (
+          <Card
+            key={pet.id}
+            pet={pet}
+            setSelectedPet={setSelectedPet}
+            setShowModal={setShowAdoptionModal}
+            toggleFavorite={toggleFavorite}
+          />
+        ))}
     </div>
   );
 };

@@ -12,4 +12,13 @@
     grid-template-columns: repeat(3, 15dvw);
     margin: 0 auto;
   }
+
+  h2 {
+    padding-top: 24px;
+  }
+}
+
+.offwhite {
+  background-color: var(--offwhite);
+  display: block;
 }

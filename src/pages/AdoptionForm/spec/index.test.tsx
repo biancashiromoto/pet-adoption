@@ -82,7 +82,7 @@ describe("AdoptionForm Component", () => {
   it("renders form fields and submit button", () => {
     expect(screen.getByLabelText(/First name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Last name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/E-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Phone number/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Birth date/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /submit/i })).toBeInTheDocument();
@@ -103,7 +103,7 @@ describe("AdoptionForm Component", () => {
     fireEvent.input(screen.getByLabelText(/Last name/i), {
       target: { value: "Doe" },
     });
-    fireEvent.input(screen.getByLabelText(/Email/i), {
+    fireEvent.input(screen.getByLabelText(/E-mail/i), {
       target: { value: "johndoe@example.com" },
     });
     fireEvent.input(screen.getByLabelText(/Phone number/i), {

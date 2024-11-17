@@ -7,7 +7,8 @@ import { Context } from "@/context";
 
 const AdoptionForm = () => {
   const { selectedPet } = useContext(Context);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showConfirmationModal, setShowConfirmationModal] =
+    useState<boolean>(false);
   const [showPageNotFoundScreen, setShowPageNotFoundScreen] =
     useState<boolean>(false);
   const navigate = useNavigate();
@@ -15,8 +16,8 @@ const AdoptionForm = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && showModal) {
-        setShowModal(false);
+      if (event.key === "Escape" && showConfirmationModal) {
+        setShowConfirmationModal(false);
       }
     };
 
@@ -25,7 +26,7 @@ const AdoptionForm = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [showModal]);
+  }, [showConfirmationModal]);
 
   useEffect(() => {
     if (selectedPet.length === 0) {
@@ -37,50 +38,75 @@ const AdoptionForm = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setShowModal(true);
+    setShowConfirmationModal(true);
   };
 
   return (
-    <>
+    <main>
       {showPageNotFoundScreen ? (
         <article>
           <h2>Oops...</h2>
           <p>Page not found!</p>
         </article>
       ) : (
-        <form className="form" onSubmit={handleSubmit}>
-          <p>{`You are filling the form to adopt ${selectedPet[0]?.name}.`}</p>
-          <img
-            src={selectedPet[0]?.url}
-            alt={`${selectedPet[0]?.name}'s picture`}
-          />
-          <hr style={{ width: "50dvw" }} />
-          <label htmlFor="input__first-name">
-            First name:
-            <input required type="text" id="input__first-name" ref={nameRef} />
-          </label>
-          <label htmlFor="input__last-name">
-            Last name:
-            <input required type="text" id="input__last-name" />
-          </label>
-          <label htmlFor="input__email">
-            Email:
-            <input required type="email" id="input__email" />
-          </label>
-          <label htmlFor="input__phone-number">
-            Phone number:
-            <input required type="tel" id="input__phone-number" />
-          </label>
-          <label htmlFor="input__birth-date">
-            Birth date:
-            <input required type="date" id="input__birth-date" />
-          </label>
-          <button type="submit">Submit</button>
-        </form>
-      )}
-      {showModal && (
         <>
-          <Overlay openModal={setShowModal} />
+          <article className="selected-pet">
+            <p>{`You are filling the form to adopt ${selectedPet[0]?.name}`}</p>
+            <img
+              className="selected-pet__image"
+              src={selectedPet[0]?.url}
+              alt={`${selectedPet[0]?.name}'s picture`}
+            />
+          </article>
+          <form className="form" onSubmit={handleSubmit}>
+            <section className="name">
+              <label
+                htmlFor="input__first-name"
+                className="input input__first-name"
+              >
+                First name:
+                <input
+                  required
+                  type="text"
+                  id="input__first-name"
+                  ref={nameRef}
+                />
+              </label>
+              <label
+                htmlFor="input__last-name"
+                className="input input__last-name"
+              >
+                Last name:
+                <input required type="text" id="input__last-name" />
+              </label>
+            </section>
+            <article className="email-phone-birth">
+              <label htmlFor="input__email" className="input input__email">
+                E-mail:
+                <input required type="email" id="input__email" />
+              </label>
+              <label
+                htmlFor="input__phone-number"
+                className="input input__phone-number"
+              >
+                Phone number:
+                <input required type="tel" id="input__phone-number" />
+              </label>
+              <label
+                htmlFor="input__birth-date"
+                className="input input__birth-date"
+              >
+                Birth date:
+                <input required type="date" id="input__birth-date" />
+              </label>
+            </article>
+            <button type="submit">Submit</button>
+          </form>
+        </>
+      )}
+      {showConfirmationModal && (
+        <>
+          <Overlay openModal={setShowConfirmationModal} />
           <Modal
             title="Thank you for submitting!"
             text="We will contact you as soon as possible"
@@ -89,7 +115,7 @@ const AdoptionForm = () => {
               <Button.Root
                 ariaLabel="ok"
                 onClick={() => {
-                  setShowModal(false);
+                  setShowConfirmationModal(false);
                   navigate("/");
                 }}
               >
@@ -99,7 +125,7 @@ const AdoptionForm = () => {
           </Modal>
         </>
       )}
-    </>
+    </main>
   );
 };
 

@@ -52,9 +52,11 @@
       justify-content: center;
       padding: 6px 64px;
       position: relative;
+      cursor: pointer;
     }
 
     .active {
+      cursor: default;
       &::after {
         content: "";
         position: absolute;
