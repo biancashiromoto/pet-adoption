@@ -15,7 +15,8 @@ header {
     position: relative;
 
     svg {
-      width: 24px;
+      color: var(--brown);
+      font-size: 20px;
     }
 
     @media screen and (min-width: 1024px) {

@@ -6,15 +6,18 @@
 @use "./__form.scss";
 @use "./__notice.scss";
 @use "./__header.scss";
+@use "./components/filter-select";
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+  --brown: #764b36;
+  --gray: #c6bcae;
   --green: #869b90;
   --offwhite: #fefff3;
-  --gray: #c6bcae;
+  --red: #dc4d41;
 }
 
 * {

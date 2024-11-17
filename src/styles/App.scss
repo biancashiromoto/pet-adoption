@@ -44,8 +44,14 @@ link {
   gap: 12px;
   grid-template-columns: repeat(2, 45dvw);
   justify-content: center;
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(3, 20dvw);
+    margin: 0 auto;
+  }
 }
 
 .no-pets {
   padding-top: 24px;
+  text-align: center;
 }
