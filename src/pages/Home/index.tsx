@@ -127,7 +127,7 @@ const Home = () => {
   }, [pets]);
 
   return (
-    <main className="home">
+    <div className="home">
       {error && <p>Error: {error.message}</p>}
       <FiltersContainer
         clearFilters={clearFilters}
@@ -136,15 +136,17 @@ const Home = () => {
         favoriteRef={favoriteRef}
         resetFavorites={resetFavorites}
       />
-      {(isLoading || isFetching) && <Loader />}
-      {!error && !isLoading && !isFetching && (
-        <>
-          <PetList />
-          {showAdoptionModal && <ModalAdoptPets />}
-          {showUpdatePetsModal && <ModalUpdatePets refetch={refetch} />}
-        </>
-      )}
-    </main>
+      <main>
+        {(isLoading || isFetching) && <Loader />}
+        {!error && !isLoading && !isFetching && (
+          <>
+            <PetList />
+            {showAdoptionModal && <ModalAdoptPets />}
+            {showUpdatePetsModal && <ModalUpdatePets refetch={refetch} />}
+          </>
+        )}
+      </main>
+    </div>
   );
 };
 
