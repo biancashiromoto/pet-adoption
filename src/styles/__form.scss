@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 
   button {
     background-color: var(--green);
@@ -43,6 +43,9 @@
   }
 
   .name {
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
     @media screen and (min-width: 1024px) {
       display: flex;
       gap: 24px;
@@ -50,10 +53,11 @@
   }
 
   .email-phone-birth {
-    @media screen and (min-width: 1024px) {
-      display: flex;
-      gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 
+    @media screen and (min-width: 1024px) {
       input[type="email"] {
         width: 320px;
       }
@@ -74,8 +78,8 @@
   }
 
   img {
-    width: 40dvw;
-    height: 40dvw;
+    width: 42dvw;
+    height: 42dvw;
     max-width: 350px;
     max-height: 350px;
     object-fit: cover;
