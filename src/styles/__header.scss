@@ -6,7 +6,7 @@ header {
   padding: 6px 18px;
 
   img {
-    width: 35px;
+    width: 36px;
   }
 
   .update-pets {
@@ -17,7 +17,7 @@ header {
 
     svg {
       color: var(--brown);
-      font-size: 20px;
+      font-size: 24px;
     }
 
     @media screen and (min-width: 1024px) {
@@ -28,8 +28,8 @@ header {
         right: -10%;
         background-color: #333;
         color: #fff;
-        padding: 5px 10px;
-        border-radius: 4px;
+        padding: 6px 12px;
+        border-radius: 6px;
         font-size: 12px;
         white-space: nowrap;
         z-index: 10;
@@ -48,8 +48,37 @@ header {
     align-items: center;
     color: black;
     display: flex;
-    gap: 12px;
     text-decoration: none;
     width: fit-content;
+    justify-content: center;
+
+    &__return {
+      font-size: 36px;
+      position: relative;
+
+      @media screen and (min-width: 1024px) {
+        &:hover::after {
+          content: "Return to previous page";
+          position: absolute;
+          top: -12px;
+          left: -40%;
+          transform: translateX(-50%);
+          background-color: #333;
+          color: #fff;
+          padding: 6px 12px;
+          border-radius: 6px;
+          font-size: 12px;
+          white-space: nowrap;
+          z-index: 10;
+          opacity: 1;
+          transition: opacity 0.2s ease-in-out;
+        }
+
+        &::after {
+          content: "";
+          opacity: 0;
+        }
+      }
+    }
   }
 }

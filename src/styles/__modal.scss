@@ -11,6 +11,8 @@
   top: 20%;
   transform: translateX(-50%);
   width: 75dvw;
+  max-width: 400px;
+  max-height: 400px;
   z-index: 100;
 
   section {
@@ -49,5 +51,13 @@
     height: 35dvw;
     object-fit: cover;
     padding-bottom: 18px;
+    max-width: 175px;
+    max-height: 175px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    h2 {
+      font-size: 24px;
+    }
   }
 }
