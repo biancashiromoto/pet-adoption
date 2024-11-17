@@ -1,6 +1,4 @@
 import { createRef, RefObject, useContext, useEffect } from "react";
-import { Button } from "@/components/Button";
-import Card from "@/components/Card";
 import FiltersContainer from "@/components/FiltersContainer";
 import Loader from "@/components/Loader";
 import { Pet } from "@/types/Pet";
@@ -15,8 +13,8 @@ import useUpdatePageTitle from "@/hooks/useUpdatePageTitle";
 import {
   FavoritesFilter,
   OrderByAgeFilter,
-  SpeciesFilter,
 } from "../../components/FiltersContainer/index.types";
+import PetList from "@/components/PetList";
 
 const utils = new Utils();
 
@@ -27,10 +25,8 @@ const Home = () => {
   const {
     pets,
     setPets,
-    displayedPets,
     setDisplayedPets,
     selectedPet,
-    setSelectedPet,
     showAdoptionModal,
     setShowAdoptionModal,
     showUpdatePetsModal,
@@ -75,7 +71,7 @@ const Home = () => {
       filteredPets = pets.filter((pet: Pet) => pet.species === speciesFilter);
     }
 
-    if (favoritesFilter !== "all") {
+    if (favoritesFilter !== "favorite status") {
       if (favoritesFilter === "favorites") {
         filteredPets = filteredPets.filter((pet: Pet) => pet.isFavorite);
       } else {
@@ -84,7 +80,7 @@ const Home = () => {
     }
 
     let orderedPets = filteredPets;
-    if (orderFilter !== "none") {
+    if (orderFilter !== "order by") {
       orderedPets = [...filteredPets].sort((a: Pet, b: Pet) => {
         if (!a.age || !b.age) return 0;
         return orderFilter === "younger" ? a.age - b.age : b.age - a.age;
@@ -110,7 +106,7 @@ const Home = () => {
 
   const updateRef = (
     ref: RefObject<HTMLSelectElement>,
-    newValue: SpeciesFilter | OrderByAgeFilter | FavoritesFilter
+    newValue: OrderByAgeFilter | FavoritesFilter
   ) => {
     if (!ref.current) return;
     ref.current.value = newValue;
@@ -118,26 +114,12 @@ const Home = () => {
 
   const clearFilters = () => {
     setDisplayedPets(pets);
-    setOrderFilter("none");
+    setOrderFilter("order by");
     setSpeciesFilter("cat");
-    setFavoritesFilter("all");
+    setFavoritesFilter("favorite status");
 
-    updateRef(speciesRef, "cat");
-    updateRef(orderRef, "none");
-    updateRef(favoriteRef, "all");
-  };
-
-  const toggleFavorite = (id: Pet["id"]) => {
-    setPets((prevPets: Pet[]) => {
-      const updatedPets = prevPets.map((pet) => {
-        if (pet.id === id) {
-          return { ...pet, isFavorite: !pet.isFavorite };
-        }
-        return pet;
-      });
-
-      return updatedPets;
-    });
+    updateRef(orderRef, "order by");
+    updateRef(favoriteRef, "favorite status");
   };
 
   useEffect(() => {
@@ -145,15 +127,8 @@ const Home = () => {
   }, [pets]);
 
   return (
-    <>
+    <div className="home">
       {error && <p>Error: {error.message}</p>}
-      <Button.Root
-        ariaLabel="Update pets"
-        onClick={() => setShowUpdatePetsModal(true)}
-      >
-        <Button.Label label="Update pets" />
-      </Button.Root>
-      <hr />
       <FiltersContainer
         clearFilters={clearFilters}
         orderRef={orderRef}
@@ -161,27 +136,15 @@ const Home = () => {
         favoriteRef={favoriteRef}
         resetFavorites={resetFavorites}
       />
-      <hr />
       {(isLoading || isFetching) && <Loader />}
       {!error && !isLoading && !isFetching && (
         <>
-          <main>
-            {displayedPets &&
-              displayedPets.map((pet: Pet) => (
-                <Card
-                  key={pet.id}
-                  pet={pet}
-                  setSelectedPet={setSelectedPet}
-                  setShowModal={setShowAdoptionModal}
-                  toggleFavorite={toggleFavorite}
-                />
-              ))}
-          </main>
+          <PetList />
           {showAdoptionModal && <ModalAdoptPets />}
           {showUpdatePetsModal && <ModalUpdatePets refetch={refetch} />}
         </>
       )}
-    </>
+    </div>
   );
 };
 
