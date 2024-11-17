@@ -46,7 +46,7 @@ link {
   justify-content: center;
 
   @media screen and (min-width: 1024px) {
-    grid-template-columns: repeat(3, 20dvw);
+    grid-template-columns: repeat(3, 15dvw);
     margin: 0 auto;
   }
 }

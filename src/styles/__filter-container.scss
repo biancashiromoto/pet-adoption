@@ -21,6 +21,18 @@
   &__buttons {
     gap: 30px;
     padding: 12px;
+
+    button {
+      background-color: var(--brown);
+      border-radius: 25px;
+      color: var(--offwhite);
+      border: none;
+      padding: 12px 36px;
+
+      &:hover {
+        background-color: var(--light-brown);
+      }
+    }
   }
 
   &__species {
@@ -45,7 +57,7 @@
         left: 0;
         width: 100%;
         height: 3px;
-        background-color: #764b36;
+        background-color: var(--brown);
       }
 
       @media screen and (min-width: 1024px) {

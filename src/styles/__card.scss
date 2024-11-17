@@ -1,13 +1,14 @@
 .card {
   background-color: var(--offwhite);
   cursor: pointer;
-  padding: 24px 0 6px 0;
+  padding: 12px;
 
   img {
-    width: 150px;
-    height: 150px;
+    width: 100%;
+    height: fit-content;
     object-fit: cover;
     padding-bottom: 6px;
+    aspect-ratio: 1 / 1;
   }
 
   button {
@@ -19,7 +20,6 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    width: 150px;
     margin: 0 auto;
 
     & > * {
@@ -55,6 +55,13 @@
   }
 
   // @media screen and (min-width: 1024px) {
-  //   width: 200px;
+  //   img {
+  //     width: 250px;
+  //     height: 250px;
+  //   }
+
+  //   &__text {
+  //     width: 250px;
+  //   }
   // }
 }

@@ -1,8 +1,7 @@
 .notice {
-  background-color: #db684256;
+  background-color: var(--warning);
   font-size: 0.75rem;
   padding: 20px 25px 15px 25px;
-  margin: 15px;
   position: relative;
 
   button {
@@ -24,5 +23,10 @@
     justify-content: center;
     gap: 6px;
     margin-top: 12px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    margin: 12px auto;
+    width: 45dvw;
   }
 }
