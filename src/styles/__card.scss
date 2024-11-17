@@ -1,16 +1,15 @@
 .card {
+  background-color: #fefff3;
   cursor: pointer;
-  margin: 5px;
-  padding: 5px;
+  padding: 12px;
 
   &:hover {
-    background-color: #5c4b4949;
     transform: scale(105%, 105%);
   }
 
   img {
-    width: 40dvw;
-    height: 40dvw;
+    width: 36dvw;
+    height: 36dvw;
     object-fit: cover;
   }
 
@@ -23,9 +22,9 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    padding: 5px 15px;
+    padding: 6px 12px;
 
-    & >* {
+    & > * {
       align-items: baseline;
       display: flex;
       margin: 0;
