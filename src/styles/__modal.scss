@@ -5,15 +5,18 @@
   flex-direction: column;
   justify-content: center;
   padding: 10px;
-  height: 65dvw;
+  height: 75dvw;
   left: 50%;
   position: fixed;
   top: 20%;
   transform: translateX(-50%);
   width: 75dvw;
-  max-width: 400px;
-  max-height: 400px;
   z-index: 100;
+
+  @media screen and (min-width: 1024px) {
+    max-width: 400px;
+    max-height: 400px;
+  }
 
   section {
     display: flex;
