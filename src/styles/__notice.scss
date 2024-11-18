@@ -1,17 +1,29 @@
 .notice {
   background-color: var(--warning);
   font-size: 0.75rem;
-  padding: 20px 25px 15px 25px;
-  position: relative;
+  padding: 12px 12px 12px 3px;
   margin: 12px;
+  position: relative;
 
   button {
     background-color: unset;
     border: none;
     font-size: 1rem;
     position: absolute;
-    right: 5px;
-    top: 5px;
+    top: 6px;
+    right: 6px;
+  }
+
+  p {
+    line-height: 1.75;
+    padding: 0 18px;
+    text-align: justify;
+
+    svg {
+      font-size: 18px;
+      transform: translateY(5px);
+      padding-right: 6px;
+    }
   }
 
   .hide {
@@ -29,5 +41,15 @@
   @media screen and (min-width: 1024px) {
     margin: 12px auto;
     width: 45dvw;
+
+    p {
+      text-align: center;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    p {
+      text-align: center;
+    }
   }
 }
