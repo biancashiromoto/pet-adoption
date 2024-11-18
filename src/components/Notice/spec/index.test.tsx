@@ -3,11 +3,9 @@ import { describe, it, expect, vi } from "vitest";
 import Notice from "..";
 
 describe("Modal component", () => {
-  const setShowNotice = vi.fn();
-
   beforeEach(() => {
     render(
-      <Notice setShowNotice={setShowNotice}>
+      <Notice>
         <h2>Notice</h2>
       </Notice>
     );
@@ -19,8 +17,8 @@ describe("Modal component", () => {
     ).toBeInTheDocument();
   });
 
-  it("should call onClick function when button is clicked", async () => {
+  it("should not be in the screen after it is closed", () => {
     fireEvent.click(screen.getByRole("button"));
-    expect(setShowNotice).toHaveBeenCalledWith(false);
+    expect(screen.queryByTestId("notice")).not.toBeInTheDocument();
   });
 });
