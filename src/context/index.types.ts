@@ -25,6 +25,6 @@ export interface ContextProps {
   setFavoritesFilter: Dispatch<SetStateAction<FavoritesFilter>>;
   showNotice: boolean;
   setShowNotice: Dispatch<SetStateAction<boolean>>;
-  dontShowNoticeAgain: boolean;
-  setDontShowNoticeAgain: Dispatch<SetStateAction<boolean>>;
+  dontShowHomePageNoticeAgain: boolean;
+  setDontShowHomePageNoticeAgain: Dispatch<SetStateAction<boolean>>;
 }

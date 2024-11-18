@@ -25,9 +25,8 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [favoritesFilter, setFavoritesFilter] =
     useState<FavoritesFilter>("favorite status");
   const [showNotice, setShowNotice] = useState(!storagedDontShowNoticeAgain);
-  const [dontShowNoticeAgain, setDontShowNoticeAgain] = useState(
-    storagedDontShowNoticeAgain
-  );
+  const [dontShowHomePageNoticeAgain, setDontShowHomePageNoticeAgain] =
+    useState(storagedDontShowNoticeAgain);
 
   const value: ContextProps = {
     pets,
@@ -48,8 +47,8 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setFavoritesFilter,
     showNotice,
     setShowNotice,
-    dontShowNoticeAgain,
-    setDontShowNoticeAgain,
+    dontShowHomePageNoticeAgain,
+    setDontShowHomePageNoticeAgain,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
