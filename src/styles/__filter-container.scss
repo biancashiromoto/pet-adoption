@@ -1,6 +1,6 @@
 .filter-container {
   align-items: center;
-  border-bottom: 1px solid var(--gray);
+  border-bottom: 1px solid var(--light-gray);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -11,11 +11,13 @@
   background-color: var(--offwhite);
 
   .selects-buttons {
-    border-bottom: 1px solid var(--gray);
+    align-items: center;
+    border-bottom: 1px solid var(--light-gray);
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: center;
     gap: 12px;
+    width: 100%;
   }
 
   &__selects,
@@ -92,9 +94,11 @@
 
     select {
       border-radius: 12px;
+      color: var(--black);
       height: 36px;
       padding: 6px 12px;
       width: max-content;
+      border: solid 1px var(--light-gray);
     }
 
     .filter-select {

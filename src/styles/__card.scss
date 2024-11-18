@@ -2,6 +2,7 @@
   background-color: var(--offwhite);
   cursor: pointer;
   padding: 12px;
+  color: var(--black);
 
   img {
     width: 100%;
@@ -26,6 +27,7 @@
       align-items: baseline;
       display: flex;
       margin: 0;
+      text-wrap: nowrap;
     }
 
     h3 {
@@ -42,26 +44,12 @@
     }
 
     button {
-      align-self: flex-end;
       font-size: 1.125rem;
       justify-self: end;
+
+      .filled {
+        color: var(--red);
+      }
     }
   }
-
-  .heart {
-    &__filled {
-      color: var(--red);
-    }
-  }
-
-  // @media screen and (min-width: 1024px) {
-  //   img {
-  //     width: 250px;
-  //     height: 250px;
-  //   }
-
-  //   &__text {
-  //     width: 250px;
-  //   }
-  // }
 }
