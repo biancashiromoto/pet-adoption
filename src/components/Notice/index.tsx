@@ -1,4 +1,4 @@
-import { IoMdCloseCircleOutline } from "react-icons/io";
+import { IoIosClose } from "react-icons/io";
 import React, { useState } from "react";
 
 interface GenericNoticeProps extends React.HTMLAttributes<HTMLElement> {
@@ -13,7 +13,7 @@ const Notice: React.FC<GenericNoticeProps> = ({
   children,
   onClose,
   showCloseButton = true,
-  icon = <IoMdCloseCircleOutline />,
+  icon = <IoIosClose />,
   type = "info",
   className = "",
   ...props
