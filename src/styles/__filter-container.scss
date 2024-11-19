@@ -40,6 +40,10 @@
       border: none;
       text-wrap: nowrap;
       text-decoration: underline;
+
+      :hover {
+        background-color: gray;
+      }
     }
   }
 

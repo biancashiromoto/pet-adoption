@@ -1,0 +1,11 @@
+.notice {
+  &__home-page {
+    a {
+      text-wrap: nowrap;
+
+      svg {
+        font-size: 18px;
+      }
+    }
+  }
+}
