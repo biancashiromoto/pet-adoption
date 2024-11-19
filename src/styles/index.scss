@@ -9,6 +9,7 @@
 @use "./components/filter-select";
 @use "./components/pet-list";
 @use "./components/button";
+@use "./components/notice-home-page";
 @use "./pages/home";
 
 @tailwind base;
@@ -18,7 +19,8 @@
 :root {
   --brown: #764b36;
   --light-brown: #996145;
-  --gray: #c6bcae;
+  --light-gray: #c6bcae;
+  --black: #2b2b2b;
   --green: #869b90;
   --offwhite: #fefff3;
   --red: #dc4d41;

@@ -39,7 +39,7 @@ const Card = ({
             {!pet.isFavorite ? (
               <FaRegHeart className="unfilled" data-testid="heart__unfilled" />
             ) : (
-              <FaHeart className="heart__filled" data-testid="heart__filled" />
+              <FaHeart className="filled" data-testid="heart__filled" />
             )}
           </button>
         </div>

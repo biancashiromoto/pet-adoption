@@ -64,8 +64,8 @@ describe("AdoptionForm Component", () => {
           showUpdatePetsModal: false,
           showNotice: false,
           setShowNotice: vi.fn(),
-          dontShowNoticeAgain: false,
-          setDontShowNoticeAgain: vi.fn(),
+          dontShowHomePageNoticeAgain: false,
+          setDontShowHomePageNoticeAgain: vi.fn(),
         }}
       >
         <BrowserRouter>

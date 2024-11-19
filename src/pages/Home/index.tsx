@@ -113,7 +113,10 @@ const Home = () => {
   };
 
   const clearFilters = () => {
-    setDisplayedPets(pets);
+    const resettedPets = [...pets].filter(
+      (pet: Pet) => pet.species === speciesFilter
+    );
+    setDisplayedPets(resettedPets);
     setOrderFilter("order by");
     setSpeciesFilter("cat");
     setFavoritesFilter("favorite status");
