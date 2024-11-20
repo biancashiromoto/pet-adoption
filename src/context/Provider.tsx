@@ -1,4 +1,4 @@
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, createRef } from "react";
 import { Context } from ".";
 import { Pet } from "@/types/Pet";
 import { ContextProps } from "./index.types";
@@ -14,6 +14,9 @@ const storagedDontShowNoticeAgain: boolean =
   utils.getLocalStorage("dont-show-again") === "true";
 
 const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const orderRef = createRef<HTMLSelectElement>();
+  const favoriteRef = createRef<HTMLSelectElement>();
+
   const [pets, setPets] = useState<Pet[]>([] as Pet[]);
   const [displayedPets, setDisplayedPets] = useState(pets as Pet[]);
   const [selectedPet, setSelectedPet] = useState([] as Pet[]);
@@ -49,6 +52,8 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setShowNotice,
     dontShowHomePageNoticeAgain,
     setDontShowHomePageNoticeAgain,
+    favoriteRef,
+    orderRef,
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
