@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 import AdoptionForm from "..";
 import { Context } from "../../../context";
-import { Pet } from "../../../types/Pet";
+import { Pet } from "../../../types/Pet.type";
 
 const mockNavigate = vi.fn();
 
@@ -66,6 +66,8 @@ describe("AdoptionForm Component", () => {
           setShowNotice: vi.fn(),
           dontShowHomePageNoticeAgain: false,
           setDontShowHomePageNoticeAgain: vi.fn(),
+          orderRef: null,
+          favoriteRef: null,
         }}
       >
         <BrowserRouter>

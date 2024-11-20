@@ -1,5 +1,5 @@
 import { Context } from "@/context";
-import { Pet } from "@/types/Pet";
+import { Pet } from "@/types/Pet.type";
 import { useContext } from "react";
 
 const useResetFavorites = () => {

@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import Card, { CardProps } from "..";
 import { Pet } from "../../../types/Pet.type";
-import { pets } from "@/tests/mocks";
+import { petsMock } from "@/tests/mocks";
 
 describe("Card component", () => {
   const setSelectedPet = vi.fn();
@@ -10,7 +10,7 @@ describe("Card component", () => {
   const toggleFavorite = vi.fn();
 
   const mockProps = {
-    pet: pets[0],
+    pet: petsMock[0],
     setSelectedPet: setSelectedPet,
     setShowModal: setShowModal,
     toggleFavorite: toggleFavorite,
@@ -23,10 +23,10 @@ describe("Card component", () => {
   it("should be correctly rendered", () => {
     renderCard(mockProps);
     expect(
-      screen.getByRole("heading", { name: pets[0].name })
+      screen.getByRole("heading", { name: petsMock[0].name })
     ).toBeInTheDocument();
-    expect(screen.getByText(`Age: ${pets[0].age}`)).toBeInTheDocument();
-    expect(screen.getByRole("img")).toHaveAttribute("src", pets[0].url);
+    expect(screen.getByText(`Age: ${petsMock[0].age}`)).toBeInTheDocument();
+    expect(screen.getByRole("img")).toHaveAttribute("src", petsMock[0].url);
     expect(screen.getByTestId("heart__unfilled")).toBeInTheDocument();
     expect(screen.queryByTestId("heart__filled")).not.toBeInTheDocument();
   });
@@ -35,7 +35,7 @@ describe("Card component", () => {
     renderCard(mockProps);
     fireEvent.click(screen.getByRole("article"));
     expect(setShowModal).toHaveBeenCalledWith(true);
-    expect(setSelectedPet).toHaveBeenCalledWith([pets[0]]);
+    expect(setSelectedPet).toHaveBeenCalledWith([petsMock[0]]);
   });
 
   it("should toggle the favorite icon when heart icon is clicked", () => {
@@ -45,10 +45,10 @@ describe("Card component", () => {
     expect(screen.queryByTestId("heart__filled")).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole("button"));
-    expect(toggleFavorite).toHaveBeenCalledWith(pets[0].id);
+    expect(toggleFavorite).toHaveBeenCalledWith(petsMock[0].id);
     const newMockProps = {
       ...mockProps,
-      pet: { ...pets[0], isFavorite: true },
+      pet: { ...petsMock[0], isFavorite: true },
     };
     rerender(<Card {...{ ...newMockProps }} />);
 
