@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, RefObject, SetStateAction } from "react";
 import { Pet } from "@/types/Pet";
 import {
   FavoritesFilter,
@@ -27,4 +27,6 @@ export interface ContextProps {
   setShowNotice: Dispatch<SetStateAction<boolean>>;
   dontShowHomePageNoticeAgain: boolean;
   setDontShowHomePageNoticeAgain: Dispatch<SetStateAction<boolean>>;
+  orderRef: RefObject<HTMLSelectElement>;
+  favoriteRef: RefObject<HTMLSelectElement>;
 }
