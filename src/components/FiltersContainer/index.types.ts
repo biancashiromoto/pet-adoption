@@ -5,7 +5,6 @@ export type OrderByAgeFilter = "order by" | "older" | "younger";
 export type FavoritesFilter = "favorite status" | "favorites" | "non favorites";
 
 export interface FiltersContainerProps {
-  speciesRef: RefObject<HTMLSelectElement>;
   orderRef: RefObject<HTMLSelectElement>;
   clearFilters: () => void;
   favoriteRef: RefObject<HTMLSelectElement>;
