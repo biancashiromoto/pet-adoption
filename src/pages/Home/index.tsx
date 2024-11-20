@@ -10,8 +10,6 @@ import useUpdatePageTitle from "@/hooks/useUpdatePageTitle";
 import PetList from "@/components/PetList";
 import useFilter from "@/hooks/useFilter";
 import useFetchPets from "@/hooks/useFetchPets";
-import useClearFilters from "@/hooks/useClearFilters";
-import useResetFavorites from "@/hooks/useResetFavorites";
 
 const utils = new Utils();
 
@@ -23,12 +21,8 @@ const Home = () => {
     setShowAdoptionModal,
     showUpdatePetsModal,
     setShowUpdatePetsModal,
-    orderRef,
-    favoriteRef,
   } = useContext(Context);
   const { isLoadingOrFetching, error, refetch } = useFetchPets();
-  const { clearFilters } = useClearFilters();
-  const { resetFavorites } = useResetFavorites();
 
   useUpdatePageTitle(
     showAdoptionModal && selectedPet.length > 0
@@ -50,12 +44,7 @@ const Home = () => {
   return (
     <div className="home">
       {error && <p>Error: {error.message}</p>}
-      <FiltersContainer
-        clearFilters={clearFilters}
-        orderRef={orderRef}
-        favoriteRef={favoriteRef}
-        resetFavorites={resetFavorites}
-      />
+      <FiltersContainer />
       <main>
         {isLoadingOrFetching && <Loader />}
         {!error && !isLoadingOrFetching && (
