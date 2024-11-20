@@ -1,9 +1,6 @@
-import {
-  FavoritesFilter,
-  OrderByAgeFilter,
-} from "@/components/FiltersContainer/index.types";
 import { Context } from "@/context";
-import { Pet } from "@/types/Pet";
+import { Favorites, OrderByAge } from "@/types/Filters.type";
+import { Pet } from "@/types/Pet.type";
 import { RefObject, useContext, useEffect } from "react";
 
 const useClearFilters = () => {
@@ -20,7 +17,7 @@ const useClearFilters = () => {
 
   const updateRef = (
     ref: RefObject<HTMLSelectElement>,
-    newValue: OrderByAgeFilter | FavoritesFilter
+    newValue: OrderByAge | Favorites
   ) => {
     if (!ref.current) return;
     ref.current.value = newValue;
@@ -35,8 +32,8 @@ const useClearFilters = () => {
     setSpeciesFilter("cat");
     setFavoritesFilter("favorite status");
 
-    updateRef(orderRef, "order by");
-    updateRef(favoriteRef, "favorite status");
+    orderRef && updateRef(orderRef, "order by");
+    favoriteRef && updateRef(favoriteRef, "favorite status");
   };
 
   return { clearFilters, pets };

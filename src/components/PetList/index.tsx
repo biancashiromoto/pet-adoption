@@ -1,7 +1,7 @@
 import { Context } from "@/context";
 import { useContext } from "react";
 import Card from "../Card";
-import { Pet } from "@/types/Pet";
+import { Pet } from "@/types/Pet.type";
 
 const PetList = () => {
   const { displayedPets, setSelectedPet, setShowAdoptionModal, setPets } =

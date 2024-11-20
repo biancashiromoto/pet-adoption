@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Context } from "@/context";
-import { Pet } from "@/types/Pet";
+import { Pet } from "@/types/Pet.type";
 
 const useFilter = () => {
   const {
