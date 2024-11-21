@@ -9,11 +9,14 @@ interface ModalUpdatePetsProps {
 }
 
 const ModalUpdatePets = ({ refetch }: ModalUpdatePetsProps) => {
-  const { setShowUpdatePetsModal } = useContext(Context);
+  const { setShowUpdatePetsModal, showUpdatePetsModal } = useContext(Context);
   return (
     <>
       <Overlay openModal={setShowUpdatePetsModal} />
       <Modal
+        isVisible={showUpdatePetsModal}
+        onClose={() => setShowUpdatePetsModal(false)}
+        className="modal"
         text="Updating pets will remove the current list and fetch new ones. Do you want to continue?"
         title="Update pets?"
       >

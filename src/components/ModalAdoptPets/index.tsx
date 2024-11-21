@@ -6,12 +6,16 @@ import { Button } from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 
 const ModalAdoptPets = () => {
-  const { setShowAdoptionModal, selectedPet } = useContext(Context);
+  const { setShowAdoptionModal, showAdoptionModal, selectedPet } =
+    useContext(Context);
   const navigate = useNavigate();
   return (
     <>
       <Overlay openModal={setShowAdoptionModal} />
       <Modal
+        isVisible={showAdoptionModal}
+        onClose={() => setShowAdoptionModal(false)}
+        className="modal"
         title={`Would you like to adopt ${selectedPet[0].name}?`}
         text="You will be redirected to the adoption form"
       >
