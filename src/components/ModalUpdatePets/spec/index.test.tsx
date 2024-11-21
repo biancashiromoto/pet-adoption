@@ -45,7 +45,7 @@ describe("ModalUpdatePets", () => {
     expect(setShowUpdatePetsModal).toHaveBeenCalledWith(false);
   });
 
-  it.only("should close modal without calling refetch when clicking 'No'", () => {
+  it("should close modal without calling refetch when clicking 'No'", () => {
     renderModal();
     fireEvent.click(screen.getByLabelText("No"));
     expect(refetch).not.toHaveBeenCalled();
