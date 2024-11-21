@@ -28,12 +28,6 @@ const Modal: FC<Props> = ({
         {text && <p>{text}</p>}
         {children}
       </section>
-
-      {onClose && (
-        <button type="button" className="modal-close-button" onClick={onClose}>
-          Close
-        </button>
-      )}
     </div>
   );
 };
