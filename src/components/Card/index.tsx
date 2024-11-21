@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { Pet } from "@/types/Pet";
+import { Pet } from "@/types/Pet.type";
 
 export interface CardProps {
   pet: Pet;
@@ -22,24 +22,29 @@ const Card = ({
         setSelectedPet([pet]);
         setShowModal(true);
       }}
+      tabIndex={0}
+      data-testid="card"
     >
-      <img alt="Random picture of a cat" src={pet.url} />
-      <div className="card__text">
-        <h3>{pet.name}</h3>
-        <p>Age: {pet.age}</p>
-        <button
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleFavorite(pet.id);
-          }}
-        >
-          {!pet.isFavorite ? (
-            <FaRegHeart data-testid="heart__unfilled" />
-          ) : (
-            <FaHeart data-testid="heart__filled" />
-          )}
-        </button>
+      <div className="card__content">
+        <img alt="Random picture of a cat" src={pet.url} />
+        <div className="card__text">
+          <h3>{pet.name}</h3>
+          <p>Age: {pet.age}</p>
+          <button
+            data-testid="favorite-button"
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              toggleFavorite(pet.id);
+            }}
+          >
+            {!pet.isFavorite ? (
+              <FaRegHeart className="unfilled" data-testid="heart__unfilled" />
+            ) : (
+              <FaHeart className="filled" data-testid="heart__filled" />
+            )}
+          </button>
+        </div>
       </div>
     </article>
   );

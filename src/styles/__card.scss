@@ -1,17 +1,15 @@
 .card {
+  background-color: var(--offwhite);
   cursor: pointer;
-  margin: 5px;
-  padding: 5px;
-
-  &:hover {
-    background-color: #5c4b4949;
-    transform: scale(105%, 105%);
-  }
+  padding: 12px;
+  color: var(--black);
 
   img {
-    width: 40dvw;
-    height: 40dvw;
+    width: 100%;
+    height: fit-content;
     object-fit: cover;
+    padding-bottom: 6px;
+    aspect-ratio: 1 / 1;
   }
 
   button {
@@ -23,18 +21,20 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    padding: 5px 15px;
+    margin: 0 auto;
 
-    & >* {
+    & > * {
       align-items: baseline;
       display: flex;
       margin: 0;
+      text-wrap: nowrap;
     }
 
     h3 {
       grid-column: 1;
       grid-row: 1;
       font-size: 1rem;
+      padding-bottom: 6px;
     }
 
     p {
@@ -44,9 +44,12 @@
     }
 
     button {
-      align-self: flex-end;
       font-size: 1.125rem;
       justify-self: end;
+
+      .filled {
+        color: var(--red);
+      }
     }
   }
 }

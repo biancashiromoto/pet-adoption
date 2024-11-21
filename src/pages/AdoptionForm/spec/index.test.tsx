@@ -3,7 +3,8 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 import AdoptionForm from "..";
 import { Context } from "../../../context";
-import { Pet } from "../../../types/Pet";
+import { petsMock } from "@/tests/mocks";
+import { ContextProps } from "@/context/index.types";
 
 const mockNavigate = vi.fn();
 
@@ -19,54 +20,16 @@ vi.mock("react-router-dom", async () => {
 });
 
 describe("AdoptionForm Component", () => {
-  const pets: Pet[] = [
-    {
-      id: "_VcB1rc9l",
-      url: "image.jpg",
-      width: 10,
-      height: 10,
-      name: "Cleo",
-      age: 5,
-      species: "dog",
-      isFavorite: false,
-    },
-    {
-      id: "_VcB1rc92",
-      url: "image.jpg",
-      width: 10,
-      height: 10,
-      name: "Pancakes",
-      age: 12,
-      species: "cat",
-      isFavorite: true,
-    },
-  ];
-
   const renderAdoptionForm = () => {
     return render(
       <Context.Provider
-        value={{
-          selectedPet: [pets[0]],
-          pets,
-          displayedPets: pets,
-          favoritesFilter: "all",
-          orderFilter: "none",
-          speciesFilter: "cat",
-          setDisplayedPets: vi.fn(),
-          setFavoritesFilter: vi.fn(),
-          setOrderFilter: vi.fn(),
-          setPets: vi.fn(),
-          setSelectedPet: vi.fn(),
-          setShowAdoptionModal: vi.fn(),
-          setShowUpdatePetsModal: vi.fn(),
-          setSpeciesFilter: vi.fn(),
-          showAdoptionModal: false,
-          showUpdatePetsModal: false,
-          showNotice: false,
-          setShowNotice: vi.fn(),
-          dontShowNoticeAgain: false,
-          setDontShowNoticeAgain: vi.fn(),
-        }}
+        value={
+          {
+            selectedPet: [petsMock[0]],
+            showNotice: false,
+            dontShowHomePageNoticeAgain: false,
+          } as unknown as ContextProps
+        }
       >
         <BrowserRouter>
           <AdoptionForm />
@@ -82,17 +45,17 @@ describe("AdoptionForm Component", () => {
   it("renders form fields and submit button", () => {
     expect(screen.getByLabelText(/First name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Last name/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/E-mail/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Phone number/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Birth date/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /submit/i })).toBeInTheDocument();
     expect(
       screen.getByText(/You are filling the form to adopt Cleo/i)
     ).toBeInTheDocument();
-    expect(screen.getByRole("img")).toHaveAttribute("src", pets[0].url);
+    expect(screen.getByRole("img")).toHaveAttribute("src", petsMock[0].url);
     expect(screen.getByRole("img")).toHaveAttribute(
       "alt",
-      `${pets[0].name}'s picture`
+      `${petsMock[0].name}'s picture`
     );
   });
 
@@ -103,7 +66,7 @@ describe("AdoptionForm Component", () => {
     fireEvent.input(screen.getByLabelText(/Last name/i), {
       target: { value: "Doe" },
     });
-    fireEvent.input(screen.getByLabelText(/Email/i), {
+    fireEvent.input(screen.getByLabelText(/E-mail/i), {
       target: { value: "johndoe@example.com" },
     });
     fireEvent.input(screen.getByLabelText(/Phone number/i), {
@@ -138,5 +101,25 @@ describe("AdoptionForm Component", () => {
         screen.queryByText(/thank you for submitting/i)
       ).not.toBeInTheDocument()
     );
+  });
+
+  it("shows 'Page not found' screen when no pet is selected", () => {
+    render(
+      <Context.Provider
+        value={
+          {
+            selectedPet: [],
+            dontShowHomePageNoticeAgain: false,
+          } as unknown as ContextProps
+        }
+      >
+        <BrowserRouter>
+          <AdoptionForm />
+        </BrowserRouter>
+      </Context.Provider>
+    );
+
+    expect(screen.getByText("Oops...")).toBeInTheDocument();
+    expect(screen.getByText("Page not found!")).toBeInTheDocument();
   });
 });

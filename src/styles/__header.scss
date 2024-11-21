@@ -1,14 +1,88 @@
 header {
-  background-color: #55866B;
+  background-color: var(--offwhite);
+  border-bottom: 1px solid #c6bcae;
   display: flex;
-  padding-left: 15px;
-
-  h1 {
-    margin: 12px;
-  }
+  justify-content: space-between;
+  padding: 6px 18px;
 
   img {
-    padding-right: 5px;
-    width: 35px;
+    width: 36px;
+  }
+
+  h1 {
+    margin-left: 12px;
+  }
+
+  .update-pets {
+    border: none;
+    background-color: unset;
+    cursor: pointer;
+    position: relative;
+
+    svg {
+      color: var(--brown);
+      font-size: 24px;
+    }
+
+    @media screen and (min-width: 1024px) {
+      &:hover::after {
+        content: "Update pets";
+        position: absolute;
+        top: -6px;
+        right: -10%;
+        background-color: #333;
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        white-space: nowrap;
+        z-index: 10;
+        opacity: 1;
+        transition: opacity 0.2s ease-in-out;
+      }
+
+      &::after {
+        content: "";
+        opacity: 0;
+      }
+    }
+  }
+
+  .link {
+    align-items: center;
+    color: var(--black);
+    display: flex;
+    text-decoration: none;
+    width: fit-content;
+    justify-content: center;
+
+    &__return {
+      font-size: 36px;
+      position: relative;
+
+      @media screen and (min-width: 1024px) {
+        &:hover::after {
+          content: "Return to previous page";
+          position: absolute;
+          top: -12px;
+          left: -40%;
+          transform: translateX(-50%);
+          background-color: #333;
+          color: #fff;
+          padding: 6px 12px;
+          border-radius: 6px;
+          font-size: 12px;
+          white-space: nowrap;
+          z-index: 10;
+          opacity: 1;
+          transition: opacity 0.2s ease-in-out;
+        }
+
+        &::after {
+          content: "";
+          opacity: 0;
+        }
+      }
+    }
   }
 }

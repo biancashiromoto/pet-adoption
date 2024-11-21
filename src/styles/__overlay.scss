@@ -1,11 +1,11 @@
 .overlay {
-  background-color: black;
+  background-color: var(--black);
   height: 100vh;
   left: 0;
-  opacity: 0.75;
+  opacity: 0.8;
   position: fixed;
   top: 0;
   width: 100vw;
   overflow: hidden;
-  z-index: 10;
+  z-index: 20;
 }

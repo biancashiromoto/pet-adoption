@@ -1,19 +1,35 @@
-import { ModalProps } from './index.types'
+import { FC, ReactNode } from "react";
 
-const Modal = ({
+type Props = {
+  children: ReactNode;
+  className?: string;
+  isVisible: boolean;
+  onClose: () => void;
+  title?: string;
+  text?: string;
+};
+
+const Modal: FC<Props> = ({
   children,
   className,
+  isVisible = true,
+  onClose,
   title,
   text,
   ...rest
-}: ModalProps) => {
-  return (
-    <div className='modal' {...rest}>
-      <h2>{ title }</h2>
-      <p>{ text }</p>
-      { children }
-    </div>
-  )
-}
+}) => {
+  if (!isVisible) return null;
 
-export default Modal
+  return (
+    <div className={`modal ${className}`} {...rest}>
+      <section className="modal-body">
+        <h2>{title}</h2>
+
+        {text && <p>{text}</p>}
+        {children}
+      </section>
+    </div>
+  );
+};
+
+export default Modal;

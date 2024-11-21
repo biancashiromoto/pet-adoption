@@ -46,17 +46,17 @@ describe("ModalAdoptPets", () => {
     setShowAdoptionModal,
     showUpdatePetsModal: false,
     setShowUpdatePetsModal: vi.fn(),
-    speciesFilter: "all",
+    speciesFilter: "cat",
     setSpeciesFilter: vi.fn(),
-    orderFilter: "none",
+    orderFilter: "order by",
     setOrderFilter: vi.fn(),
-    favoritesFilter: "all",
+    favoritesFilter: "favorite status",
     setFavoritesFilter: vi.fn(),
     showNotice: false,
     setShowNotice: vi.fn(),
-    dontShowNoticeAgain: false,
-    setDontShowNoticeAgain: vi.fn(),
-  };
+    dontShowHomePageNoticeAgain: false,
+    setDontShowHomePageNoticeAgain: vi.fn(),
+  } as unknown as ContextProps;
 
   const renderModal = () =>
     render(
