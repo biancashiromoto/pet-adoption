@@ -23,6 +23,7 @@ const Card = ({
         setShowModal(true);
       }}
       tabIndex={0}
+      data-testid="card"
     >
       <div className="card__content">
         <img alt="Random picture of a cat" src={pet.url} />
@@ -30,6 +31,7 @@ const Card = ({
           <h3>{pet.name}</h3>
           <p>Age: {pet.age}</p>
           <button
+            data-testid="favorite-button"
             type="button"
             onClick={(e) => {
               e.stopPropagation();
