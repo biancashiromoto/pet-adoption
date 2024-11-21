@@ -5,6 +5,13 @@ import { BrowserRouter } from "react-router-dom";
 import PetList from "..";
 import { petsMock } from "@/tests/mocks";
 import { Pet } from "@/types/Pet.type";
+import useFetchPets from "@/hooks/useFetchPets";
+
+vi.mock("@/hooks/useFetchPets", async () => {
+  return {
+    default: vi.fn(),
+  };
+});
 
 describe("PetList component", () => {
   const cats = petsMock.filter((pet: Pet) => pet.species === "cat");
@@ -12,6 +19,10 @@ describe("PetList component", () => {
   const setSelectedPet = vi.fn();
   const setShowAdoptionModal = vi.fn();
   const renderComponent = (displayedPets: Pet[] = cats) => {
+    (useFetchPets as any).mockResolvedValueOnce({
+      isLoadingOrFetching: false,
+      data: petsMock,
+    });
     render(
       <Context.Provider
         value={
@@ -40,7 +51,7 @@ describe("PetList component", () => {
       expect(card.textContent).toMatch(cats[index].name as string);
       expect(card.textContent).toMatch(cats[index].age as unknown as string);
       expect(screen.getAllByRole("img")[index].getAttribute("src")).toBe(
-        cats[0].url
+        cats[index].url
       );
     });
   });
@@ -64,9 +75,9 @@ describe("PetList component", () => {
     const cards = screen.getAllByTestId("card");
 
     expect(
-      screen.getByTestId(
+      screen.getAllByTestId(
         `${cats[0].isFavorite ? "heart__filled" : "heart__unfilled"}`
-      )
+      )[0]
     ).toBeInTheDocument();
     fireEvent.click(cards[0]);
     expect(setSelectedPet).toHaveBeenCalledWith([cats[0]]);
