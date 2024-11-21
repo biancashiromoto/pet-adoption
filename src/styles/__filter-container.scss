@@ -41,8 +41,19 @@
       text-wrap: nowrap;
       text-decoration: underline;
 
-      :hover {
-        background-color: gray;
+      span {
+        padding: 3px;
+      }
+
+      svg {
+        pointer-events: none;
+        transition: none;
+      }
+
+      @media screen and (min-width: 768px) {
+        :hover {
+          background-color: rgba(128, 128, 128, 0.493);
+        }
       }
     }
   }
