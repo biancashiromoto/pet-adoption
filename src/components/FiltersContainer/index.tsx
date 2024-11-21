@@ -1,10 +1,11 @@
 import FilterSelect from "@/components/FilterSelect";
 import { Button } from "@/components/Button";
 import { ChangeEvent, Dispatch, SetStateAction, useContext } from "react";
-import { FiltersContainerProps } from "./index.types";
 import { Context } from "@/context";
 import { IoMdClose } from "react-icons/io";
 import { GrPowerReset } from "react-icons/gr";
+import useClearFilters from "@/hooks/useClearFilters";
+import useResetFavorites from "@/hooks/useResetFavorites";
 
 const selectFilter = (
   e: ChangeEvent<HTMLSelectElement>,
@@ -14,18 +15,18 @@ const selectFilter = (
   callback(value);
 };
 
-const FiltersContainer = ({
-  orderRef,
-  clearFilters,
-  favoriteRef,
-  resetFavorites,
-}: FiltersContainerProps) => {
+const FiltersContainer = () => {
   const {
     setFavoritesFilter,
     setOrderFilter,
     speciesFilter,
     setSpeciesFilter,
+    orderRef,
+    favoriteRef,
   } = useContext(Context);
+  const { clearFilters } = useClearFilters();
+  const { resetFavorites } = useResetFavorites();
+
   return (
     <article className="filter-container">
       <div className="selects-buttons">

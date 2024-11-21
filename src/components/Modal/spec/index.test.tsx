@@ -5,7 +5,13 @@ import Modal from "..";
 describe("Modal component", () => {
   it("should be correctly rendered", () => {
     render(
-      <Modal title="Modal title" text="Modal text">
+      <Modal
+        title="Modal title"
+        text="Modal text"
+        isVisible={true}
+        onClose={vi.fn()}
+        className="modal"
+      >
         <span>Modal child</span>
       </Modal>
     );

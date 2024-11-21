@@ -108,6 +108,9 @@ const AdoptionForm = () => {
         <>
           <Overlay openModal={setShowConfirmationModal} />
           <Modal
+            onClose={() => setShowConfirmationModal(false)}
+            className="modal"
+            isVisible={showConfirmationModal}
             title="Thank you for submitting!"
             text="We will contact you as soon as possible"
           >

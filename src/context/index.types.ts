@@ -1,10 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
-import { Pet } from "@/types/Pet";
-import {
-  FavoritesFilter,
-  OrderByAgeFilter,
-  SpeciesFilter,
-} from "@/components/FiltersContainer/index.types";
+import { Dispatch, RefObject, SetStateAction } from "react";
+import { Pet } from "@/types/Pet.type";
+import { Favorites, OrderByAge, Species } from "@/types/Filters.type";
 
 export interface ContextProps {
   pets: Pet[];
@@ -17,14 +13,16 @@ export interface ContextProps {
   setShowAdoptionModal: Dispatch<SetStateAction<boolean>>;
   showUpdatePetsModal: boolean;
   setShowUpdatePetsModal: Dispatch<SetStateAction<boolean>>;
-  speciesFilter: SpeciesFilter;
-  setSpeciesFilter: Dispatch<SetStateAction<SpeciesFilter>>;
-  orderFilter: OrderByAgeFilter;
-  setOrderFilter: Dispatch<SetStateAction<OrderByAgeFilter>>;
-  favoritesFilter: FavoritesFilter;
-  setFavoritesFilter: Dispatch<SetStateAction<FavoritesFilter>>;
+  speciesFilter: Species;
+  setSpeciesFilter: Dispatch<SetStateAction<Species>>;
+  orderFilter: OrderByAge;
+  setOrderFilter: Dispatch<SetStateAction<OrderByAge>>;
+  favoritesFilter: Favorites;
+  setFavoritesFilter: Dispatch<SetStateAction<Favorites>>;
   showNotice: boolean;
   setShowNotice: Dispatch<SetStateAction<boolean>>;
   dontShowHomePageNoticeAgain: boolean;
   setDontShowHomePageNoticeAgain: Dispatch<SetStateAction<boolean>>;
+  orderRef: RefObject<HTMLSelectElement> | null;
+  favoriteRef: RefObject<HTMLSelectElement> | null;
 }

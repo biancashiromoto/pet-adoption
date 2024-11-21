@@ -1,24 +1,13 @@
 import { Context } from "@/context";
 import { useContext } from "react";
 import Card from "../Card";
-import { Pet } from "@/types/Pet";
+import { Pet } from "@/types/Pet.type";
+import useToggleFavorite from "@/hooks/useToggleFavorite";
 
 const PetList = () => {
-  const { displayedPets, setSelectedPet, setShowAdoptionModal, setPets } =
+  const { displayedPets, setSelectedPet, setShowAdoptionModal } =
     useContext(Context);
-
-  const toggleFavorite = (id: Pet["id"]) => {
-    setPets((prevPets: Pet[]) => {
-      const updatedPets = prevPets.map((pet) => {
-        if (pet.id === id) {
-          return { ...pet, isFavorite: !pet.isFavorite };
-        }
-        return pet;
-      });
-
-      return updatedPets;
-    });
-  };
+  const { toggleFavorite } = useToggleFavorite();
 
   return (
     <div
