@@ -4,13 +4,13 @@
   background-color: white;
   flex-direction: column;
   justify-content: center;
-  padding: 10px;
-  height: 75dvw;
+  padding: 12px;
+  height: 380px;
   left: 50%;
   position: fixed;
   top: 20%;
   transform: translateX(-50%);
-  width: 75dvw;
+  width: 380px;
   z-index: 100;
 
   @media screen and (min-width: 1024px) {
