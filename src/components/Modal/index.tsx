@@ -7,7 +7,6 @@ type Props = {
   onClose: () => void;
   title?: string;
   text?: string;
-  wrapperClassName: string;
 };
 
 const Modal: FC<Props> = ({
