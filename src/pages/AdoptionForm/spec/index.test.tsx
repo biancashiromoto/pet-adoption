@@ -50,7 +50,7 @@ describe("AdoptionForm Component", () => {
     expect(screen.getByLabelText(/Birth date/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /submit/i })).toBeInTheDocument();
     expect(
-      screen.getByText(/You are filling the form to adopt Cleo/i)
+      screen.getByText(`You are filling the form to adopt ${petsMock[0].name}`)
     ).toBeInTheDocument();
     expect(screen.getByRole("img")).toHaveAttribute("src", petsMock[0].url);
     expect(screen.getByRole("img")).toHaveAttribute(
