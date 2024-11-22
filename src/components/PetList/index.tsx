@@ -9,15 +9,14 @@ const PetList = () => {
   const { displayedPets, setSelectedPet, setShowAdoptionModal } =
     useContext(Context);
   const { toggleFavorite } = useToggleFavorite();
-  const { isLoadingOrFetching, data: pets } = useFetchPets();
+  const { isLoadingOrFetching } = useFetchPets();
 
   return (
     <div
       className={`pet-list ${displayedPets.length === 0 || !displayedPets ? "offwhite" : ""}`}
     >
-      {(!pets || pets.length === 0) && !isLoadingOrFetching && (
-        <h2 className="no-pets">No pets found :/</h2>
-      )}
+      {(!displayedPets || displayedPets.length === 0) &&
+        !isLoadingOrFetching && <h2 className="no-pets">No pets found :/</h2>}
       {displayedPets.length > 0 &&
         displayedPets.map((pet: Pet) => (
           <Card
