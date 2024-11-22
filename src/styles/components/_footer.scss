@@ -3,9 +3,10 @@ footer {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 18px;
   background-color: var(--offwhite);
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--light-gray);
+  bottom: 0;
+  height: var(--header-height);
 
   p {
     margin-right: 12px;

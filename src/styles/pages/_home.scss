@@ -1,4 +1,6 @@
 main {
-  height: max-content;
+  min-height: calc(
+    100dvh - (var(--filters-container-height) + var(--header-height) * 3)
+  );
   margin: 0 auto;
 }

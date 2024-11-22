@@ -12,13 +12,14 @@
     font-weight: 700;
     padding: 12px 24px;
     margin-top: 24px;
+    margin-bottom: 24px;
     width: 160px;
   }
 
   input {
     border-radius: 12px;
     border: solid 1px var(--light-gray);
-    height: 36px;
+    height: 24px;
     padding: 6px 12px;
     width: 320px;
   }
@@ -69,8 +70,8 @@
   img {
     width: 42dvw;
     height: 42dvw;
-    max-width: 350px;
-    max-height: 350px;
+    max-width: 250px;
+    max-height: 250px;
     object-fit: cover;
   }
 }
