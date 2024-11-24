@@ -38,7 +38,7 @@ const AppContent = () => {
   };
 
   return (
-    <>
+    <div className="app-grid">
       <Header />
       <div className="app-content">
         {renderNotice()}
@@ -48,7 +48,7 @@ const AppContent = () => {
         </Routes>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
