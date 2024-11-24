@@ -5,11 +5,12 @@
 @use "./__loader.scss";
 @use "./__form.scss";
 @use "./__notice.scss";
-@use "./__header.scss";
+@use "./components/_header.scss";
 @use "./components/filter-select";
 @use "./components/pet-list";
 @use "./components/button";
 @use "./components/notice-home-page";
+@use "./components/footer";
 @use "./pages/home";
 
 @tailwind base;
@@ -18,13 +19,18 @@
 
 :root {
   --brown: #764b36;
+  --blue: #0077b5;
   --light-brown: #996145;
   --light-gray: #c6bcae;
+  --dark-gray: #66615b;
   --black: #2b2b2b;
   --green: #869b90;
   --offwhite: #fefff3;
   --red: #dc4d41;
   --warning: #db684256;
+
+  --header-height: 50px;
+  --filters-container-height: 120px;
 }
 
 * {
@@ -35,4 +41,8 @@
 body {
   text-align: center;
   background-color: var(--offwhite);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100dvh;
 }
