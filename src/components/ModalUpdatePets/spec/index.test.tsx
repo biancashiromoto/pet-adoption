@@ -13,27 +13,9 @@ describe("ModalUpdatePets", () => {
   });
 
   const mockContext: ContextProps = {
-    pets: [],
-    setPets: vi.fn(),
-    displayedPets: [],
-    setDisplayedPets: vi.fn(),
-    selectedPet: [],
-    setSelectedPet: vi.fn(),
-    showAdoptionModal: false,
-    setShowAdoptionModal: vi.fn(),
-    showUpdatePetsModal: false,
+    showUpdatePetsModal: true,
     setShowUpdatePetsModal,
-    speciesFilter: "all",
-    setSpeciesFilter: vi.fn(),
-    orderFilter: "order by",
-    setOrderFilter: vi.fn(),
-    favoritesFilter: "favorite status",
-    setFavoritesFilter: vi.fn(),
-    showNotice: false,
-    setShowNotice: vi.fn(),
-    dontShowHomePageNoticeAgain: false,
-    setDontShowHomePageNoticeAgain: vi.fn(),
-  };
+  } as unknown as ContextProps;
 
   const renderModal = () =>
     render(
@@ -66,7 +48,6 @@ describe("ModalUpdatePets", () => {
   it("should close modal without calling refetch when clicking 'No'", () => {
     renderModal();
     fireEvent.click(screen.getByLabelText("No"));
-
     expect(refetch).not.toHaveBeenCalled();
     expect(setShowUpdatePetsModal).toHaveBeenCalledWith(false);
   });

@@ -1,52 +1,64 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import Header from "..";
-import { BrowserRouter, MemoryRouter } from "react-router-dom";
-import { ContextProps } from "@/context/index.types";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import { Context } from "@/context";
+import { ContextProps } from "@/context/index.types";
 
-let setShowUpdatePetsModalMock = vi.fn();
-const mockContext = {
-  setShowUpdatePetsModal: setShowUpdatePetsModalMock,
-} as unknown as ContextProps;
+vi.mock("react-router-dom", async () => {
+  const actual =
+    await vi.importActual<typeof import("react-router-dom")>(
+      "react-router-dom"
+    );
+  return {
+    ...actual,
+    useLocation: vi.fn(),
+  };
+});
 
 describe("Header component", () => {
-  it("should be correctly rendered", () => {
-    render(
-      <BrowserRouter>
-        <Context.Provider value={mockContext}>
-          <Header />
-        </Context.Provider>
-      </BrowserRouter>
-    );
-    expect(screen.getByText("Pet adoption")).toBeInTheDocument();
-    const links = screen.getAllByRole("link");
-    links.forEach((link: HTMLElement) => {
-      expect(link).toHaveAttribute("href", "/");
-      expect(link).toHaveAttribute("aria-label", "Return to Home page");
-    });
-    expect(screen.getByRole("button")).toHaveAttribute(
-      "aria-label",
-      "Update pets"
-    );
+  const setShowUpdatePetsModalMock = vi.fn();
 
+  const renderComponent = (pathname: string = "/") => {
+    (useLocation as any).mockReturnValue({ pathname });
+    render(
+      <Context.Provider
+        value={
+          {
+            setShowUpdatePetsModal: setShowUpdatePetsModalMock,
+          } as unknown as ContextProps
+        }
+      >
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      </Context.Provider>
+    );
+  };
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("should be correctly rendered", () => {
+    renderComponent();
+    expect(screen.getByText("Pet adoption")).toBeInTheDocument();
+    expect(screen.getByTestId("logo")).toBeInTheDocument();
+    expect(screen.getByTestId("logo").getAttribute("height")).toEqual("36");
+    expect(screen.getByTestId("logo").getAttribute("width")).toEqual("36");
+    expect(screen.queryByTestId("link__return")).not.toBeInTheDocument();
+  });
+
+  it("should call setShowUpdatePetsModal when button is clicked", () => {
+    renderComponent();
     fireEvent.click(screen.getByRole("button"));
     expect(setShowUpdatePetsModalMock).toHaveBeenCalledWith(true);
   });
 
-  test("renders Return to Home link when not on the root path", () => {
-    render(
-      <MemoryRouter initialEntries={["/some-path"]}>
-        <Context.Provider value={mockContext}>
-          <Header />
-        </Context.Provider>
-      </MemoryRouter>
-    );
+  it("should render two buttons to return to Home page if pathname is not '/'", () => {
+    renderComponent("/test");
 
-    const returnLink = screen.getAllByRole("link")[1];
-    expect(returnLink).toBeInTheDocument();
-
-    const updatePetsButton = screen.queryByRole("button");
-    expect(updatePetsButton).not.toBeInTheDocument();
+    const returnButtons = screen.getAllByLabelText(/return to home page/i);
+    expect(returnButtons.length).toEqual(2);
   });
 });

@@ -46,7 +46,7 @@ describe("ModalAdoptPets", () => {
     setShowAdoptionModal,
     showUpdatePetsModal: false,
     setShowUpdatePetsModal: vi.fn(),
-    speciesFilter: "all",
+    speciesFilter: "cat",
     setSpeciesFilter: vi.fn(),
     orderFilter: "order by",
     setOrderFilter: vi.fn(),
@@ -56,7 +56,7 @@ describe("ModalAdoptPets", () => {
     setShowNotice: vi.fn(),
     dontShowHomePageNoticeAgain: false,
     setDontShowHomePageNoticeAgain: vi.fn(),
-  };
+  } as unknown as ContextProps;
 
   const renderModal = () =>
     render(

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { Pet } from "@/types/Pet";
+import { Pet } from "@/types/Pet.type";
 
 export interface CardProps {
   pet: Pet;
@@ -23,6 +23,7 @@ const Card = ({
         setShowModal(true);
       }}
       tabIndex={0}
+      data-testid="card"
     >
       <div className="card__content">
         <img alt="Random picture of a cat" src={pet.url} />
@@ -30,6 +31,7 @@ const Card = ({
           <h3>{pet.name}</h3>
           <p>Age: {pet.age}</p>
           <button
+            data-testid="favorite-button"
             type="button"
             onClick={(e) => {
               e.stopPropagation();
