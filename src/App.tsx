@@ -12,6 +12,7 @@ import Header from "@/components/Header";
 import { Utils } from "@/helpers/Utils";
 import { Context } from "@/context";
 import NoticeHomePage from "./components/NoticeHomePage";
+import Footer from "./components/Footer";
 
 const utils = new Utils();
 
@@ -46,6 +47,7 @@ const AppContent = () => {
           <Route path="/adopt" element={<AdoptionForm />} />
         </Routes>
       </div>
+      <Footer />
     </>
   );
 };
