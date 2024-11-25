@@ -7,29 +7,32 @@ const utils = new Utils();
 const fetchPets = async (): Promise<Pet[]> => {
   const stored = utils.getLocalStorage("pets");
 
-  if (stored && stored.length > 0) {
+  if (Array.isArray(stored) && stored.length > 0) {
     return stored;
   }
 
-  const catsResponse = await fetch(info.CAT_API_URL, {
-    headers: { "x-api-key": info.CAT_API_KEY },
-  });
-  const dogsResponse = await fetch(info.DOG_API_URL, {
-    headers: { "x-api-key": info.DOG_API_KEY },
-  });
+  const [catsResponse, dogsResponse] = await Promise.all([
+    fetch(info.CAT_API_URL, {
+      headers: { "x-api-key": info.CAT_API_KEY },
+    }),
+    fetch(info.DOG_API_URL, {
+      headers: { "x-api-key": info.DOG_API_KEY },
+    }),
+  ]);
 
   if (!catsResponse.ok || !dogsResponse.ok) {
     throw new Error("Failed to fetch");
   }
 
-  const catsData = await catsResponse.json();
-  const dogsData = await dogsResponse.json();
+  const [catsData, dogsData] = await Promise.all([
+    catsResponse.json(),
+    dogsResponse.json(),
+  ]);
 
-  const formatted = utils.formatPetsData([...catsData, ...dogsData]);
+  const formattedPets = utils.formatPetsData([...catsData, ...dogsData]);
+  utils.setLocalStorage("pets", formattedPets);
 
-  utils.setLocalStorage("pets", formatted);
-
-  return formatted;
+  return formattedPets;
 };
 
 export default fetchPets;

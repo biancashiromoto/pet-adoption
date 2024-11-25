@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 
 const useFetchPets = () => {
   const { setPets } = useContext(Context);
-  const [isLoadingOrFetching, setIsLoadingOrFetching] = useState(false);
+  const [isLoadingOrFetching, setIsLoadingOrFetching] = useState(true);
 
   const {
     isLoading,
@@ -16,6 +16,8 @@ const useFetchPets = () => {
   } = useQuery({
     queryKey: ["fetchPets"],
     queryFn: fetchPets,
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
   });
 
   useEffect(() => {
@@ -23,8 +25,11 @@ const useFetchPets = () => {
   }, [isFetching, isLoading]);
 
   useEffect(() => {
-    setPets(fetchedPets || []);
-  }, [fetchedPets]);
+    if (fetchedPets) {
+      setPets(fetchedPets);
+    }
+    setIsLoadingOrFetching(!fetchedPets && !error);
+  }, [fetchedPets, error]);
 
   return {
     isLoadingOrFetching,

@@ -6,6 +6,13 @@ import PetList from "..";
 import { petsMock } from "@/tests/mocks";
 import { Pet } from "@/types/Pet.type";
 
+vi.mock("@/hooks/useFetchPets", () => ({
+  __esModule: true,
+  default: vi.fn(() => ({
+    isFetchingOrLoading: false,
+  })),
+}));
+
 describe("PetList component", () => {
   const cats = petsMock.filter((pet: Pet) => pet.species === "cat");
   const setPets = vi.fn();
