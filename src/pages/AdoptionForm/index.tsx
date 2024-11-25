@@ -42,7 +42,7 @@ const AdoptionForm = () => {
   };
 
   return (
-    <main>
+    <main className="adoption-form">
       {showPageNotFoundScreen ? (
         <article>
           <h2>Oops...</h2>

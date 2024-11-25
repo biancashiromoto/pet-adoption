@@ -4,7 +4,6 @@ import Footer from "..";
 describe("Footer component", () => {
   it("should be correctly rendered", () => {
     render(<Footer />);
-    screen.debug();
     expect(
       screen.getByText(/developed by Bianca Shiromoto/i)
     ).toBeInTheDocument();
