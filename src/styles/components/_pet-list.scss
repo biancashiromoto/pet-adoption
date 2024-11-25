@@ -5,12 +5,16 @@
   align-items: center;
   display: grid;
   gap: 12px;
-  grid-template-columns: repeat(2, 45dvw);
+  grid-template-columns: repeat(2, 150px);
   justify-content: center;
 
-  @media screen and (min-width: 1024px) {
-    grid-template-columns: repeat(3, 15dvw);
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(3, 200px);
     margin: 0 auto;
+  }
+
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: repeat(4, 200px);
   }
 
   h2 {
