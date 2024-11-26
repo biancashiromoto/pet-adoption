@@ -21,7 +21,7 @@ const Modal: FC<Props> = ({
   if (!isVisible) return null;
 
   return (
-    <div className={`modal ${className}`} {...rest}>
+    <div className={`modal ${className}`} data-testid="modal" {...rest}>
       <section className="modal-body">
         <h2>{title}</h2>
 
