@@ -47,7 +47,7 @@ describe("PetList component", () => {
       expect(card.textContent).toMatch(cats[index].name as string);
       expect(card.textContent).toMatch(cats[index].age as unknown as string);
       expect(screen.getAllByRole("img")[index].getAttribute("src")).toBe(
-        cats[0].url
+        cats[index].url
       );
     });
   });
@@ -71,9 +71,9 @@ describe("PetList component", () => {
     const cards = screen.getAllByTestId("card");
 
     expect(
-      screen.getByTestId(
+      screen.getAllByTestId(
         `${cats[0].isFavorite ? "heart__filled" : "heart__unfilled"}`
-      )
+      )[0]
     ).toBeInTheDocument();
     fireEvent.click(cards[0]);
     expect(setSelectedPet).toHaveBeenCalledWith([cats[0]]);
