@@ -5,12 +5,6 @@ import { Pet } from "@/types/Pet.type";
 const utils = new Utils();
 
 const fetchPets = async (): Promise<Pet[]> => {
-  const stored = utils.getLocalStorage("pets");
-
-  if (Array.isArray(stored) && stored.length > 0) {
-    return stored;
-  }
-
   const [catsResponse, dogsResponse] = await Promise.all([
     fetch(info.CAT_API_URL, {
       headers: { "x-api-key": info.CAT_API_KEY },
@@ -30,7 +24,6 @@ const fetchPets = async (): Promise<Pet[]> => {
   ]);
 
   const formattedPets = utils.formatPetsData([...catsData, ...dogsData]);
-  utils.setLocalStorage("pets", formattedPets);
 
   return formattedPets;
 };

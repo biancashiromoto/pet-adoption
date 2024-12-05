@@ -14,11 +14,15 @@ const useFetchPets = () => {
     data: fetchedPets,
     refetch,
   } = useQuery({
-    queryKey: ["fetchPets"],
+    queryKey: ["fetchedPets"],
     queryFn: fetchPets,
-    staleTime: 1000 * 60 * 5,
-    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+    gcTime: Infinity,
   });
+
+  if (fetchedPets) {
+    setPets(fetchedPets);
+  }
 
   useEffect(() => {
     setIsLoadingOrFetching(isFetching || isLoading);
