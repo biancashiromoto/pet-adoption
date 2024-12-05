@@ -47,19 +47,10 @@ export class Utils {
     return pets.filter((pet: Pet) => pet.url.split(".").pop() !== "gif");
   }
 
-  public shuffleArray(array: Pet[]) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
-
   /**
    * formatPetsData
    */
   public formatPetsData(pets: Pet[]): Pet[] {
-    const filtered = this.addPetsInfo(this.removeGifs(pets));
-    return this.shuffleArray(filtered) || [];
+    return this.addPetsInfo(this.removeGifs(pets)) || [];
   }
 }
