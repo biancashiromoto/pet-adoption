@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 
 const useFetchPets = () => {
-  const { setPets } = useContext(Context);
+  const { setPets, speciesFilter } = useContext(Context);
   const [isLoadingOrFetching, setIsLoadingOrFetching] = useState(true);
 
   const {
@@ -14,8 +14,8 @@ const useFetchPets = () => {
     data: fetchedPets,
     refetch,
   } = useQuery({
-    queryKey: ["fetchedPets"],
-    queryFn: fetchPets,
+    queryKey: ["fetchedPets", speciesFilter],
+    queryFn: () => fetchPets(speciesFilter),
     staleTime: Infinity,
     gcTime: Infinity,
   });
