@@ -1,25 +1,27 @@
-import { info } from "@/helpers/info";
+import { API_KEYS } from "@/helpers/info";
 import { Utils } from "@/helpers/Utils";
 import { Species } from "@/types/Filters.type";
 import { Pet } from "@/types/Pet.type";
 
 const utils = new Utils();
 
-const apiKeyMap: Record<string, string> = {
-  CAT: info.CAT_API_URL,
-  DOG: info.DOG_API_URL,
-};
+const MAX_PETS: number = 25;
 
 const fetchPets = async (species: Species): Promise<Pet[]> => {
-  const speciesKey = species.toUpperCase();
-  const apiKey: string = apiKeyMap[speciesKey];
+  const apiUrl = `https://api.the${species}api.com/v1/images/search?limit=${MAX_PETS}&size=thumb`;
 
-  if (!apiKey) {
-    throw new Error(`Invalid species: ${speciesKey}`);
+  const response = await fetch(apiUrl, {
+    headers: {
+      "x-api-key": API_KEYS[species],
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Invalid species: ${species}`);
   }
 
-  const response = (await fetch(apiKey)).json();
-  return utils.formatPetsData(await response);
+  const result = await response.json();
+  return utils.formatPetsData(await result);
 };
 
 export default fetchPets;

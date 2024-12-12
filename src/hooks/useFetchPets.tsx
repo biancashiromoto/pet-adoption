@@ -20,10 +20,6 @@ const useFetchPets = () => {
     gcTime: Infinity,
   });
 
-  if (fetchedPets) {
-    setPets(fetchedPets);
-  }
-
   useEffect(() => {
     setIsLoadingOrFetching(isFetching || isLoading);
   }, [isFetching, isLoading]);
