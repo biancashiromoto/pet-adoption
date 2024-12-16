@@ -16,7 +16,7 @@ vi.mock("@/hooks/useFetchPets", () => ({
 describe("PetList component", () => {
   const cats = petsMock.filter((pet: Pet) => pet.species === "cat");
   const setPets = vi.fn();
-  const setSelectedPet = vi.fn();
+  const setSelectedPets = vi.fn();
   const setShowAdoptionModal = vi.fn();
   const renderComponent = (displayedPets: Pet[] = cats) => {
     render(
@@ -24,7 +24,7 @@ describe("PetList component", () => {
         value={
           {
             displayedPets,
-            setSelectedPet,
+            setSelectedPets,
             setPets,
             setShowAdoptionModal,
           } as unknown as ContextProps
@@ -66,7 +66,7 @@ describe("PetList component", () => {
     expect(setPets).toHaveBeenCalledTimes(1);
   });
 
-  it("should call setSelectedPet and setShowAdoptionModal when a pet card is clicked", () => {
+  it("should call setSelectedPets and setShowAdoptionModal when a pet card is clicked", () => {
     renderComponent();
     const cards = screen.getAllByTestId("card");
 
@@ -76,7 +76,7 @@ describe("PetList component", () => {
       )[0]
     ).toBeInTheDocument();
     fireEvent.click(cards[0]);
-    expect(setSelectedPet).toHaveBeenCalledWith([cats[0]]);
+    expect(setSelectedPets).toHaveBeenCalledWith([cats[0]]);
     expect(setShowAdoptionModal).toHaveBeenCalledWith(true);
   });
 });

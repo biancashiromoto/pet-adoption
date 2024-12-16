@@ -16,7 +16,7 @@ const utils = new Utils();
 const Home = () => {
   const {
     pets,
-    selectedPet,
+    selectedPets,
     showAdoptionModal,
     setShowAdoptionModal,
     showUpdatePetsModal,
@@ -25,8 +25,8 @@ const Home = () => {
   const { isLoadingOrFetching, error, refetch } = useFetchPets();
 
   useUpdatePageTitle(
-    showAdoptionModal && selectedPet.length > 0
-      ? `Adopt ${selectedPet[0].name} | Pet Adoption`
+    showAdoptionModal && selectedPets.length > 0
+      ? `Adopt ${selectedPets[0].name} | Pet Adoption`
       : "Home | Pet Adoption"
   );
   useFilter();

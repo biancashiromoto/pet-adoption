@@ -4,14 +4,14 @@ import { Pet } from "@/types/Pet.type";
 
 export interface CardProps {
   pet: Pet;
-  setSelectedPet: Dispatch<SetStateAction<Pet[]>>;
+  setSelectedPets: Dispatch<SetStateAction<Pet[]>>;
   setShowModal: Dispatch<SetStateAction<boolean>>;
   toggleFavorite: (id: Pet["id"]) => void;
 }
 
 const Card = ({
   pet,
-  setSelectedPet,
+  setSelectedPets,
   setShowModal,
   toggleFavorite,
 }: CardProps) => {
@@ -19,7 +19,7 @@ const Card = ({
     <article
       className="card"
       onClick={() => {
-        setSelectedPet([pet]);
+        setSelectedPets([pet]);
         setShowModal(true);
       }}
       tabIndex={0}

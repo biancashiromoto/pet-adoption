@@ -45,7 +45,7 @@ describe("Home Page", () => {
 
   const mockContext = {
     pets: cats,
-    selectedPet: [cats[0]],
+    selectedPets: [cats[0]],
     displayedPets: cats,
     showAdoptionModal: false,
     setShowAdoptionModal: vi.fn(),
@@ -95,7 +95,7 @@ describe("Home Page", () => {
     });
 
     expect(screen.getByTestId("modal")).toHaveTextContent(
-      `Would you like to adopt ${mockContext.selectedPet[0].name}?`
+      `Would you like to adopt ${mockContext.selectedPets[0].name}?`
     );
   });
 

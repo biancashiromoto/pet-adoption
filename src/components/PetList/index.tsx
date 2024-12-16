@@ -6,7 +6,7 @@ import useToggleFavorite from "@/hooks/useToggleFavorite";
 import useFetchPets from "@/hooks/useFetchPets";
 
 const PetList = () => {
-  const { displayedPets, setSelectedPet, setShowAdoptionModal } =
+  const { displayedPets, setSelectedPets, setShowAdoptionModal } =
     useContext(Context);
   const { toggleFavorite } = useToggleFavorite();
   const { isLoadingOrFetching } = useFetchPets();
@@ -22,7 +22,7 @@ const PetList = () => {
           <Card
             key={pet.id}
             pet={pet}
-            setSelectedPet={setSelectedPet}
+            setSelectedPets={setSelectedPets}
             setShowModal={setShowAdoptionModal}
             toggleFavorite={toggleFavorite}
           />

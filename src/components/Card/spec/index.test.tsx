@@ -5,13 +5,13 @@ import { Pet } from "../../../types/Pet.type";
 import { petsMock } from "@/tests/mocks";
 
 describe("Card component", () => {
-  const setSelectedPet = vi.fn();
+  const setSelectedPets = vi.fn();
   const setShowModal = vi.fn();
   const toggleFavorite = vi.fn();
 
   const mockProps = {
     pet: petsMock[0],
-    setSelectedPet: setSelectedPet,
+    setSelectedPets: setSelectedPets,
     setShowModal: setShowModal,
     toggleFavorite: toggleFavorite,
   };
@@ -31,11 +31,11 @@ describe("Card component", () => {
     expect(screen.queryByTestId("heart__filled")).not.toBeInTheDocument();
   });
 
-  it("should call setSelectedPet and setShowModal functions when card is clicked", () => {
+  it("should call setSelectedPets and setShowModal functions when card is clicked", () => {
     renderCard(mockProps);
     fireEvent.click(screen.getByRole("article"));
     expect(setShowModal).toHaveBeenCalledWith(true);
-    expect(setSelectedPet).toHaveBeenCalledWith([petsMock[0]]);
+    expect(setSelectedPets).toHaveBeenCalledWith([petsMock[0]]);
   });
 
   it("should toggle the favorite icon when heart icon is clicked", () => {

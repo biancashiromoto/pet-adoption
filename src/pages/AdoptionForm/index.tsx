@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Context } from "@/context";
 
 const AdoptionForm = () => {
-  const { selectedPet } = useContext(Context);
+  const { selectedPets } = useContext(Context);
   const [showConfirmationModal, setShowConfirmationModal] =
     useState<boolean>(false);
   const [showPageNotFoundScreen, setShowPageNotFoundScreen] =
@@ -29,10 +29,10 @@ const AdoptionForm = () => {
   }, [showConfirmationModal]);
 
   useEffect(() => {
-    if (selectedPet.length === 0) {
+    if (selectedPets.length === 0) {
       setShowPageNotFoundScreen(true);
     }
-    document.title = `Form | Adopt ${selectedPet[0]?.name}`;
+    document.title = `Form | Adopt ${selectedPets[0]?.name}`;
     nameRef.current && nameRef.current.focus();
   }, []);
 
@@ -51,11 +51,11 @@ const AdoptionForm = () => {
       ) : (
         <>
           <article className="selected-pet">
-            <p>{`You are filling the form to adopt ${selectedPet[0]?.name}`}</p>
+            <p>{`You are filling the form to adopt ${selectedPets[0]?.name}`}</p>
             <img
               className="selected-pet__image"
-              src={selectedPet[0]?.url}
-              alt={`${selectedPet[0]?.name}'s picture`}
+              src={selectedPets[0]?.url}
+              alt={`${selectedPets[0]?.name}'s picture`}
             />
           </article>
           <form className="form" onSubmit={handleSubmit}>
