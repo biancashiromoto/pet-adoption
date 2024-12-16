@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 
 const useFetchPets = () => {
   const { setPets, speciesFilter } = useContext(Context);
-  const [isLoadingOrFetching, setIsLoadingOrFetching] = useState(true);
+  const [isLoadingOrFetching, setIsLoadingOrFetching] = useState(false);
 
   const {
     isLoading,
