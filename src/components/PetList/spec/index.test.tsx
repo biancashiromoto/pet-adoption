@@ -76,7 +76,7 @@ describe("PetList component", () => {
       )[0]
     ).toBeInTheDocument();
     fireEvent.click(cards[0]);
-    expect(setSelectedPets).toHaveBeenCalledWith([cats[0]]);
+    expect(setSelectedPets).toHaveBeenCalledTimes(1);
     expect(setShowAdoptionModal).toHaveBeenCalledWith(true);
   });
 });

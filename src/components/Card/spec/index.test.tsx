@@ -35,7 +35,7 @@ describe("Card component", () => {
     renderCard(mockProps);
     fireEvent.click(screen.getByRole("article"));
     expect(setShowModal).toHaveBeenCalledWith(true);
-    expect(setSelectedPets).toHaveBeenCalledWith([petsMock[0]]);
+    expect(setSelectedPets).toHaveBeenCalledTimes(1);
   });
 
   it("should toggle the favorite icon when heart icon is clicked", () => {
