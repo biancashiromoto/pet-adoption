@@ -24,7 +24,13 @@ const ModalAdoptPets = () => {
           src={selectedPets[0].url}
         />
         <div className="modal__buttons-container">
-          <Button.Root ariaLabel="Yes" onClick={() => navigate("/adopt")}>
+          <Button.Root
+            ariaLabel="Yes"
+            onClick={() => {
+              setShowAdoptionModal(false);
+              navigate("/adopt");
+            }}
+          >
             <Button.Label label="Yes" />
           </Button.Root>
           <Button.Root
