@@ -7,6 +7,9 @@ import { petsMock } from "@/tests/mocks";
 import useFetchPets from "@/hooks/useFetchPets";
 import { Pet } from "@/types/Pet.type";
 import { BrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 vi.mock("@/helpers/Utils", () => {
   return {
@@ -36,6 +39,14 @@ vi.mock("@/hooks/useEscapeKeyClose", () => ({
 vi.mock("@/hooks/useUpdatePageTitle", () => ({
   default: vi.fn(),
 }));
+
+vi.mock(import("@/hooks/useToggleFavorite"), async (importOriginal) => {
+  const actual = await importOriginal();
+  return {
+    ...actual,
+    toggleFavorite: vi.fn(),
+  };
+});
 
 describe("Home Page", () => {
   const mockRefetch = vi.fn();
@@ -67,11 +78,13 @@ describe("Home Page", () => {
       refetch: mockRefetch,
     });
     return render(
-      <Context.Provider value={mockContextValue}>
-        <BrowserRouter>
-          <Home />
-        </BrowserRouter>
-      </Context.Provider>
+      <QueryClientProvider client={queryClient}>
+        <Context.Provider value={mockContextValue}>
+          <BrowserRouter>
+            <Home />
+          </BrowserRouter>
+        </Context.Provider>
+      </QueryClientProvider>
     );
   };
 
