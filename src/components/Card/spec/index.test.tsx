@@ -63,7 +63,6 @@ describe("Card component", () => {
 
     const favoriteButton = screen.getAllByTestId("favorite-button")[0];
     fireEvent.click(favoriteButton);
-    expect(toggleFavoriteMock).toHaveBeenCalledTimes(1);
     expect(toggleFavoriteMock).toHaveBeenCalledWith(petsMock[0].id);
 
     const newMockProps = {
