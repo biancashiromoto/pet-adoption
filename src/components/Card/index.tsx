@@ -1,26 +1,21 @@
-import { Dispatch, SetStateAction } from "react";
+import { useContext } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { Pet } from "@/types/Pet.type";
+import useToggleFavorite from "@/hooks/useToggleFavorite";
+import { Context } from "@/context";
 
 export interface CardProps {
   pet: Pet;
-  setSelectedPet: Dispatch<SetStateAction<Pet[]>>;
-  setShowModal: Dispatch<SetStateAction<boolean>>;
-  toggleFavorite: (id: Pet["id"]) => void;
 }
-
-const Card = ({
-  pet,
-  setSelectedPet,
-  setShowModal,
-  toggleFavorite,
-}: CardProps) => {
+const Card = ({ pet }: CardProps) => {
+  const { setSelectedPets, setShowAdoptionModal } = useContext(Context);
+  const { toggleFavorite } = useToggleFavorite();
   return (
     <article
       className="card"
       onClick={() => {
-        setSelectedPet([pet]);
-        setShowModal(true);
+        setSelectedPets([pet]);
+        setShowAdoptionModal(true);
       }}
       tabIndex={0}
       data-testid="card"

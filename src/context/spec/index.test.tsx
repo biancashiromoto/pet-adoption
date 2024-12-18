@@ -8,7 +8,7 @@ describe("Provider Component", () => {
   const mockContext = {
     pets: petsMock,
     displayedPets: petsMock,
-    selectedPet: [petsMock[0]],
+    selectedPets: [petsMock[0]],
     showAdoptionModal: false,
     showUpdatePetsModal: false,
     speciesFilter: "cat",
@@ -20,7 +20,7 @@ describe("Provider Component", () => {
     orderRef: null,
     setPets: vi.fn(),
     setDisplayedPets: vi.fn(),
-    setSelectedPet: vi.fn(),
+    setSelectedPets: vi.fn(),
     setShowAdoptionModal: vi.fn(),
     setShowUpdatePetsModal: vi.fn(),
     setSpeciesFilter: vi.fn(),
@@ -55,7 +55,7 @@ describe("Provider Component", () => {
 
     expect(contextValues.pets).toEqual(petsMock);
     expect(contextValues.displayedPets).toEqual(petsMock);
-    expect(contextValues.selectedPet).toEqual([petsMock[0]]);
+    expect(contextValues.selectedPets).toEqual([petsMock[0]]);
     expect(contextValues.showAdoptionModal).toBe(false);
     expect(contextValues.showUpdatePetsModal).toBe(false);
     expect(contextValues.speciesFilter).toBe("cat");
@@ -82,7 +82,7 @@ describe("Provider Component", () => {
 
     contextValues.setPets([]);
     contextValues.setDisplayedPets([]);
-    contextValues.setSelectedPet([]);
+    contextValues.setSelectedPets([]);
     contextValues.setShowAdoptionModal(true);
     contextValues.setShowUpdatePetsModal(true);
     contextValues.setSpeciesFilter("dog");
@@ -99,7 +99,7 @@ describe("Provider Component", () => {
 
     expect(contextValues.pets).toEqual(mockContext.pets);
     expect(contextValues.displayedPets).toEqual(mockContext.displayedPets);
-    expect(contextValues.selectedPet).toEqual(mockContext.selectedPet);
+    expect(contextValues.selectedPets).toEqual(mockContext.selectedPets);
     expect(contextValues.showAdoptionModal).toBe(mockContext.showAdoptionModal);
     expect(contextValues.showUpdatePetsModal).toBe(
       mockContext.showUpdatePetsModal

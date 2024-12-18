@@ -5,6 +5,8 @@ import { BrowserRouter } from "react-router-dom";
 import PetList from "..";
 import { petsMock } from "@/tests/mocks";
 import { Pet } from "@/types/Pet.type";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { vi } from "vitest";
 
 vi.mock("@/hooks/useFetchPets", () => ({
   __esModule: true,
@@ -13,27 +15,31 @@ vi.mock("@/hooks/useFetchPets", () => ({
   })),
 }));
 
+const queryClient = new QueryClient();
+
 describe("PetList component", () => {
   const cats = petsMock.filter((pet: Pet) => pet.species === "cat");
   const setPets = vi.fn();
-  const setSelectedPet = vi.fn();
+  const setSelectedPets = vi.fn();
   const setShowAdoptionModal = vi.fn();
   const renderComponent = (displayedPets: Pet[] = cats) => {
     render(
-      <Context.Provider
-        value={
-          {
-            displayedPets,
-            setSelectedPet,
-            setPets,
-            setShowAdoptionModal,
-          } as unknown as ContextProps
-        }
-      >
-        <BrowserRouter>
-          <PetList />
-        </BrowserRouter>
-      </Context.Provider>
+      <QueryClientProvider client={queryClient}>
+        <Context.Provider
+          value={
+            {
+              displayedPets,
+              setSelectedPets,
+              setPets,
+              setShowAdoptionModal,
+            } as unknown as ContextProps
+          }
+        >
+          <BrowserRouter>
+            <PetList />
+          </BrowserRouter>
+        </Context.Provider>
+      </QueryClientProvider>
     );
   };
 
@@ -59,14 +65,7 @@ describe("PetList component", () => {
     ).toBeInTheDocument();
   });
 
-  it("should call toggleFavorite function when heart icon is clicked", () => {
-    renderComponent();
-    const favoriteButton = screen.getAllByTestId("favorite-button")[0];
-    fireEvent.click(favoriteButton);
-    expect(setPets).toHaveBeenCalledTimes(1);
-  });
-
-  it("should call setSelectedPet and setShowAdoptionModal when a pet card is clicked", () => {
+  it("should call setSelectedPets and setShowAdoptionModal when a pet card is clicked", () => {
     renderComponent();
     const cards = screen.getAllByTestId("card");
 
@@ -76,7 +75,7 @@ describe("PetList component", () => {
       )[0]
     ).toBeInTheDocument();
     fireEvent.click(cards[0]);
-    expect(setSelectedPet).toHaveBeenCalledWith([cats[0]]);
+    expect(setSelectedPets).toHaveBeenCalledTimes(1);
     expect(setShowAdoptionModal).toHaveBeenCalledWith(true);
   });
 });

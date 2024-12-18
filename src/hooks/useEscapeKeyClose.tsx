@@ -7,7 +7,7 @@ const useEscapeKeyClose = () => {
     setShowAdoptionModal,
     showUpdatePetsModal,
     setShowUpdatePetsModal,
-    selectedPet,
+    selectedPets,
   } = useContext(Context);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const useEscapeKeyClose = () => {
       if (event.key === "Escape") {
         if (showAdoptionModal) {
           setShowAdoptionModal(false);
-          document.title = `Adopt ${selectedPet[0].name} | Pet Adoption`;
+          document.title = `Adopt ${selectedPets[0].name} | Pet Adoption`;
         }
         if (showUpdatePetsModal) {
           setShowUpdatePetsModal(false);
@@ -28,7 +28,7 @@ const useEscapeKeyClose = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [showAdoptionModal, showUpdatePetsModal, selectedPet]);
+  }, [showAdoptionModal, showUpdatePetsModal, selectedPets]);
 };
 
 export default useEscapeKeyClose;

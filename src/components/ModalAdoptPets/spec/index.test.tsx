@@ -29,7 +29,7 @@ describe("ModalAdoptPets", () => {
     setPets: vi.fn(),
     displayedPets: [],
     setDisplayedPets: vi.fn(),
-    selectedPet: [
+    selectedPets: [
       {
         name: "Francisco",
         height: 10,
@@ -41,7 +41,7 @@ describe("ModalAdoptPets", () => {
         species: "cat",
       },
     ],
-    setSelectedPet: vi.fn(),
+    setSelectedPets: vi.fn(),
     showAdoptionModal: true,
     setShowAdoptionModal,
     showUpdatePetsModal: false,
@@ -70,7 +70,7 @@ describe("ModalAdoptPets", () => {
 
     expect(
       screen.getByText(
-        `Would you like to adopt ${mockContext.selectedPet[0].name}?`
+        `Would you like to adopt ${mockContext.selectedPets[0].name}?`
       )
     ).toBeInTheDocument();
     expect(

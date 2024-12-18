@@ -1,23 +1,40 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import Card, { CardProps } from "..";
-import { Pet } from "../../../types/Pet.type";
 import { petsMock } from "@/tests/mocks";
+import { Context } from "@/context";
+import { ContextProps } from "@/context/index.types";
+
+const toggleFavoriteMock = vi.fn();
+
+vi.mock("@/hooks/useToggleFavorite", () => ({
+  __esModule: true,
+  default: vi.fn(() => ({
+    toggleFavorite: toggleFavoriteMock,
+  })),
+}));
+
+const setShowAdoptionModalMock = vi.fn();
+const setSelectedPetsMock = vi.fn();
 
 describe("Card component", () => {
-  const setSelectedPet = vi.fn();
-  const setShowModal = vi.fn();
-  const toggleFavorite = vi.fn();
-
   const mockProps = {
     pet: petsMock[0],
-    setSelectedPet: setSelectedPet,
-    setShowModal: setShowModal,
-    toggleFavorite: toggleFavorite,
   };
 
   const renderCard = (props: CardProps) => {
-    render(<Card {...props} />);
+    render(
+      <Context.Provider
+        value={
+          {
+            setSelectedPets: setSelectedPetsMock,
+            setShowAdoptionModal: setShowAdoptionModalMock,
+          } as unknown as ContextProps
+        }
+      >
+        <Card {...props} />
+      </Context.Provider>
+    );
   };
 
   it("should be correctly rendered", () => {
@@ -31,25 +48,29 @@ describe("Card component", () => {
     expect(screen.queryByTestId("heart__filled")).not.toBeInTheDocument();
   });
 
-  it("should call setSelectedPet and setShowModal functions when card is clicked", () => {
+  it("should call setSelectedPets and setShowModal functions when card is clicked", () => {
     renderCard(mockProps);
     fireEvent.click(screen.getByRole("article"));
-    expect(setShowModal).toHaveBeenCalledWith(true);
-    expect(setSelectedPet).toHaveBeenCalledWith([petsMock[0]]);
+    expect(setShowAdoptionModalMock).toHaveBeenCalledWith(true);
+    expect(setSelectedPetsMock).toHaveBeenCalledTimes(1);
   });
 
-  it("should toggle the favorite icon when heart icon is clicked", () => {
+  it("should call toggleFavorite function when heart icon is clicked", () => {
     const { rerender } = render(<Card {...mockProps} />);
 
     expect(screen.getByTestId("heart__unfilled")).toBeInTheDocument();
     expect(screen.queryByTestId("heart__filled")).not.toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button"));
-    expect(toggleFavorite).toHaveBeenCalledWith(petsMock[0].id);
+    const favoriteButton = screen.getAllByTestId("favorite-button")[0];
+    fireEvent.click(favoriteButton);
+    expect(toggleFavoriteMock).toHaveBeenCalledTimes(1);
+    expect(toggleFavoriteMock).toHaveBeenCalledWith(petsMock[0].id);
+
     const newMockProps = {
       ...mockProps,
       pet: { ...petsMock[0], isFavorite: true },
     };
+
     rerender(<Card {...{ ...newMockProps }} />);
 
     expect(screen.getByTestId("heart__filled")).toBeInTheDocument();

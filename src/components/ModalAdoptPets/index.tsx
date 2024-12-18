@@ -6,7 +6,7 @@ import { Button } from "@/components/Button";
 import { useNavigate } from "react-router-dom";
 
 const ModalAdoptPets = () => {
-  const { setShowAdoptionModal, showAdoptionModal, selectedPet } =
+  const { setShowAdoptionModal, showAdoptionModal, selectedPets } =
     useContext(Context);
   const navigate = useNavigate();
   return (
@@ -16,12 +16,12 @@ const ModalAdoptPets = () => {
         isVisible={showAdoptionModal}
         onClose={() => setShowAdoptionModal(false)}
         className="modal"
-        title={`Would you like to adopt ${selectedPet[0].name}?`}
+        title={`Would you like to adopt ${selectedPets[0].name}?`}
         text="You will be redirected to the adoption form"
       >
         <img
-          alt={`Random picture of a ${selectedPet[0].species}`}
-          src={selectedPet[0].url}
+          alt={`Random picture of a ${selectedPets[0].species}`}
+          src={selectedPets[0].url}
         />
         <div className="modal__buttons-container">
           <Button.Root ariaLabel="Yes" onClick={() => navigate("/adopt")}>

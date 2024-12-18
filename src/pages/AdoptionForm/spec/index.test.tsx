@@ -25,7 +25,7 @@ describe("AdoptionForm Component", () => {
       <Context.Provider
         value={
           {
-            selectedPet: [petsMock[0]],
+            selectedPets: [petsMock[0]],
             showNotice: false,
             dontShowHomePageNoticeAgain: false,
           } as unknown as ContextProps
@@ -108,7 +108,7 @@ describe("AdoptionForm Component", () => {
       <Context.Provider
         value={
           {
-            selectedPet: [],
+            selectedPets: [],
             dontShowHomePageNoticeAgain: false,
           } as unknown as ContextProps
         }

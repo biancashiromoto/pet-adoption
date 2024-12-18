@@ -15,7 +15,7 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   const [pets, setPets] = useState<Pet[]>([] as Pet[]);
   const [displayedPets, setDisplayedPets] = useState(pets as Pet[]);
-  const [selectedPet, setSelectedPet] = useState([] as Pet[]);
+  const [selectedPets, setSelectedPets] = useState([] as Pet[]);
   const [showAdoptionModal, setShowAdoptionModal] = useState(false);
   const [showUpdatePetsModal, setShowUpdatePetsModal] =
     useState<boolean>(false);
@@ -32,8 +32,8 @@ const Provider: React.FC<{ children: ReactNode }> = ({ children }) => {
     setPets,
     displayedPets,
     setDisplayedPets,
-    selectedPet,
-    setSelectedPet,
+    selectedPets,
+    setSelectedPets,
     showAdoptionModal,
     setShowAdoptionModal,
     showUpdatePetsModal,
