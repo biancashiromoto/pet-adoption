@@ -1,11 +1,18 @@
 import FilterSelect from "@/components/FilterSelect";
 import { Button } from "@/components/Button";
-import { ChangeEvent, Dispatch, SetStateAction, useContext } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  KeyboardEvent,
+  SetStateAction,
+  useContext,
+} from "react";
 import { Context } from "@/context";
 import { IoMdClose } from "react-icons/io";
 import { GrPowerReset } from "react-icons/gr";
 import useClearFilters from "@/hooks/useClearFilters";
 import useResetFavorites from "@/hooks/useResetFavorites";
+import FilterRadioOption from "../FilterRadioOption";
 
 const selectFilter = (
   e: ChangeEvent<HTMLSelectElement>,
@@ -26,6 +33,15 @@ const FiltersContainer = () => {
   } = useContext(Context);
   const { clearFilters } = useClearFilters();
   const { resetFavorites } = useResetFavorites();
+
+  const handleKeyDown = (
+    e: KeyboardEvent<HTMLLabelElement>,
+    callback: () => void
+  ) => {
+    if (e.key === "Enter" || e.key === " ") {
+      callback();
+    }
+  };
 
   return (
     <article className="filter-container">
@@ -61,44 +77,22 @@ const FiltersContainer = () => {
         </section>
       </div>
       <section className="filter-container__species">
-        <label
+        <FilterRadioOption
+          name="species"
+          checked={speciesFilter === "cat"}
           className={`${speciesFilter === "cat" ? "active" : ""}`}
-          htmlFor="cats"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              setSpeciesFilter("cat");
-            }
-          }}
-        >
-          <input
-            id="cats"
-            type="radio"
-            name="species"
-            onChange={() => setSpeciesFilter("cat")}
-            checked={speciesFilter === "cat"}
-          />
-          <span>Cats</span>
-        </label>
-        <label
+          id="cats"
+          onKeyDown={(e) => handleKeyDown(e, () => setSpeciesFilter("cat"))}
+          onChange={() => setSpeciesFilter("cat")}
+        />
+        <FilterRadioOption
+          name="species"
+          checked={speciesFilter === "dog"}
           className={`${speciesFilter === "dog" ? "active" : ""}`}
-          htmlFor="dogs"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              setSpeciesFilter("dog");
-            }
-          }}
-        >
-          <input
-            id="dogs"
-            type="radio"
-            name="species"
-            onChange={() => setSpeciesFilter("dog")}
-            checked={speciesFilter === "dog"}
-          />
-          <span>Dogs</span>
-        </label>
+          id="dogs"
+          onKeyDown={(e) => handleKeyDown(e, () => setSpeciesFilter("dog"))}
+          onChange={() => setSpeciesFilter("dog")}
+        />
       </section>
     </article>
   );
