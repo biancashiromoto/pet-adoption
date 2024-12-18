@@ -33,11 +33,6 @@ const Home = () => {
   useEscapeKeyClose();
 
   useEffect(() => {
-    setShowUpdatePetsModal(false);
-    setShowAdoptionModal(false);
-  }, []);
-
-  useEffect(() => {
     utils.setLocalStorage("pets", pets);
   }, [pets]);
 
