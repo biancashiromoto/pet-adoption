@@ -7,8 +7,8 @@ export interface ContextProps {
   setPets: Dispatch<SetStateAction<Pet[]>>;
   displayedPets: Pet[];
   setDisplayedPets: Dispatch<SetStateAction<Pet[]>>;
-  selectedPet: Pet[];
-  setSelectedPet: Dispatch<SetStateAction<Pet[]>>;
+  selectedPets: Pet[];
+  setSelectedPets: Dispatch<SetStateAction<Pet[]>>;
   showAdoptionModal: boolean;
   setShowAdoptionModal: Dispatch<SetStateAction<boolean>>;
   showUpdatePetsModal: boolean;
