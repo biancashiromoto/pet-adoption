@@ -43,9 +43,18 @@
       font-size: 0.75rem;
     }
 
-    button {
+    label {
       font-size: 1.125rem;
       justify-self: end;
+      width: min-content;
+      cursor: pointer;
+
+      input[type="checkbox"] {
+        display: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: none;
+      }
 
       .filled {
         color: var(--red);

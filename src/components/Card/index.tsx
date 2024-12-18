@@ -25,20 +25,25 @@ const Card = ({ pet }: CardProps) => {
         <div className="card__text">
           <h3>{pet.name}</h3>
           <p>Age: {pet.age}</p>
-          <button
-            data-testid="favorite-button"
-            type="button"
+          <label
             onClick={(e) => {
               e.stopPropagation();
               toggleFavorite(pet.id);
             }}
           >
+            <input
+              type="checkbox"
+              data-testid="favorite-button"
+              onChange={() => toggleFavorite(pet.id)}
+              aria-label={`Save ${pet.name} as favorite`}
+              checked={pet.isFavorite}
+            />
             {!pet.isFavorite ? (
               <FaRegHeart className="unfilled" data-testid="heart__unfilled" />
             ) : (
               <FaHeart className="filled" data-testid="heart__filled" />
             )}
-          </button>
+          </label>
         </div>
       </div>
     </article>
